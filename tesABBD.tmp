@@ -1,0 +1,346 @@
+[gd_scene load_steps=24 format=3 uid="uid://ckwee7k5aga1u"]
+
+[ext_resource type="Texture2D" uid="uid://ia2xs1iy06d" path="res://icon.svg" id="1_bk8b2"]
+[ext_resource type="Script" path="res://character_body_2d.gd" id="2_0wfex"]
+[ext_resource type="Texture2D" uid="uid://bnohnq7jvaf3k" path="res://sprites/spr_rosa.png" id="2_idk7i"]
+[ext_resource type="Texture2D" uid="uid://cbwhaorhvbudq" path="res://sprites/wheel.png" id="3_f0bco"]
+[ext_resource type="Texture2D" uid="uid://eirq7dj1dwco" path="res://sprites/spr_redp.png" id="4_u5233"]
+[ext_resource type="Texture2D" uid="uid://cltb78hfxpa6k" path="res://sprites/spr_yellowp.png" id="5_y0ijf"]
+[ext_resource type="Texture2D" uid="uid://wg5tbt2loyh3" path="res://sprites/spr_bluep.png" id="6_1y7u0"]
+[ext_resource type="Texture2D" uid="uid://d0dwwcyq8wfl1" path="res://sprites/spr_greyp.png" id="7_s6xea"]
+[ext_resource type="Texture2D" uid="uid://bdkan3yyeydmv" path="res://sprites/spr_greenp.png" id="8_3nd1s"]
+[ext_resource type="Texture2D" uid="uid://dlstudbmexd77" path="res://sprites/spr_purplep.png" id="9_bbuyp"]
+[ext_resource type="Script" path="res://companion.gd" id="11_e7ybe"]
+[ext_resource type="Script" path="res://ghost_block.gd" id="12_0v2jc"]
+[ext_resource type="Texture2D" uid="uid://bvn7jj8up1lbk" path="res://sprites/ghostblock.png" id="12_w6mg3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xfvoi"]
+size = Vector2(128.111, 126)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d6b26"]
+radius = 31.7126
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jjlsx"]
+size = Vector2(32, 54)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jvmwr"]
+radius = 31.5753
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fuc8o"]
+size = Vector2(120.358, 123.661)
+
+[sub_resource type="Animation" id="Animation_ilfgx"]
+resource_name = "AttackPlaceholder"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.366667, 0.633333, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.53058, 1.06116, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Companion:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.566667, 0.933333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.330657, 0.847377, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Player/Sprite2D:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.566667, 0.933333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.330657, 0.847377, 1, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_xs8mk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Companion:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_6ebcs"]
+resource_name = "ShrinkPlaceholder"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Companion:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.533333, 0.933333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 0, 1), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Player/Sprite2D:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.533333, 0.933333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lvkcr"]
+_data = {
+"AttackPlaceholder": SubResource("Animation_ilfgx"),
+"RESET": SubResource("Animation_xs8mk"),
+"ShrinkPlaceholder": SubResource("Animation_6ebcs")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_stlxs"]
+size = Vector2(34, 34)
+
+[node name="TestScene" type="Node2D"]
+
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2(577, 585)
+scale = Vector2(9.04688, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Ground"]
+texture = ExtResource("1_bk8b2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+position = Vector2(0.165802, 1)
+shape = SubResource("RectangleShape2D_xfvoi")
+
+[node name="Ground2" type="StaticBody2D" parent="."]
+position = Vector2(569, 136)
+scale = Vector2(9.04688, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Ground2"]
+texture = ExtResource("1_bk8b2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground2"]
+position = Vector2(0.165802, 1)
+shape = SubResource("RectangleShape2D_xfvoi")
+
+[node name="Ground3" type="StaticBody2D" parent="."]
+position = Vector2(43, 422)
+scale = Vector2(4.72557, 0.263246)
+
+[node name="Sprite2D" type="Sprite2D" parent="Ground3"]
+texture = ExtResource("1_bk8b2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground3"]
+position = Vector2(0.165802, 1)
+shape = SubResource("RectangleShape2D_xfvoi")
+
+[node name="Wall" type="StaticBody2D" parent="."]
+position = Vector2(447, 323)
+scale = Vector2(0.553642, 2.67917)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall"]
+texture = ExtResource("1_bk8b2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
+position = Vector2(0.165802, 1)
+shape = SubResource("RectangleShape2D_xfvoi")
+
+[node name="Companion" type="Sprite2D" parent="."]
+position = Vector2(277.714, 431.857)
+texture = ExtResource("6_1y7u0")
+script = ExtResource("11_e7ybe")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+self_modulate = Color(0.52572, 0.723689, 0.712835, 1)
+position = Vector2(322, 433)
+script = ExtResource("2_0wfex")
+
+[node name="SelectPower" type="Node2D" parent="Player"]
+visible = false
+position = Vector2(-47, -52)
+
+[node name="wheel" type="Sprite2D" parent="Player/SelectPower"]
+position = Vector2(50, 50)
+texture = ExtResource("3_f0bco")
+
+[node name="Area2D" type="Area2D" parent="Player/SelectPower"]
+
+[node name="redp" type="Sprite2D" parent="Player/SelectPower/Area2D"]
+texture = ExtResource("4_u5233")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/SelectPower/Area2D"]
+scale = Vector2(1.07696, 1)
+shape = SubResource("CircleShape2D_d6b26")
+
+[node name="Area2D2" type="Area2D" parent="Player/SelectPower"]
+
+[node name="yellowp" type="Sprite2D" parent="Player/SelectPower/Area2D2"]
+position = Vector2(-26, 57)
+texture = ExtResource("5_y0ijf")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Player/SelectPower/Area2D2"]
+position = Vector2(-30, 58)
+scale = Vector2(1.07696, 1)
+shape = SubResource("CircleShape2D_d6b26")
+
+[node name="Area2D3" type="Area2D" parent="Player/SelectPower"]
+
+[node name="bluep" type="Sprite2D" parent="Player/SelectPower/Area2D3"]
+position = Vector2(17, 109)
+texture = ExtResource("6_1y7u0")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Player/SelectPower/Area2D3"]
+position = Vector2(18, 107)
+scale = Vector2(1.07696, 1)
+shape = SubResource("CircleShape2D_d6b26")
+
+[node name="Area2D4" type="Area2D" parent="Player/SelectPower"]
+
+[node name="greyp" type="Sprite2D" parent="Player/SelectPower/Area2D4"]
+position = Vector2(69, -7)
+texture = ExtResource("7_s6xea")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Player/SelectPower/Area2D4"]
+position = Vector2(72, -18)
+scale = Vector2(1.07696, 1)
+shape = SubResource("CircleShape2D_d6b26")
+
+[node name="Area2D5" type="Area2D" parent="Player/SelectPower"]
+
+[node name="purplep" type="Sprite2D" parent="Player/SelectPower/Area2D5"]
+position = Vector2(93, 100)
+texture = ExtResource("9_bbuyp")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="Player/SelectPower/Area2D5"]
+position = Vector2(88, 97)
+scale = Vector2(1.07696, 1)
+shape = SubResource("CircleShape2D_d6b26")
+
+[node name="Area2D6" type="Area2D" parent="Player/SelectPower"]
+
+[node name="greenp" type="Sprite2D" parent="Player/SelectPower/Area2D6"]
+position = Vector2(117, 35)
+texture = ExtResource("8_3nd1s")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="Player/SelectPower/Area2D6"]
+position = Vector2(123, 31)
+scale = Vector2(1.07696, 1)
+shape = SubResource("CircleShape2D_d6b26")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture = ExtResource("2_idk7i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(1, 2)
+shape = SubResource("RectangleShape2D_jjlsx")
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(1, 1)
+
+[node name="Attack Damage Area" type="Area2D" parent="Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Attack Damage Area"]
+shape = SubResource("CircleShape2D_jvmwr")
+disabled = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+offset_left = 7.0
+offset_top = 7.99998
+offset_right = 125.0
+offset_bottom = 31.0
+scale = Vector2(2.06691, 2.74735)
+text = "Current Power:
+"
+
+[node name="Breakable Block" type="Area2D" parent="."]
+position = Vector2(668, 360)
+scale = Vector2(0.963437, 2.54094)
+
+[node name="Breakable Block" type="Sprite2D" parent="Breakable Block"]
+modulate = Color(0.439049, 0.439049, 0.439049, 1)
+texture = ExtResource("1_bk8b2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Breakable Block"]
+position = Vector2(-0.9552, 1.08496)
+shape = SubResource("RectangleShape2D_fuc8o")
+
+[node name="Label" type="Label" parent="Breakable Block"]
+offset_left = -36.2985
+offset_top = -6.50841
+offset_right = 42.7015
+offset_bottom = 16.4916
+text = "Breakable"
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Breakable Block"]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Breakable Block/StaticBody2D"]
+position = Vector2(-0.9552, 1.08496)
+shape = SubResource("RectangleShape2D_fuc8o")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_lvkcr")
+}
+
+[node name="GhostBlock" type="StaticBody2D" parent="."]
+position = Vector2(868, 498)
+script = ExtResource("12_0v2jc")
+
+[node name="Sprite2D" type="Sprite2D" parent="GhostBlock"]
+texture = ExtResource("12_w6mg3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GhostBlock"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_stlxs")
+
+[node name="Area2D" type="Area2D" parent="GhostBlock"]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="GhostBlock/Area2D"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_stlxs")
+
+[connection signal="input_event" from="Player/SelectPower/Area2D" to="Player" method="_on_pepper_picked_input_event"]
+[connection signal="input_event" from="Player/SelectPower/Area2D2" to="Player" method="_on_area_2d_2_input_event"]
+[connection signal="input_event" from="Player/SelectPower/Area2D3" to="Player" method="_on_area_2d_3_input_event"]
+[connection signal="input_event" from="Player/SelectPower/Area2D4" to="Player" method="_on_area_2d_4_input_event"]
+[connection signal="input_event" from="Player/SelectPower/Area2D5" to="Player" method="_on_area_2d_5_input_event"]
+[connection signal="input_event" from="Player/SelectPower/Area2D6" to="Player" method="_on_area_2d_6_input_event"]
+[connection signal="area_entered" from="Player/Attack Damage Area" to="Player" method="_on_attack_damage_area_area_entered"]
+[connection signal="input_event" from="GhostBlock" to="GhostBlock" method="_on_input_event"]
+[connection signal="area_entered" from="GhostBlock/Area2D" to="GhostBlock" method="_on_area_2d_area_entered"]
