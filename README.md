@@ -1,4 +1,16 @@
-# Welcome to your organization's demo respository
-This code repository (or "repo") is designed to demonstrate the best GitHub has to offer with the least amount of noise.
+# Welcome to the LongLiveRosa-game repository
 
-The repo includes an `index.html` file (so it can render a web page), two GitHub Actions workflows, and a CSS stylesheet dependency.
+This repository holds the godot community game for the longliverosa project
+
+## Play the game
+
+Check out the newest release on the release page, or clone the project and play using godot
+
+## Helping out with the game
+
+- Install the godot game engine on your machine
+- Clone the repository using the green 'Clone' button
+- Open the project in godot
+- Make changes on a new branch that starts with feature/'branch-name'
+- Push to git
+- Create a pullrequest in github
