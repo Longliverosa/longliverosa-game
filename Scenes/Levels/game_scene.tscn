@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://bq6oq5v2mk5ay"]
+
+[ext_resource type="PackedScene" uid="uid://hr6mdo4lhefu" path="res://Scenes/Characters/rosa_character.tscn" id="1_ukt2a"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_68s2c"]
+size = Vector2(850, 20)
+
+[sub_resource type="Gradient" id="Gradient_ny4rq"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_u0xws"]
+gradient = SubResource("Gradient_ny4rq")
+
+[node name="GameScene" type="Node2D"]
+
+[node name="RosaCharacter" parent="." instance=ExtResource("1_ukt2a")]
+position = Vector2(443, 419)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(434, 449)
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(115, -1)
+shape = SubResource("RectangleShape2D_68s2c")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="StaticBody2D"]
+texture = SubResource("GradientTexture1D_u0xws")
