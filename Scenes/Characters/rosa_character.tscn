@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://hr6mdo4lhefu"]
 
-[ext_resource type="Script" path="res://Scripts/Characters/rosa_character.gd" id="1_46r5w"]
+[ext_resource type="Script" uid="uid://bt3pfl5wow30c" path="res://Scripts/Characters/rosa_character.gd" id="1_46r5w"]
 [ext_resource type="Texture2D" uid="uid://c4lble5jebjuf" path="res://Images/favicon.png" id="1_x270g"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_05o8q"]
