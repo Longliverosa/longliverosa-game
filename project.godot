@@ -10,10 +10,16 @@ config_version=5
 
 [application]
 
-config/name="longliverosa-game"
+config/name="LongLiveRosa"
+config/description="A game project by a community of influencer/streamer DougDoug for honouring the life and legacy of Rosa the sea otter from the Monterey Bay Aquarium. (Not officially associated with DougDoug, the Monterey Bay Aquarium or any other organization)"
+config/version="a0.0.1"
 run/main_scene="res://Scenes/Levels/game_scene.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="uid://c4lble5jebjuf"
+
+[autoload]
+
+LevelLoader="*res://Autoloads/level_loader.gd"
 
 [input]
 
