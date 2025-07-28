@@ -2,7 +2,7 @@ extends Node
 
 enum Difficulty { EASY, NORMAL, HARD }
 
-var all_levels : Array[Node2D] = [] 
+var all_levels : Array[LevelBase] = [] 
 
 func _ready() -> void:
 	load_levels() 
@@ -11,7 +11,7 @@ func _ready() -> void:
 func load_levels():
 	for file in get_all_file_paths("res://Scenes/Levels"):
 		var level = load(file)
-		if(level is Node2D):
+		if(level is LevelBase):
 			all_levels.append(level)
 
 func get_all_file_paths(path: String) -> Array[String]:

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LevelBase" load_steps=3 format=3 uid="uid://cseyudjbi357f"]
+
+[ext_resource type="Texture2D" uid="uid://yq8rtoqp7yvl" path="res://Sprites/DougDougRosa.png" id="1_u8a4e"]
+[ext_resource type="Script" uid="uid://ijd7s5ydo7go" path="res://Scripts/level_base.gd" id="2_85pgh"]
+
+[resource]
+script = ExtResource("2_85pgh")
+name = "Second level"
+order = 1
+depends_on = 0
+icon = ExtResource("1_u8a4e")
+metadata/_custom_type_script = "uid://ijd7s5ydo7go"
