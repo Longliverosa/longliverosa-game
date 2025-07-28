@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://ccpe61iq4yldp"]
 
-[ext_resource type="Texture2D" uid="uid://bnjnmrn4swjda" path="res://Images/RosaLooking.png" id="1_jcge5"]
-[ext_resource type="Texture2D" uid="uid://yq8rtoqp7yvl" path="res://Images/DougDougRosa.png" id="2_1ttjw"]
+[ext_resource type="Texture2D" uid="uid://bnjnmrn4swjda" path="res://Sprites/RosaLooking.png" id="1_jcge5"]
+[ext_resource type="Texture2D" uid="uid://yq8rtoqp7yvl" path="res://Sprites/DougDougRosa.png" id="2_1ttjw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kr3tp"]
 bg_color = Color(0.427493, 0.427493, 0.427493, 1)

@@ -31,4 +31,3 @@ We use the default GDScript naming and style conventions:
 | Enum members | CONSTANT_CASE | {EARTH, WATER, AIR, FIRE} |
 
 For more information see https://docs.godotengine.org/en/4.4/tutorials/scripting/gdscript/gdscript_styleguide.html
-

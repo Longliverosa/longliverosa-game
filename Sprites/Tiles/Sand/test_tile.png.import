@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://yq8rtoqp7yvl"
-path="res://.godot/imported/DougDougRosa.png-87e470dc2251cd49e233854bc7e3625f.ctex"
+uid="uid://dfp10cuylpvme"
+path="res://.godot/imported/test_tile.png-53160984ccd74d574c730d35bbb151d8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/DougDougRosa.png"
-dest_files=["res://.godot/imported/DougDougRosa.png-87e470dc2251cd49e233854bc7e3625f.ctex"]
+source_file="res://Sprites/Tiles/Sand/test_tile.png"
+dest_files=["res://.godot/imported/test_tile.png-53160984ccd74d574c730d35bbb151d8.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnjnmrn4swjda"
-path="res://.godot/imported/RosaLooking.png-88fc488433be21e01863df622751da05.ctex"
+uid="uid://yq8rtoqp7yvl"
+path="res://.godot/imported/DougDougRosa.png-71065124b3d4ecfc4f726b93bbc10a6a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/RosaLooking.png"
-dest_files=["res://.godot/imported/RosaLooking.png-88fc488433be21e01863df622751da05.ctex"]
+source_file="res://Sprites/DougDougRosa.png"
+dest_files=["res://.godot/imported/DougDougRosa.png-71065124b3d4ecfc4f726b93bbc10a6a.ctex"]
 
 [params]
 
