@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://ccpe61iq4yldp"]
+[gd_scene load_steps=9 format=3 uid="uid://ccpe61iq4yldp"]
 
 [ext_resource type="Texture2D" uid="uid://bnjnmrn4swjda" path="res://Sprites/RosaLooking.png" id="1_jcge5"]
 [ext_resource type="Script" uid="uid://b3p8cfk3vw7g0" path="res://Scripts/main_menu.gd" id="2_1ehe0"]
 [ext_resource type="Texture2D" uid="uid://yq8rtoqp7yvl" path="res://Sprites/DougDougRosa.png" id="2_1ttjw"]
 [ext_resource type="PackedScene" uid="uid://4vjk881onlb1" path="res://Scenes/Menu/choose_level.tscn" id="3_n45e2"]
 [ext_resource type="PackedScene" uid="uid://cfxwk5psql6q8" path="res://Scenes/Menu/settings.tscn" id="4_opfnp"]
+[ext_resource type="AudioStream" uid="uid://catqi580f6hr3" path="res://sounds/music/beach music.mp3" id="6_gpijq"]
+[ext_resource type="Script" uid="uid://cex2rj88yk8rx" path="res://Scenes/Menu/audio_stream_player.gd" id="7_pn3xf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kr3tp"]
 bg_color = Color(0.427493, 0.427493, 0.427493, 1)
@@ -76,6 +78,12 @@ text = "Quit"
 [node name="CenterContainer" type="CenterContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_gpijq")
+autoplay = true
+script = ExtResource("7_pn3xf")
+
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/MenuOptions/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/MenuOptions/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/MenuOptions/Quit" to="." method="_on_quit_pressed"]
+[connection signal="finished" from="AudioStreamPlayer" to="AudioStreamPlayer" method="_on_finished"]
