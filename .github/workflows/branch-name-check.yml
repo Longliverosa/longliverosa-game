@@ -1,0 +1,19 @@
+# .github/workflows/branch-name-check.yml
+name: Branch Name Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  check-branch-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch naming convention
+        run: |
+          BRANCH_NAME="${{ github.head_ref }}"
+          echo "Checking branch: $BRANCH_NAME"
+          if [[ ! "$BRANCH_NAME" =~ ^feature\/ ]]; then
+            echo "Branch name must start with 'feature/'"
+            exit 1
+          fi
