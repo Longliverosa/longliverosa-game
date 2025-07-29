@@ -20,6 +20,7 @@ func load_config_file():
 		return
 		
 	var value = config.get_value("Levels", "completed", "")
+	
 	if value.contains(","):
 		completed_levels.assign(value.split(','))
 	else:
