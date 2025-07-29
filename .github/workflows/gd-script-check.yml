@@ -1,0 +1,16 @@
+# .github/workflows/gd-script-check.yml
+name: Check .gd Script Style
+
+on:
+  pull_request:
+    paths:
+      - '**.gd'
+
+jobs:
+  check-gd-vars:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check var naming conventions
+        run: python3 .github/scripts/check_gd_vars.py

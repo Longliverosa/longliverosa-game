@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://catqi580f6hr3"
-path="res://.godot/imported/beach music.mp3-2bd983ae291990c3b4546f120e50451a.mp3str"
+path="res://.godot/imported/beach music.mp3-042e2cc6f417700ffbee0e52bec514f2.mp3str"
 
 [deps]
 
-source_file="res://Sounds/music/beach music.mp3"
-dest_files=["res://.godot/imported/beach music.mp3-2bd983ae291990c3b4546f120e50451a.mp3str"]
+source_file="res://Sounds/Music/beach music.mp3"
+dest_files=["res://.godot/imported/beach music.mp3-042e2cc6f417700ffbee0e52bec514f2.mp3str"]
 
 [params]
 
