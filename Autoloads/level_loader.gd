@@ -4,9 +4,24 @@ enum Difficulty { EASY, NORMAL, HARD }
 
 var all_levels : Array[LevelBase] = [] 
 
+var completed_levels : Array[int] = []
+
+func load_config_file():
+	var config = ConfigFile.new()
+	var err = config.load("user://levels.cfg")
+	if err != OK:
+		return
+		
+	completed_levels.assign(config.get_value("Levels", "completed", "").split(','))
+
+func save_config_file():
+	var config = ConfigFile.new()
+	config.set_value("Levels", "completed", ",".join(PackedStringArray(completed_levels)))
+	config.save("user://levels.cfg")
+	
 func _ready() -> void:
+	load_config_file()
 	load_levels() 
-	# Pick random level from list, generate stuff inside?
 
 func load_levels():
 	for file in get_all_file_paths("res://Scenes/Levels"):
@@ -27,3 +42,9 @@ func get_all_file_paths(path: String) -> Array[String]:
 			file_paths.append(file_path)
 		file_name = dir.get_next()
 	return file_paths
+
+
+func set_completed_level(id : int) -> void:
+	if !completed_levels.has(id):
+		completed_levels.append(id)
+		save_config_file()
