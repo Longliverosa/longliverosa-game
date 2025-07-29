@@ -1,10 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://dvldnxksorea7"]
+[gd_scene load_steps=14 format=3 uid="uid://dvldnxksorea7"]
 
 [ext_resource type="Script" uid="uid://bt3pfl5wow30c" path="res://Scripts/Player/player.gd" id="1_46r5w"]
 [ext_resource type="Texture2D" uid="uid://b00mm51luc0qm" path="res://Sprites/Characters/Peppers/wheel.png" id="2_htcer"]
 [ext_resource type="Texture2D" uid="uid://8kff6ifakcd" path="res://Sprites/Characters/Rosa/test_sprite.png" id="2_rcd5j"]
 [ext_resource type="Texture2D" uid="uid://bvveikc1g3126" path="res://Sprites/Characters/Peppers/spr_orange_pepper_test.png" id="3_xpcdj"]
-[ext_resource type="Script" uid="uid://c81lnspdwdc66" path="res://Scripts/Player/companion.gd" id="4_mtuoh"]
+[ext_resource type="Script" uid="uid://c81lnspdwdc66" path="res://Scenes/Player/companion.gd" id="4_mtuoh"]
 [ext_resource type="Texture2D" uid="uid://bdby4qh4dmy6x" path="res://Sprites/Characters/Peppers/spr_yellow_pepper_test.png" id="6_gk6dx"]
 [ext_resource type="Texture2D" uid="uid://d1r0d18iqr3qq" path="res://Sprites/Characters/Peppers/spr_blue_pepper_test.png" id="7_jhyir"]
 [ext_resource type="Texture2D" uid="uid://b7iegcyc5c6u8" path="res://Sprites/Characters/Peppers/spr_purple_pepper_test.png" id="8_74mp2"]
@@ -12,21 +12,6 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jjlsx"]
 size = Vector2(19, 29)
-
-[sub_resource type="Animation" id="Animation_gk6dx"]
-resource_name = "PurpleHaze"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Player/Companion:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.53, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(0.68192, 0.000384372, 0.690389, 1), Color(1, 1, 1, 1)]
-}
 
 [sub_resource type="Animation" id="Animation_xs8mk"]
 length = 0.001
@@ -57,7 +42,6 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lvkcr"]
 _data = {
-&"PurpleHaze": SubResource("Animation_gk6dx"),
 &"RESET": SubResource("Animation_xs8mk")
 }
 
@@ -101,7 +85,6 @@ libraries = {
 }
 
 [node name="SelectPower" type="Node2D" parent="."]
-visible = false
 position = Vector2(-47, -52)
 
 [node name="Wheel" type="Sprite2D" parent="SelectPower"]
