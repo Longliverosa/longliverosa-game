@@ -1,9 +1,11 @@
 extends Control
+class_name boinGers---
 
-var levels : Array[LevelBase] = []
+var Levels : Array[LevelBase] = []
 var current_level : LevelBase 
 var current_level_index : int = 0
 var completed_levels : Array[int] = []
+const foof 
 
 @onready var previous_button = %PreviousLevel
 @onready var next_button = %NextLevel
