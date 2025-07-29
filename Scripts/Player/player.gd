@@ -6,6 +6,17 @@ extends CharacterBody2D
 @export var jump_velocity = -300
 var platform_count = 0
 var cooldown_until = 0
+var grappling = false
+var grapple_point = Vector2.ZERO
+var crouch_time = 0.0
+var crouch_locked = false
+@onready var companion = $Companion
+@onready var label = $Canvas/Label
+@onready var select_power = $SelectPower
+@onready var pepper_animations = $PepperAnimations
+@onready var plug = $Plug
+@onready var plug_head = $PlugHead
+@onready var raycast = $RayCast2D
 
 const TEX_ORANGE = preload("res://Sprites/Characters/Peppers/spr_orange_pepper_test.png")
 const TEX_YELLOW = preload("res://Sprites/Characters/Peppers/spr_yellow_pepper_test.png")
@@ -13,11 +24,8 @@ const TEX_BLUE = preload("res://Sprites/Characters/Peppers/spr_blue_pepper_test.
 const TEX_PURPLE = preload("res://Sprites/Characters/Peppers/spr_purple_pepper_test.png")
 const TEX_GREEN = preload("res://Sprites/Characters/Peppers/spr_green_pepper_test.png")
 const EYE_PLATFORM = preload("res://Scenes/Player/eyeplatform.tscn")
-
-@onready var companion = $Companion
-@onready var label = $Canvas/Label
-@onready var select_power = $SelectPower
-@onready var pepper_animations = $PepperAnimations
+const PLUG_SPEED = 300.0
+const PLUG_RANGE = 300.0
 
 var powers = {
 	"SelectPower/OrangeArea": {
@@ -63,22 +71,59 @@ func _physics_process(delta):
 
 	if not is_on_floor():
 		velocity.y += gravity * delta
+		
+	if Input.is_action_pressed("move_down") and not crouch_locked:
+		crouch_time += delta/2
+		scale = Vector2(1, 0.9)
+	else:
+		if not Input.is_action_pressed("move_down"):
+			crouch_locked = false
+		crouch_time = 0.0
+		scale = Vector2(1, 1)
 
 	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = jump_velocity
+		if Input.is_action_pressed("move_down"):
+			var multiplier = lerp(1.0, 2.0, clamp(crouch_time / 1.0, 0.0, 1.0))
+			velocity.y = jump_velocity * multiplier
+			crouch_time = 0.0
+			crouch_locked = true
+			scale = Vector2(1, 1)
+		else:
+			velocity.y = jump_velocity
 		
 	if Input.is_action_just_pressed("jump") and companion.texture == TEX_PURPLE and not is_on_floor():
 		if Time.get_ticks_msec() >= cooldown_until and platform_count < 3:
+			pepper_animations.play("PurpleHaze")
 			_spawn_eye_platform()
 			platform_count += 1
 			if platform_count >= 3:
 				cooldown_until = Time.get_ticks_msec() + 3000  
 				platform_count = 0
-			else:
-				pepper_animations.play("PurpleHaze")
 
-	var direction = Input.get_axis("move_left", "move_right")
-	velocity.x = direction * speed
+	if grappling:
+		var dir = (grapple_point - global_position).normalized()
+		velocity = dir * PLUG_SPEED
+
+		companion.global_position = global_position + Vector2(0, -16)
+		companion.rotation = (grapple_point - companion.global_position).angle() + PI + 1.5
+
+		plug.clear_points()
+		plug.add_point(to_local(companion.global_position))
+		plug.add_point(to_local(grapple_point))
+
+		plug_head.global_position = grapple_point
+		plug_head.rotation = (grapple_point - companion.global_position).angle()
+		plug_head.show()
+
+		if global_position.distance_to(grapple_point) < 10:
+			grappling = false
+			companion.rotation = 0
+			plug.clear_points()
+	else:
+		var direction = Input.get_axis("move_left", "move_right")
+		velocity.x = direction * speed
+		plug_head.hide()
+		companion.rotation = 0
 
 	move_and_slide()
 
@@ -109,13 +154,52 @@ func _input(_event):
 		if Input.is_action_just_pressed("pepper_power"):
 			match companion.texture:
 				TEX_ORANGE:
-					print("orange")
+					_attack_or_break_nearest("enemy")
+				TEX_YELLOW:
+					_attack_or_break_nearest("breakable")
 				TEX_BLUE:
 					print("blue")
 				TEX_GREEN:
-					print("green")
-				TEX_YELLOW:
-					print("yellow")
+					_start_grapple()
+
+func _start_grapple():
+	var nearest_hook = _find_nearest_in_group("hooks", PLUG_RANGE)
+	if not nearest_hook:
+		return
+	raycast.target_position = nearest_hook.global_position - global_position
+	raycast.force_raycast_update()
+	if not raycast.is_colliding():
+		grapple_point = nearest_hook.global_position
+		grappling = true
+		
+func _find_nearest_in_group(group: String, radius: float) -> Node2D:
+	var nearest = null
+	var nearest_dist = radius
+	for node in get_tree().get_nodes_in_group(group):
+		var dist = global_position.distance_to(node.global_position)
+		if dist < nearest_dist:
+			nearest = node
+			nearest_dist = dist
+	return nearest
+
+func _attack_or_break_nearest(group: String, radius: float = 200):
+	var target = _find_nearest_in_group(group, radius)
+	if target:
+		match group:
+			"breakable":
+				pepper_animations.play("YellowAttack")
+			"enemy":
+				pepper_animations.play("OrangeAttack")
+		var original_pos = companion.global_position
+		var travel_time = 0.5
+		var timer = 0.0
+		while timer < travel_time and target:
+			var delta = get_process_delta_time()
+			companion.global_position = companion.global_position.lerp(target.global_position, delta * 5)
+			timer += delta
+			await get_tree().process_frame
+		if target:
+			target.queue_free()
 
 func _set_power(power):
 	companion.texture = power["texture"]

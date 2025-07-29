@@ -5,7 +5,7 @@ var fluff_radius: float = 1
 @onready var player = $"../Sprite2D"
 
 func _ready() -> void:
-	self.scale = Vector2(0.45, 0.45)
+	self.scale = Vector2(0.5, 0.5)
 
 func _process(delta: float) -> void:
 	var target_pos = player.position + Vector2(-50, 0) 
