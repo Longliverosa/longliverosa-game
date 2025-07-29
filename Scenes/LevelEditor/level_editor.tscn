@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://dqs2syn58gexv"]
+
+[ext_resource type="Script" uid="uid://dg0p3ur7aden5" path="res://Scripts/level_editor.gd" id="1_bkpai"]
+[ext_resource type="Texture2D" uid="uid://csljihyxxlcp" path="res://Sprites/Characters/Peppers/plug_head.png" id="2_7onm0"]
+[ext_resource type="Texture2D" uid="uid://drl35eqdl2llb" path="res://Sprites/Characters/Peppers/hook.png" id="3_eyld0"]
+[ext_resource type="Texture2D" uid="uid://de0ys637srgvt" path="res://Sprites/Characters/Peppers/spr_green_pepper_test.png" id="4_te4j6"]
+
+[node name="LevelEditor" type="Node2D"]
+script = ExtResource("1_bkpai")
+
+[node name="CameraHolder" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="CameraHolder"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="TileMap" type="TileMap" parent="."]
+format = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -280.0
+offset_top = -132.0
+offset_right = -168.0
+offset_bottom = 107.0
+
+[node name="ItemList" type="ItemList" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = -24.0
+offset_top = 1.0
+offset_right = 92.0
+offset_bottom = 140.0
+auto_width = true
+item_count = 3
+max_columns = 3
+same_column_width = true
+item_0/icon = ExtResource("2_7onm0")
+item_1/icon = ExtResource("3_eyld0")
+item_2/icon = ExtResource("4_te4j6")
