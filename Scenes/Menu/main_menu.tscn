@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://yq8rtoqp7yvl" path="res://Sprites/DougDougRosa.png" id="2_1ttjw"]
 [ext_resource type="PackedScene" uid="uid://4vjk881onlb1" path="res://Scenes/Menu/choose_level.tscn" id="3_n45e2"]
 [ext_resource type="PackedScene" uid="uid://dqs2syn58gexv" path="res://Scenes/LevelEditor/level_editor.tscn" id="4_pn3xf"]
-[ext_resource type="AudioStream" uid="uid://catqi580f6hr3" path="res://Sounds/Music/beach music.mp3" id="6_gpijq"]
+[ext_resource type="AudioStream" uid="uid://rrprmkdlx2f6" path="res://Sounds/Music/beach music.mp3" id="6_gpijq"]
 [ext_resource type="Script" uid="uid://cex2rj88yk8rx" path="res://Scenes/Menu/audio_stream_player.gd" id="7_pn3xf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kr3tp"]

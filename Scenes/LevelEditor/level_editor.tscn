@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dqs2syn58gexv"]
+[gd_scene load_steps=5 format=3 uid="uid://dqs2syn58gexv"]
 
 [ext_resource type="Script" uid="uid://dg0p3ur7aden5" path="res://Scripts/level_editor.gd" id="1_bkpai"]
 [ext_resource type="Texture2D" uid="uid://csljihyxxlcp" path="res://Sprites/Characters/Peppers/plug_head.png" id="2_7onm0"]
+[ext_resource type="TileSet" uid="uid://cvovyihqvkh1c" path="res://Scenes/TileSet.tres" id="2_eyld0"]
 [ext_resource type="Texture2D" uid="uid://drl35eqdl2llb" path="res://Sprites/Characters/Peppers/hook.png" id="3_eyld0"]
 
 [node name="LevelEditor" type="Node2D"]
@@ -13,10 +14,12 @@ script = ExtResource("1_bkpai")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
-[node name="TileMap" type="TileMap" parent="."]
-format = 2
+[node name="TileMap" type="TileMapLayer" parent="."]
+use_parent_material = true
+tile_set = ExtResource("2_eyld0")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
 
 [node name="EditInterface" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -43,13 +46,15 @@ item_2/icon = ExtResource("3_eyld0")
 item_3/icon = ExtResource("3_eyld0")
 
 [node name="CategorySelect" type="ItemList" parent="CanvasLayer/EditInterface"]
+layout_mode = 0
 offset_left = -27.0
 offset_top = 214.0
-offset_right = 34.0
-offset_bottom = 250.0
+offset_right = 71.0
+offset_bottom = 283.0
 auto_width = true
 item_count = 2
 same_column_width = true
 item_0/text = "Tiles"
+item_1/text = "Entities"
 
 [connection signal="item_selected" from="CanvasLayer/EditInterface/CategorySelect" to="." method="_on_category_select_item_selected"]
