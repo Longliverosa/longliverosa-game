@@ -11,8 +11,25 @@
 [ext_resource type="Texture2D" uid="uid://de0ys637srgvt" path="res://Sprites/Characters/Peppers/spr_green_pepper_test.png" id="9_oikmp"]
 [ext_resource type="Texture2D" uid="uid://csljihyxxlcp" path="res://Sprites/Characters/Peppers/plug_head.png" id="10_jhyir"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jjlsx"]
-size = Vector2(19, 29)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jhyir"]
+radius = 6.0
+height = 28.0
+
+[sub_resource type="Animation" id="Animation_jhyir"]
+resource_name = "OrangeAttack"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player/Companion:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.18, 0.333333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0.380392, 0.129412, 1), Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_gk6dx"]
 resource_name = "PurpleHaze"
@@ -81,22 +98,6 @@ tracks/2/keys = {
 "values": [Vector2(0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_jhyir"]
-resource_name = "OrangeAttack"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Player/Companion:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.18, 0.333333),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 0.380392, 0.129412, 1), Color(1, 1, 1, 1)]
-}
-
 [sub_resource type="Animation" id="Animation_74mp2"]
 resource_name = "YellowAttack"
 length = 0.4
@@ -125,6 +126,7 @@ _data = {
 radius = 26.0183
 
 [node name="Player" type="CharacterBody2D"]
+physics_interpolation_mode = 2
 self_modulate = Color(0.52572, 0.723689, 0.712835, 1)
 script = ExtResource("1_46r5w")
 
@@ -132,10 +134,11 @@ script = ExtResource("1_46r5w")
 texture = ExtResource("2_rcd5j")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 1.5)
-shape = SubResource("RectangleShape2D_jjlsx")
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_jhyir")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+physics_interpolation_mode = 1
 position = Vector2(1, 1)
 
 [node name="Canvas" type="CanvasLayer" parent="."]
@@ -231,3 +234,13 @@ visible = false
 texture = ExtResource("10_jhyir")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="CoyoteTime" type="Timer" parent="Timers"]
+wait_time = 0.1
+one_shot = true
+
+[node name="JumpBuffer" type="Timer" parent="Timers"]
+wait_time = 0.2
+one_shot = true
