@@ -35,7 +35,8 @@ folder_colors={
 "res://Scenes/": "orange",
 "res://Scripts/": "yellow",
 "res://Sounds/": "blue",
-"res://Sprites/": "green"
+"res://Sprites/": "blue",
+"res://sounds/": "green"
 }
 
 [input]
