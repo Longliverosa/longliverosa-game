@@ -1,8 +1,4 @@
 # Godot 4+ specific ignores
 .godot/
-<<<<<<< HEAD
 
-.tmp
-=======
 *.tmp
->>>>>>> eb62135 (Temp files removal)
