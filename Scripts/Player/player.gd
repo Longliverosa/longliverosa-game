@@ -1,9 +1,15 @@
 class_name Player
 extends CharacterBody2D
 
+@export_category("Movement")
 @export var gravity = 1000
-@export var speed = 200.0
-@export var jump_velocity = -300
+@export var jump_height = 52
+
+@export var max_speed = 200.0
+@export var acceleration = 0.06
+@export var friction = 0.15
+
+
 var platform_count = 0
 var cooldown_until = 0
 var grappling = false
@@ -71,25 +77,32 @@ func _physics_process(delta):
 
 	if not is_on_floor():
 		velocity.y += gravity * delta
-		
-	if Input.is_action_pressed("move_down") and not crouch_locked:
-		crouch_time += delta/2
-		scale = Vector2(1, 0.9)
 	else:
-		if not Input.is_action_pressed("move_down"):
-			crouch_locked = false
-		crouch_time = 0.0
-		scale = Vector2(1, 1)
-
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		if Input.is_action_pressed("move_down"):
-			var multiplier = lerp(1.0, 2.0, clamp(crouch_time / 1.0, 0.0, 1.0))
-			velocity.y = jump_velocity * multiplier
-			crouch_time = 0.0
-			crouch_locked = true
-			scale = Vector2(1, 1)
-		else:
-			velocity.y = jump_velocity
+		$Timers/CoyoteTime.start()
+		
+	#if Input.is_action_pressed("move_down") and not crouch_locked:
+		#crouch_time += delta/2
+		#scale = Vector2(1, 0.9)
+	#else:
+		#if not Input.is_action_pressed("move_down"):
+			#crouch_locked = false
+		#crouch_time = 0.0
+		#scale = Vector2(1, 1)
+		
+	if Input.is_action_just_pressed("jump"):
+		$Timers/JumpBuffer.start()
+	
+	if !$Timers/JumpBuffer.is_stopped() and !$Timers/CoyoteTime.is_stopped():
+		#if Input.is_action_pressed("move_down"):
+			#var multiplier = lerp(1.0, 2.0, clamp(crouch_time / 1.0, 0.0, 1.0))
+			#velocity.y = jump_velocity * multiplier
+			#crouch_time = 0.0
+			#crouch_locked = true
+			#scale = Vector2(1, 1)
+		#else:
+		velocity.y = -sqrt(jump_height * 2 * gravity)
+		$Timers/CoyoteTime.stop()
+		$Timers/JumpBuffer.stop()
 		
 	if Input.is_action_just_pressed("jump") and companion.texture == TEX_PURPLE and not is_on_floor():
 		if Time.get_ticks_msec() >= cooldown_until and platform_count < 3:
@@ -121,7 +134,10 @@ func _physics_process(delta):
 			plug.clear_points()
 	else:
 		var direction = Input.get_axis("move_left", "move_right")
-		velocity.x = direction * speed
+		if direction:
+			velocity.x = lerp(velocity.x, direction * max_speed, acceleration)
+		else:
+			velocity.x = lerp(velocity.x, 0.0, friction)
 		plug_head.hide()
 		companion.rotation = 0
 
