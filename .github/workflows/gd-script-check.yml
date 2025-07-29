@@ -1,11 +1,9 @@
 # .github/workflows/gd-script-check.yml
-name: Check .gd Script Style
+name: GDScript Style Check
 
 on:
-  pull_request:
-    paths:
-      - '**.gd'
-
+  pull_request
+  
 jobs:
   check-gd-vars:
     runs-on: ubuntu-latest
