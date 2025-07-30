@@ -1,9 +1,40 @@
-[gd_scene load_steps=2 format=4]
+[gd_scene load_steps=6 format=4]
 
-[ext_resource type="TileSet" path="res://Scenes/LevelEditor/TileSet.tres" id="1_qtspa"]
+[ext_resource type="TileSet" path="res://Scenes/LevelEditor/TileSet.tres" id="1_n72jf"]
+[ext_resource type="PackedScene" path="res://Scenes/LevelEditor/entity_spawn.tscn" id="2_3rnhm"]
+[ext_resource type="Texture2D" path="res://Sprites/favicon.png" id="3_7o2ha"]
+[ext_resource type="Script" path="res://Scripts/entity_spawn.gd" id="4_l820i"]
+[ext_resource type="Resource" path="res://Scenes/Entities/player.tres" id="5_02gf7"]
 
-[node name="TileMap" type="TileMapLayer"]
+[node name="CreatedScene" type="Node2D"]
+unique_name_in_owner = true
+
+[node name="TileMap" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 use_parent_material = true
-tile_map_data = PackedByteArray("AAASAAoAAQAEAAEAAAARAAoAAQABAAAAAAARAAsAAQABAAIAAAARAAwAAQABAAIAAAARAA0AAQABAAEAAAASAA0AAQAAAAIAAAATAA0AAQAAAAIAAAAUAA0AAQAAAAIAAAAVAA0AAQAAAAIAAAAWAAwAAQACAAIAAAAWAAsAAQACAAIAAAAWAAoAAQAHAAAAAAAVAAkAAQAHAAAAAAAUAAkAAQAAAAEAAAATAAkAAQAAAAEAAAASAAkAAQABAAAAAAAUAAwAAQALAAMAAAAUAAsAAQALAAMAAAAUAAoAAQALAAMAAAATAAoAAQALAAMAAAASAAsAAQALAAMAAAASAAwAAQALAAMAAAATAAwAAQALAAMAAAATAAsAAQALAAMAAAAVAAsAAQALAAMAAAAVAAoAAQADAAEAAAAVAAwAAQALAAMAAAAWAA0AAQACAAEAAAA=")
-tile_set = ExtResource("1_qtspa")
+tile_map_data = PackedByteArray("AAAPAAoAAQAAAAEAAAAQAAoAAQAAAAEAAAARAAoAAQAAAAEAAAASAAoAAQAAAAEAAAATAAoAAQAAAAEAAAAVAAoAAQAAAAEAAAAWAAoAAQAAAAEAAAAXAAoAAQAAAAEAAAAYAAoAAQAAAAEAAAAZAAoAAQAAAAEAAAAaAAoAAQAAAAEAAAAbAAoAAQAAAAEAAAAcAAoAAQAHAAAAAAAUAAoAAQAAAAEAAAAOAAoAAQABAAAAAAAOAAsAAQABAAEAAAAPAAsAAQAAAAIAAAAQAAsAAQAAAAIAAAARAAsAAQAAAAIAAAASAAsAAQAAAAIAAAATAAsAAQAAAAIAAAAUAAsAAQAAAAIAAAAVAAsAAQAAAAIAAAAWAAsAAQAAAAIAAAAXAAsAAQAAAAIAAAAYAAsAAQAAAAIAAAAZAAsAAQAAAAIAAAAaAAsAAQAAAAIAAAAbAAsAAQAAAAIAAAAcAAsAAQACAAEAAAA=")
+tile_set = ExtResource("1_n72jf")
+
+[node name="EntitySpawn" type="TextureRect" parent="." instance=ExtResource("2_3rnhm")]
+offset_left = 389.0
+offset_top = 118.503
+offset_right = 429.0
+offset_bottom = 158.503
+texture = ExtResource("3_7o2ha")
+script = ExtResource("4_l820i")
+entity = ExtResource("5_02gf7")
+
+[node name="EntitySpawn2" type="TextureRect" parent="." instance=ExtResource("2_3rnhm")]
+offset_left = 269.0
+offset_top = 117.503
+offset_right = 309.0
+offset_bottom = 157.503
+texture = ExtResource("3_7o2ha")
+flip_h = true
+script = ExtResource("4_l820i")
+entity = ExtResource("5_02gf7")
+
+[connection signal="mouse_entered" from="EntitySpawn" to="EntitySpawn" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="EntitySpawn" to="EntitySpawn" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="EntitySpawn2" to="EntitySpawn2" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="EntitySpawn2" to="EntitySpawn2" method="_on_mouse_exited"]

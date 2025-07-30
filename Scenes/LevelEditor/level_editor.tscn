@@ -1,12 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://dqs2syn58gexv"]
+[gd_scene load_steps=4 format=3 uid="uid://dqs2syn58gexv"]
 
 [ext_resource type="Script" uid="uid://dg0p3ur7aden5" path="res://Scripts/level_editor.gd" id="1_bkpai"]
 [ext_resource type="TileSet" uid="uid://cvovyihqvkh1c" path="res://Scenes/LevelEditor/TileSet.tres" id="2_eyld0"]
+[ext_resource type="PackedScene" uid="uid://crnybjn75ot3p" path="res://Scenes/LevelEditor/entity_spawn.tscn" id="2_vteww"]
 
 [node name="LevelEditor" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_bkpai")
+entity_placeholder_scene = ExtResource("2_vteww")
 
 [node name="CameraHolder" type="Node2D" parent="."]
 
@@ -16,7 +18,10 @@ anchor_mode = 0
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
-[node name="TileMap" type="TileMapLayer" parent="."]
+[node name="CreatedScene" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="TileMap" type="TileMapLayer" parent="CreatedScene"]
 unique_name_in_owner = true
 use_parent_material = true
 tile_set = ExtResource("2_eyld0")
@@ -36,6 +41,7 @@ unique_name_in_owner = true
 layout_mode = 0
 offset_right = 112.0
 offset_bottom = 250.0
+focus_mode = 0
 auto_width = true
 item_count = 1
 fixed_column_width = 100
@@ -47,6 +53,7 @@ layout_mode = 0
 offset_top = 250.0
 offset_right = 112.0
 offset_bottom = 312.0
+focus_mode = 0
 auto_width = true
 auto_height = true
 item_count = 2
@@ -60,7 +67,16 @@ offset_left = 558.0
 offset_top = -8.0
 offset_right = 602.0
 offset_bottom = 23.0
+focus_mode = 0
 text = "Save"
+
+[node name="Label" type="Label" parent="CanvasLayer/EditInterface"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 311.0
+offset_right = 583.0
+offset_bottom = 334.0
+text = "Navigate using WASD, place with left click, remove with right, flip with z"
 
 [connection signal="item_selected" from="CanvasLayer/EditInterface/ItemSelect" to="." method="_on_item_select_item_selected"]
 [connection signal="item_selected" from="CanvasLayer/EditInterface/CategorySelect" to="." method="_on_category_select_item_selected"]
