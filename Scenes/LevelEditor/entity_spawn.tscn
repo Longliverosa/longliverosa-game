@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://crnybjn75ot3p"]
+
+[ext_resource type="Script" uid="uid://dwbaplg5no0va" path="res://Scripts/entity_spawn.gd" id="1_f4kw6"]
+
+[node name="EntitySpawn" type="TextureRect"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_f4kw6")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
