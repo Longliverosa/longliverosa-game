@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://bq6oq5v2mk5ay"]
+[gd_scene load_steps=13 format=4 uid="uid://bq6oq5v2mk5ay"]
 
 [ext_resource type="PackedScene" uid="uid://dvldnxksorea7" path="res://Scenes/Player/player.tscn" id="1_ukt2a"]
 [ext_resource type="Texture2D" uid="uid://drl35eqdl2llb" path="res://Sprites/Characters/Peppers/hook.png" id="2_2nmlx"]
@@ -410,6 +410,8 @@ sources/0 = SubResource("TileSetAtlasSource_2nmlx")
 sources/1 = SubResource("TileSetAtlasSource_sxkof")
 sources/2 = SubResource("TileSetAtlasSource_mwoug")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3kxv5"]
+
 [node name="GameScene" type="Node2D"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
@@ -432,10 +434,15 @@ texture = ExtResource("2_2nmlx")
 position = Vector2(597, -62)
 texture = ExtResource("2_2nmlx")
 
-[node name="Enemy" type="Sprite2D" parent="." groups=["enemy"]]
+[node name="Enemy" type="CharacterBody2D" parent="." groups=["enemy"]]
 position = Vector2(438, 264)
-texture = ExtResource("3_mjcty")
 script = ExtResource("4_3kxv5")
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy"]
+texture = ExtResource("3_mjcty")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
+shape = SubResource("RectangleShape2D_3kxv5")
 
 [node name="Player" parent="." instance=ExtResource("1_ukt2a")]
 position = Vector2(285, 222)
