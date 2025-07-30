@@ -1,60 +1,67 @@
-[gd_scene load_steps=5 format=3 uid="uid://dqs2syn58gexv"]
+[gd_scene load_steps=3 format=3 uid="uid://dqs2syn58gexv"]
 
 [ext_resource type="Script" uid="uid://dg0p3ur7aden5" path="res://Scripts/level_editor.gd" id="1_bkpai"]
-[ext_resource type="Texture2D" uid="uid://csljihyxxlcp" path="res://Sprites/Characters/Peppers/plug_head.png" id="2_7onm0"]
-[ext_resource type="TileSet" uid="uid://cvovyihqvkh1c" path="res://Scenes/TileSet.tres" id="2_eyld0"]
-[ext_resource type="Texture2D" uid="uid://drl35eqdl2llb" path="res://Sprites/Characters/Peppers/hook.png" id="3_eyld0"]
+[ext_resource type="TileSet" uid="uid://cvovyihqvkh1c" path="res://Scenes/LevelEditor/TileSet.tres" id="2_eyld0"]
 
-[node name="LevelEditor" type="Node2D"]
+[node name="LevelEditor" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_bkpai")
 
 [node name="CameraHolder" type="Node2D" parent="."]
 
-[node name="Camera2D" type="Camera2D" parent="CameraHolder"]
+[node name="Camera" type="Camera2D" parent="CameraHolder"]
+unique_name_in_owner = true
+anchor_mode = 0
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="TileMap" type="TileMapLayer" parent="."]
+unique_name_in_owner = true
 use_parent_material = true
 tile_set = ExtResource("2_eyld0")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-follow_viewport_enabled = true
 
 [node name="EditInterface" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -280.0
-offset_top = -132.0
-offset_right = -168.0
-offset_bottom = 107.0
+offset_left = 25.0
+offset_top = 20.0
+offset_right = 140.0
+offset_bottom = 334.0
 
 [node name="ItemSelect" type="ItemList" parent="CanvasLayer/EditInterface"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = -27.0
-offset_top = -36.0
-offset_right = 69.0
-offset_bottom = 214.0
+offset_right = 112.0
+offset_bottom = 250.0
 auto_width = true
-item_count = 4
-max_columns = 3
-same_column_width = true
-item_0/icon = ExtResource("2_7onm0")
-item_1/icon = ExtResource("2_7onm0")
-item_2/icon = ExtResource("3_eyld0")
-item_3/icon = ExtResource("3_eyld0")
+item_count = 1
+fixed_column_width = 100
+item_0/text = "test"
 
 [node name="CategorySelect" type="ItemList" parent="CanvasLayer/EditInterface"]
+unique_name_in_owner = true
 layout_mode = 0
-offset_left = -27.0
-offset_top = 214.0
-offset_right = 71.0
-offset_bottom = 283.0
+offset_top = 250.0
+offset_right = 112.0
+offset_bottom = 312.0
 auto_width = true
+auto_height = true
 item_count = 2
-same_column_width = true
+fixed_column_width = 100
 item_0/text = "Tiles"
 item_1/text = "Entities"
 
+[node name="SaveScene" type="Button" parent="CanvasLayer/EditInterface"]
+layout_mode = 0
+offset_left = 558.0
+offset_top = -8.0
+offset_right = 602.0
+offset_bottom = 23.0
+text = "Save"
+
+[connection signal="item_selected" from="CanvasLayer/EditInterface/ItemSelect" to="." method="_on_item_select_item_selected"]
 [connection signal="item_selected" from="CanvasLayer/EditInterface/CategorySelect" to="." method="_on_category_select_item_selected"]
+[connection signal="pressed" from="CanvasLayer/EditInterface/SaveScene" to="." method="_on_save_button_pressed"]

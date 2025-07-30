@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=4 uid="uid://bq6oq5v2mk5ay"]
 
-[ext_resource type="TileSet" uid="uid://cvovyihqvkh1c" path="res://Scenes/TileSet.tres" id="1_tcq61"]
+[ext_resource type="TileSet" uid="uid://cvovyihqvkh1c" path="res://Scenes/LevelEditor/TileSet.tres" id="1_tcq61"]
 [ext_resource type="PackedScene" uid="uid://dvldnxksorea7" path="res://Scenes/Player/player.tscn" id="1_ukt2a"]
 [ext_resource type="Texture2D" uid="uid://drl35eqdl2llb" path="res://Sprites/Characters/Peppers/hook.png" id="2_2nmlx"]
 [ext_resource type="Texture2D" uid="uid://c2ivboeq415v6" path="res://Sprites/Characters/Peppers/crab_placeholder.png" id="3_mjcty"]
