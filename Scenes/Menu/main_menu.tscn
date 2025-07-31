@@ -1,12 +1,12 @@
 [gd_scene load_steps=9 format=3 uid="uid://ccpe61iq4yldp"]
 
 [ext_resource type="Texture2D" uid="uid://bnjnmrn4swjda" path="res://Sprites/RosaLooking.png" id="1_jcge5"]
-[ext_resource type="Script" uid="uid://b3p8cfk3vw7g0" path="res://Scripts/main_menu.gd" id="2_1ehe0"]
+[ext_resource type="Script" path="res://Scripts/main_menu.gd" id="2_1ehe0"]
 [ext_resource type="Texture2D" uid="uid://yq8rtoqp7yvl" path="res://Sprites/DougDougRosa.png" id="2_1ttjw"]
 [ext_resource type="PackedScene" uid="uid://4vjk881onlb1" path="res://Scenes/Menu/choose_level.tscn" id="3_n45e2"]
 [ext_resource type="PackedScene" uid="uid://dqs2syn58gexv" path="res://Scenes/LevelEditor/level_editor.tscn" id="4_pn3xf"]
 [ext_resource type="AudioStream" uid="uid://rrprmkdlx2f6" path="res://Sounds/Music/beach music.mp3" id="6_gpijq"]
-[ext_resource type="Script" uid="uid://cex2rj88yk8rx" path="res://Scripts/audio_stream_player.gd" id="7_pn3xf"]
+[ext_resource type="Script" path="res://Scripts/audio_stream_player.gd" id="7_pn3xf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kr3tp"]
 bg_color = Color(0.427493, 0.427493, 0.427493, 1)
