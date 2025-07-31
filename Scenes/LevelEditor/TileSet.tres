@@ -1,16 +1,7 @@
-[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://cvovyihqvkh1c"]
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://cvovyihqvkh1c"]
 
-[ext_resource type="Texture2D" uid="uid://dfp10cuylpvme" path="res://Sprites/Tiles/Sand/test_tile.png" id="1_8r7mx"]
 [ext_resource type="Texture2D" uid="uid://c61c86cfaya0b" path="res://Sprites/Tiles/Sand/sand.png" id="2_0mfga"]
 [ext_resource type="Texture2D" uid="uid://b7c0vpc5462ey" path="res://Sprites/Tiles/Sand/breakable.png" id="3_7ngoq"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b7oq6"]
-texture = ExtResource("1_8r7mx")
-0:0/0 = 0
-0:0/0/terrain_set = 0
-0:0/0/terrain = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
-0:0/0/terrains_peering_bit/right_side = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5rknm"]
 texture = ExtResource("2_0mfga")
@@ -25,7 +16,6 @@ texture = ExtResource("2_0mfga")
 2:0/0/terrain_set = 0
 2:0/0/terrain = 0
 2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
-2:0/0/terrains_peering_bit/bottom_right_corner = 0
 2:0/0/terrains_peering_bit/bottom_side = 0
 2:0/0/terrains_peering_bit/bottom_left_corner = 0
 2:0/0/terrains_peering_bit/left_side = 0
@@ -149,17 +139,13 @@ texture = ExtResource("2_0mfga")
 5:1/0/terrain_set = 0
 5:1/0/terrain = 0
 5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
-5:1/0/terrains_peering_bit/bottom_right_corner = 0
 5:1/0/terrains_peering_bit/bottom_side = 0
-5:1/0/terrains_peering_bit/bottom_left_corner = 0
-5:1/0/terrains_peering_bit/left_side = 0
 5:1/0/terrains_peering_bit/top_side = 0
 6:1/0 = 0
 6:1/0/terrain_set = 0
 6:1/0/terrain = 0
 6:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 6:1/0/terrains_peering_bit/right_side = 0
-6:1/0/terrains_peering_bit/bottom_left_corner = 0
 6:1/0/terrains_peering_bit/top_side = 0
 7:1/0 = 0
 7:1/0/terrain_set = 0
@@ -253,7 +239,6 @@ texture = ExtResource("2_0mfga")
 6:2/0/terrains_peering_bit/bottom_side = 0
 6:2/0/terrains_peering_bit/bottom_left_corner = 0
 6:2/0/terrains_peering_bit/left_side = 0
-6:2/0/terrains_peering_bit/top_left_corner = 0
 6:2/0/terrains_peering_bit/top_side = 0
 6:2/0/terrains_peering_bit/top_right_corner = 0
 7:2/0 = 0
@@ -408,9 +393,8 @@ physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 0
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Sand"
-terrain_set_0/terrain_0/color = Color(0.772549, 0.415686, 0.247059, 1)
+terrain_set_0/terrain_0/color = Color(0, 0, 0, 1)
 custom_data_layer_0/name = "Breakable"
 custom_data_layer_0/type = 1
-sources/0 = SubResource("TileSetAtlasSource_b7oq6")
 sources/1 = SubResource("TileSetAtlasSource_5rknm")
 sources/2 = SubResource("TileSetAtlasSource_v3u1m")
