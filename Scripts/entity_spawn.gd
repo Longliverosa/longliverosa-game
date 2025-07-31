@@ -7,7 +7,7 @@ var is_mouse_on_me : bool = false
 func set_icon():
 	self.texture = entity.icon
 
-func _process(delta) -> void:
+func _process(_delta) -> void:
 	if Input.is_action_pressed("alt_click") and is_mouse_on_me:
 		queue_free()
 		
