@@ -1,34 +1,46 @@
 class_name Companion
 extends Sprite2D
 
-@export var power_list = [
+@export var power_list: Array[Dictionary] = [
 	{"texture": preload("res://Sprites/Characters/Peppers/spr_orange_pepper_test.png"), "text": "Current Power: Basic Attack"},
 	{"texture": preload("res://Sprites/Characters/Peppers/spr_yellow_pepper_test.png"), "text": "Current Power: Destroy Blocks"},
-	{"texture": preload("res://Sprites/Characters/Peppers/spr_blue_pepper_test.png"), "text": "Current Power: Water Tower"},
+	{"texture": preload("res://Sprites/Characters/Peppers/spr_blue_pepper_test.png"), "text": "Current Power: Remote Control"},
 	{"texture": preload("res://Sprites/Characters/Peppers/spr_purple_pepper_test.png"), "text": "Current Power: Creates Platforms"},
 	{"texture": preload("res://Sprites/Characters/Peppers/spr_green_pepper_test.png"), "text": "Current Power: Grappling Hook"}
 ]
 
-@onready var eye_platform_scene = preload("res://Scenes/Player/eyeplatform.tscn")
-@onready var pepper_animations = $"../PepperAnimations"
-@onready var raycast = $"../RayCast2D"
-@onready var plug = $"../Plug"
-@onready var plug_head = $"../PlugHead"
-@onready var select_power_ui = $"../SelectPower"
-@onready var player_body = get_parent()
-@onready var player_sprite = $"../Sprite2D"
+@onready var eye_platform_scene: PackedScene = preload("res://Scenes/Player/eyeplatform.tscn")
+@onready var pepper_animations: AnimationPlayer = $"../PepperAnimations"
+@onready var raycast: RayCast2D = $"../RayCast2D"
+@onready var plug: Line2D = $"../Plug"
+@onready var plug_head: Sprite2D = $"../PlugHead"
+@onready var select_power_ui: Node = $"../SelectPower"
+@onready var player_body: CharacterBody2D = get_parent()
+@onready var camera: Camera2D = $"../Camera2D"
+@onready var subcamera: Camera2D = $Camera2D
+@onready var player_sprite: Sprite2D = $"../Sprite2D"
+@onready var fuel_bar: ProgressBar = $FuelBar
+@onready var fuel_label: Label = $FuelLabel
 
-var current_index = 0
-var platform_count = 0
-var cooldown_until = 0
-var grappling = false
-var grapple_point = Vector2.ZERO
-
-const PLUG_SPEED = 300
-const PLUG_RANGE = 300
-
-var follow_speed: float = 2
+var current_index: int = 0
+var platform_count: int = 0
+var cooldown_until: int = 0
+var grappling: bool = false
+var grapple_point: Vector2 = Vector2.ZERO
+var follow_speed: float = 2.0
 var fluff_radius: float = 0.3
+var controlling: bool = false
+var max_fuel: float = 5.0
+var boost_multiplier: float = 2.0
+var fuel: float = max_fuel
+var remote_cooldown: float = 0.0
+var remote_cooldown_time: float = 1.5
+var pulling_enemy: bool = false
+var pulled_enemy: Node2D = null
+
+const PLUG_SPEED: float = 300.0
+const ENEMY_PULL_SPEED: float = 200.0
+const PLUG_RANGE: float = 300.0
 
 signal power_changed(power_data: Dictionary)
 
@@ -37,17 +49,52 @@ func _ready():
 	_set_power(power_list[current_index])
 	emit_signal("power_changed", power_list[current_index])
 	_update_highlight()
+	fuel_bar.max_value = max_fuel
+	var style_bg = StyleBoxFlat.new()
+	style_bg.bg_color = Color(1, 1, 1) 
+	var style_fill = StyleBoxFlat.new()
+	style_fill.bg_color = Color(0, 0, 0) 
+	fuel_bar.add_theme_stylebox_override("background", style_bg)
+	fuel_bar.add_theme_stylebox_override("fill", style_fill)
 
 func _process(delta: float) -> void:
-	var target_pos = player_sprite.position + Vector2(-50, 0)
-	position = position.lerp(target_pos, follow_speed * delta)
+	if controlling:
+		if fuel > 0:
+			var dir = Vector2(
+				int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left")),
+				int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("ui_up"))
+			)
+			var speed = 200.0
+			var drain = 1.0
+			if Input.is_action_pressed("menu"):
+				speed *= boost_multiplier
+				drain *= boost_multiplier
+			position += dir.normalized() * speed * delta
+			fuel -= drain * delta
+		else:
+			controlling = false
+			player_body.controlling = false
+			camera.enabled = true
+			subcamera.enabled = false
+			fuel = max_fuel
+			fuel_bar.visible = false
+	else:
+		position = position.lerp(player_sprite.position + Vector2(-50,0), follow_speed * delta)
+		fuel = clamp(fuel + delta, 0, max_fuel)
 
 	var fluff = Vector2(
 		sin(Time.get_ticks_msec() / 200.0),
 		cos(Time.get_ticks_msec() / 300.0)
 	) * fluff_radius
-
 	position += fluff
+
+	fuel_bar.value = fuel
+	fuel_bar.visible = controlling
+	fuel_label.visible = controlling
+	
+	if remote_cooldown > 0:
+		remote_cooldown -= delta
+
 
 func next_power():
 	current_index = (current_index + 1) % power_list.size()
@@ -82,7 +129,6 @@ func _update_highlight():
 		"PurpleArea",
 		"GreenArea"
 	]
-
 	for i in range(area_names.size()):
 		var area_node = select_power_ui.get_node(area_names[i])
 		if area_node:
@@ -100,24 +146,31 @@ func physics_step(_delta):
 		player_body.velocity = dir * PLUG_SPEED
 		global_position = player_body.global_position + Vector2(0, -16)
 		rotation = (grapple_point - global_position).angle() + PI + 1.5
-
 		plug.clear_points()
 		var start_local = plug.to_local(global_position)
 		var end_local = plug.to_local(grapple_point)
 		plug.add_point(start_local)
 		plug.add_point(end_local)
-
 		plug_head.global_position = grapple_point
 		plug_head.rotation = (grapple_point - global_position).angle()
 		plug_head.show()
-
 		if player_body.global_position.distance_to(grapple_point) < 10:
 			grappling = false
 			rotation = 0
 			plug.clear_points()
 	else:
-		plug_head.hide()
-		rotation = 0
+		if pulling_enemy and pulled_enemy:
+			var dir = (global_position - pulled_enemy.global_position).normalized()
+			pulled_enemy.global_position += dir * ENEMY_PULL_SPEED * _delta
+			plug.clear_points()
+			plug.add_point(plug.to_local(global_position))
+			plug.add_point(plug.to_local(pulled_enemy.global_position))
+			rotation = (pulled_enemy.global_position - global_position).angle() + PI + 1.5
+			plug_head.global_position = pulled_enemy.global_position
+			plug_head.show()
+		else:
+			plug_head.hide()
+			rotation = 0
 
 func use_power():
 	var power_text = get_current_power()["text"]
@@ -126,8 +179,17 @@ func use_power():
 			_attack_or_break_nearest("enemy")
 		"Current Power: Destroy Blocks":
 			_attack_or_break_nearest("breakable")
-		"Current Power: Water Tower":
-			pass
+		"Current Power: Remote Control":
+			if remote_cooldown <= 0:
+				controlling = !controlling
+				player_body.controlling = controlling
+				camera.enabled = !controlling
+				subcamera.enabled = controlling
+				fuel = max_fuel
+				fuel_bar.visible = controlling
+				fuel_label.visible = controlling
+				if !controlling:
+					remote_cooldown = remote_cooldown_time
 		"Current Power: Creates Platforms":
 			_spawn_eye_platform()
 		"Current Power: Grappling Hook":
@@ -162,14 +224,33 @@ func _spawn_eye_platform():
 			platform_count = 0
 
 func _start_grapple():
-	var nearest_hook = _find_nearest_in_group("hooks", PLUG_RANGE)
-	if not nearest_hook:
+	if pulling_enemy:
+		pulling_enemy = false
+		if pulled_enemy:
+			pulled_enemy.start_x = pulled_enemy.global_position.x
+			pulled_enemy.grappled = false
+		pulled_enemy = null
+		plug.clear_points()
+		plug_head.hide()
 		return
+
+	var enemy = _find_nearest_in_group("enemy", PLUG_RANGE)
+
+	var hook = _find_nearest_in_group("hooks", PLUG_RANGE)
+	if enemy and (not hook or player_body.global_position.distance_to(enemy.global_position) < player_body.global_position.distance_to(hook.global_position)):
+		pulled_enemy = enemy
+		pulled_enemy.grappled = true
+		pulling_enemy = true
+		return
+
+	var nearest_hook = hook
+	if not nearest_hook: return
 	raycast.target_position = nearest_hook.global_position - player_body.global_position
 	raycast.force_raycast_update()
 	if not raycast.is_colliding():
 		grapple_point = nearest_hook.global_position
 		grappling = true
+
 
 func _find_nearest_in_group(group: String, radius: float) -> Node2D:
 	var nearest = null

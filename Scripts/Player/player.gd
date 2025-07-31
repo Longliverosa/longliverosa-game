@@ -2,16 +2,17 @@ class_name Player
 extends CharacterBody2D
 
 @export_category("Movement")
-@export var gravity = 1000
-@export var jump_height = 52
-@export var max_speed = 200.0
-@export var acceleration = 0.06
-@export var friction = 0.15
-@onready var label = $Canvas/Label
-@onready var select_power = $SelectPower
-@onready var coyote_timer = $Timers/CoyoteTime
-@onready var jump_buffer = $Timers/JumpBuffer
-@onready var companion = $Companion
+@export var gravity: int= 1000
+@export var jump_height: int = 52
+@export var max_speed: int = 200
+@export var acceleration: float = 0.06
+@export var friction: float = 0.15
+@onready var label: Label = $Canvas/Label
+@onready var select_power: Node = $SelectPower
+@onready var coyote_timer: Timer = $Timers/CoyoteTime
+@onready var jump_buffer: Timer = $Timers/JumpBuffer
+@onready var companion: Node = $Companion 
+var controlling: bool = false
 
 var shortcut_map = {
 	"orange_shortcut": 0,
@@ -26,7 +27,7 @@ func _ready():
 	_on_power_changed(companion.get_current_power())
 
 func _physics_process(delta):
-	if select_power.visible:
+	if select_power.visible or controlling:
 		return
 
 	if not is_on_floor():
@@ -52,7 +53,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 func _input(_event):
-	if Input.is_action_just_pressed("menu"):
+	if Input.is_action_just_pressed("menu") and !controlling:
 		select_power.visible = not select_power.visible
 
 	if select_power.visible:

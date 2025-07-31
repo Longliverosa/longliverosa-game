@@ -1,25 +1,31 @@
 extends CharacterBody2D
 
-var speed: float = 50
-var left_limit: float = -70
-var right_limit: float = 70
-var direction: int = 1 
+@export var speed: float = 50
+@export var patrol_distance: float = 70
+@export var gravity: float = 1000
+var direction: int = 1
 var start_x: float
+var grappled: bool = false
 
 func _ready():
 	start_x = global_position.x
 
 func _physics_process(delta):
-	var motion = Vector2(speed * direction * delta, 0)
-	var collision = move_and_collide(motion)
-	if collision:
-		direction = -direction
-	else:
-		global_position += motion
+	if grappled:
+		return
+	
+	velocity.x = speed * direction
 
-	if global_position.x > start_x + right_limit:
-		global_position.x = start_x + right_limit
+	if not is_on_floor():
+		velocity.y += gravity * delta
+	else:
+		velocity.y = 0
+
+	move_and_slide()
+
+	if global_position.x > start_x + patrol_distance:
+		global_position.x = start_x + patrol_distance
 		direction = -1
-	elif global_position.x < start_x + left_limit:
-		global_position.x = start_x + left_limit
+	elif global_position.x < start_x - patrol_distance:
+		global_position.x = start_x - patrol_distance
 		direction = 1

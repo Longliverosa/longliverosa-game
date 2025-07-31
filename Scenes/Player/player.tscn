@@ -156,6 +156,26 @@ position = Vector2(-44.286, -1.14301)
 texture = ExtResource("3_xpcdj")
 script = ExtResource("4_mtuoh")
 
+[node name="Camera2D" type="Camera2D" parent="Companion"]
+
+[node name="FuelBar" type="ProgressBar" parent="Companion"]
+visible = false
+offset_left = -21.714
+offset_top = -25.857
+offset_right = 21.286
+offset_bottom = -19.857
+step = 0.001
+show_percentage = false
+
+[node name="FuelLabel" type="Label" parent="Companion"]
+visible = false
+offset_left = -22.714
+offset_top = -42.857
+offset_right = 17.286
+offset_bottom = -19.857
+scale = Vector2(1.35598, 0.861816)
+text = "Fuel"
+
 [node name="PepperAnimations" type="AnimationPlayer" parent="."]
 root_node = NodePath("../..")
 libraries = {
