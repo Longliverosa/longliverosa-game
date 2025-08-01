@@ -1,5 +1,5 @@
-class_name BasicAttackPower
 extends Power
+class_name BasicAttackPower
 
 func _init():
 	id = "basic_attack"

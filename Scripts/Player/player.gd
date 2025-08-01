@@ -25,7 +25,7 @@ var shortcut_map = {
 }
 
 func _ready():
-	companion.initialize(["basic_attack", "remote_control", "grappling_hook", "create_platforms", "destroy_blocks"])
+	companion.initialize(["basic_attack", "remote_control", "grappling_hook", "create_platforms", "destroy_blocks", "freeze_time"])
 	add_child(companion)
 	companion.power_changed.connect(_on_power_changed)
 	_on_power_changed(companion.get_current_power())
@@ -53,7 +53,6 @@ func _physics_process(delta):
 	else:
 		velocity.x = lerp(velocity.x, 0.0, friction)
 
-	companion.physics_step(delta)
 	move_and_slide()
 
 func _input(_event):
