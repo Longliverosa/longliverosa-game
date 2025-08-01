@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dvldnxksorea7"]
+[gd_scene load_steps=6 format=3 uid="uid://dvldnxksorea7"]
 
 [ext_resource type="Script" uid="uid://bt3pfl5wow30c" path="res://Scripts/Player/player.gd" id="1_46r5w"]
 [ext_resource type="Texture2D" uid="uid://b00mm51luc0qm" path="res://Sprites/Characters/Peppers/wheel.png" id="2_htcer"]
@@ -8,65 +8,6 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jhyir"]
 radius = 6.0
 height = 28.0
-
-[sub_resource type="Animation" id="Animation_jhyir"]
-resource_name = "OrangeAttack"
-length = 0.4
-
-[sub_resource type="Animation" id="Animation_gk6dx"]
-resource_name = "PurpleHaze"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Player/Sprite2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.0333333, 0.2, 0.366667),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -2), Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_xs8mk"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Player:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Player/Sprite2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_74mp2"]
-resource_name = "YellowAttack"
-length = 0.4
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_lvkcr"]
-_data = {
-&"OrangeAttack": SubResource("Animation_jhyir"),
-&"PurpleHaze": SubResource("Animation_gk6dx"),
-&"RESET": SubResource("Animation_xs8mk"),
-&"YellowAttack": SubResource("Animation_74mp2")
-}
 
 [node name="Player" type="CharacterBody2D"]
 physics_interpolation_mode = 2
@@ -100,12 +41,6 @@ offset_right = 125.0
 offset_bottom = 31.0
 scale = Vector2(2.06691, 2.74735)
 text = "Current Power: Basic Attack"
-
-[node name="PepperAnimations" type="AnimationPlayer" parent="."]
-root_node = NodePath("../..")
-libraries = {
-&"": SubResource("AnimationLibrary_lvkcr")
-}
 
 [node name="Plug" type="Line2D" parent="."]
 width = 1.0

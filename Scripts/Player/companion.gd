@@ -31,7 +31,7 @@ const ALL_POWERS := {
 
 @export var power_slot_scene: PackedScene = preload("res://Scenes/Player/PowerSlot.tscn")
 @onready var eye_platform_scene: PackedScene = preload("res://Scenes/Player/eyeplatform.tscn")
-@onready var pepper_animations: AnimationPlayer = $"../PepperAnimations"
+@onready var pepper_animations: AnimationPlayer = $PepperAnimations
 @onready var raycast: RayCast2D = $"../RayCast2D"
 @onready var plug: Line2D = $"../Plug"
 @onready var plug_head: Sprite2D = $"../PlugHead"
