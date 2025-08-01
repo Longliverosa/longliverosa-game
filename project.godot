@@ -38,6 +38,12 @@ folder_colors={
 "res://Sprites/": "blue"
 }
 
+[global_group]
+
+ungrounded=""
+hooks=""
+enemy=""
+
 [input]
 
 ui_left={

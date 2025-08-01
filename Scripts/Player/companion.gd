@@ -14,7 +14,7 @@ const ALL_POWERS := {
 	},
 	"remote_control": {
 		"id": "remote_control",
-		"texture": preload("res://Sprites/Characters/Peppers/spr_blue_pepper_test.png"),
+		"texture": preload("res://Sprites/Characters/Peppers/spr_grey_pepper_test.png"),
 		"text": "Current Power: Remote Control"
 	},
 	"create_platforms": {
@@ -26,6 +26,11 @@ const ALL_POWERS := {
 		"id": "grappling_hook",
 		"texture": preload("res://Sprites/Characters/Peppers/spr_green_pepper_test.png"),
 		"text": "Current Power: Grappling Hook"
+	},
+	"freeze_time": {
+		"id": "freeze_time",
+		"texture": preload("res://Sprites/Characters/Peppers/spr_blue_pepper_test.png"),
+		"text": "Current Power: Freeze Time"
 	}
 }
 
@@ -46,7 +51,11 @@ const ALL_POWERS := {
 
 var equipped_power_ids: Array = []
 var power_list: Array[Dictionary] = []
+var active_platforms: Array = []
 var power_ui_nodes: Array = []
+var ground_charge_time: float = 1.5
+var charge_ready: bool = false
+var platforms_spawned_in_cycle: int = 0
 var current_index: int = 0
 var platform_count: int = 0
 var cooldown_until: int = 0
@@ -59,13 +68,15 @@ var max_fuel: float = 5.0
 var boost_multiplier: float = 2.0
 var fuel: float = max_fuel
 var remote_cooldown: float = 0.0
-var remote_cooldown_time: float = 1.5
+var remote_cooldown_time: float = 2.5
 var pulling_enemy: bool = false
 var pulled_enemy: Node2D = null
 
 const PLUG_SPEED: float = 300.0
 const ENEMY_PULL_SPEED: float = 200.0
 const PLUG_RANGE: float = 300.0
+const REQUIRED_CHARGE: float = 1.5
+const MAX_PLATFORMS: int = 3
 
 signal power_changed(power_data: Dictionary)
 
@@ -183,6 +194,21 @@ func _update_highlight():
 			sprite.modulate = Color(0.5, 0.5, 0.5)
 
 func physics_step(_delta):
+	var on_ground = false
+	if player_body.is_on_floor():
+		var collision = player_body.get_last_slide_collision()
+		if collision:
+			var collider = collision.get_collider()
+			if collider == null or not collider.is_in_group("ungrounded"):
+				on_ground = true
+		else:
+			on_ground = true  
+			
+	if not charge_ready and on_ground:
+		ground_charge_time = clamp(ground_charge_time + _delta, 0, REQUIRED_CHARGE)
+		if ground_charge_time >= REQUIRED_CHARGE:
+			charge_ready = true
+			
 	if grappling:
 		var dir = (grapple_point - player_body.global_position).normalized()
 		player_body.velocity = dir * PLUG_SPEED
@@ -202,6 +228,10 @@ func physics_step(_delta):
 			plug.clear_points()
 	else:
 		if pulling_enemy and pulled_enemy:
+			if pulled_enemy.test_move(pulled_enemy.transform, Vector2.ZERO) \
+			or pulled_enemy.global_position.distance_to(player_body.global_position) < 40:
+				cleanup()
+				return
 			var dir = (global_position - pulled_enemy.global_position).normalized()
 			pulled_enemy.global_position += dir * ENEMY_PULL_SPEED * _delta
 			plug.clear_points()
@@ -255,15 +285,26 @@ func _attack_or_break_nearest(group: String, radius: float = 200):
 			target.queue_free()
 
 func _spawn_eye_platform():
-	if Time.get_ticks_msec() >= cooldown_until and platform_count < 3:
-		pepper_animations.play("PurpleHaze")
-		var platform = eye_platform_scene.instantiate()
-		player_body.get_parent().add_child(platform)
-		platform.global_position = Vector2(player_body.global_position.x, player_body.global_position.y + 8)
-		platform_count += 1
-		if platform_count >= 3:
-			cooldown_until = Time.get_ticks_msec() + 3000
-			platform_count = 0
+	if not charge_ready:
+		return 
+	if platforms_spawned_in_cycle >= MAX_PLATFORMS:
+		return
+	if active_platforms.size() >= MAX_PLATFORMS:
+		var oldest = active_platforms.pop_front()
+		if oldest:
+			oldest.queue_free()
+
+	pepper_animations.play("PurpleHaze")
+	var platform = eye_platform_scene.instantiate()
+	player_body.get_parent().add_child(platform)
+	platform.global_position = Vector2(player_body.global_position.x, player_body.global_position.y + 8)
+	active_platforms.append(platform)
+	platforms_spawned_in_cycle += 1
+
+	if platforms_spawned_in_cycle >= MAX_PLATFORMS:
+		ground_charge_time = 0.0
+		charge_ready = false
+		platforms_spawned_in_cycle = 0
 
 func _start_grapple():
 	if pulling_enemy:

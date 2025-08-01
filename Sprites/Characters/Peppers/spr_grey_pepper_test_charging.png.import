@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://vjf14st0ew3d"
-path="res://.godot/imported/spr_blue_pepper_test.png-3ee154fcaa7e3037163bc5af6315765d.ctex"
+uid="uid://wyq2d3tsdnty"
+path="res://.godot/imported/spr_grey_pepper_test_charging.png-52f26af3d83ee461b2834da13fe39cec.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Characters/Peppers/spr_blue_pepper_test.png"
-dest_files=["res://.godot/imported/spr_blue_pepper_test.png-3ee154fcaa7e3037163bc5af6315765d.ctex"]
+source_file="res://Sprites/Characters/Peppers/spr_grey_pepper_test_charging.png"
+dest_files=["res://.godot/imported/spr_grey_pepper_test_charging.png-52f26af3d83ee461b2834da13fe39cec.ctex"]
 
 [params]
 

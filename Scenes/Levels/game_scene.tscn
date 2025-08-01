@@ -7,7 +7,6 @@
 [ext_resource type="Script" uid="uid://dxkeftgpdeo8" path="res://Scripts/enemy.gd" id="4_3kxv5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tcq61"]
-size = Vector2(28, 20)
 
 [node name="GameScene" type="Node2D"]
 
@@ -39,8 +38,9 @@ script = ExtResource("4_3kxv5")
 texture = ExtResource("3_mjcty")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
+position = Vector2(0, 2)
+scale = Vector2(0.97878, 0.560718)
 shape = SubResource("RectangleShape2D_tcq61")
-one_way_collision = true
 
 [node name="Player" parent="." instance=ExtResource("1_ukt2a")]
 position = Vector2(285, 222)
