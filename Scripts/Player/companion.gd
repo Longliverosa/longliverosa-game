@@ -1,38 +1,5 @@
-class_name Companion
 extends Sprite2D
-
-const ALL_POWERS := {
-	"basic_attack": {
-		"id": "basic_attack",
-		"texture": preload("res://Sprites/Characters/Peppers/spr_orange_pepper_test.png"),
-		"text": "Current Power: Basic Attack"
-	},
-	"destroy_blocks": {
-		"id": "destroy_blocks",
-		"texture": preload("res://Sprites/Characters/Peppers/spr_yellow_pepper_test.png"),
-		"text": "Current Power: Destroy Blocks"
-	},
-	"remote_control": {
-		"id": "remote_control",
-		"texture": preload("res://Sprites/Characters/Peppers/spr_grey_pepper_test.png"),
-		"text": "Current Power: Remote Control"
-	},
-	"create_platforms": {
-		"id": "create_platforms",
-		"texture": preload("res://Sprites/Characters/Peppers/spr_purple_pepper_test.png"),
-		"text": "Current Power: Creates Platforms"
-	},
-	"grappling_hook": {
-		"id": "grappling_hook",
-		"texture": preload("res://Sprites/Characters/Peppers/spr_green_pepper_test.png"),
-		"text": "Current Power: Grappling Hook"
-	},
-	"freeze_time": {
-		"id": "freeze_time",
-		"texture": preload("res://Sprites/Characters/Peppers/spr_blue_pepper_test.png"),
-		"text": "Current Power: Freeze Time"
-	}
-}
+class_name Companion
 
 @export var power_slot_scene: PackedScene = preload("res://Scenes/Player/PowerSlot.tscn")
 @onready var eye_platform_scene: PackedScene = preload("res://Scenes/Player/eyeplatform.tscn")
@@ -49,15 +16,19 @@ const ALL_POWERS := {
 @onready var fuel_bar: ProgressBar = $FuelBar
 @onready var fuel_label: Label = $FuelLabel
 
+# Powers (array of Power objects)
+var power_list: Array = []
 var equipped_power_ids: Array = []
-var power_list: Array[Dictionary] = []
+
+# State variables
 var active_platforms: Array = []
 var power_ui_nodes: Array = []
+
 var ground_charge_time: float = 1.5
 var charge_ready: bool = false
 var platforms_spawned_in_cycle: int = 0
 var current_index: int = 0
-var platform_count: int = 0
+
 var cooldown_until: int = 0
 var grappling: bool = false
 var grapple_point: Vector2 = Vector2.ZERO
@@ -78,7 +49,7 @@ const PLUG_RANGE: float = 300.0
 const REQUIRED_CHARGE: float = 1.5
 const MAX_PLATFORMS: int = 3
 
-signal power_changed(power_data: Dictionary)
+signal power_changed(power_data)
 
 func initialize(equipped_ids: Array) -> void:
 	equipped_power_ids = equipped_ids
@@ -86,11 +57,25 @@ func initialize(equipped_ids: Array) -> void:
 func _ready():
 	scale = Vector2(0.5, 0.5)
 	if equipped_power_ids.is_empty():
-		equipped_power_ids = ALL_POWERS.keys()
+		equipped_power_ids = ["basic_attack", "destroy_blocks", "remote_control", "create_platforms", "grappling_hook", "freeze_time"]
 
 	for id in equipped_power_ids:
-		if ALL_POWERS.has(id):
-			power_list.append(ALL_POWERS[id])
+		var power_instance = null
+		match id:
+			"basic_attack":
+				power_instance = BasicAttackPower.new()
+			"destroy_blocks":
+				power_instance = DestroyBlocksPower.new()
+			"remote_control":
+				power_instance = RemoteControlPower.new()
+			"create_platforms":
+				power_instance = CreatePlatformsPower.new()
+			"grappling_hook":
+				power_instance = GrapplingHookPower.new()
+			"freeze_time":
+				power_instance = FreezeTimePower.new()
+		if power_instance:
+			power_list.append(power_instance)
 
 	_build_power_wheel()
 	_set_power(power_list[current_index])
@@ -162,11 +147,13 @@ func set_power_by_index(index: int):
 		emit_signal("power_changed", power_list[current_index])
 		_update_highlight()
 
-func _set_power(power: Dictionary):
-	texture = power["texture"]
+func _set_power(power):
+	texture = power.texture
 
 func get_current_power():
-	return power_list[current_index]
+	if current_index >= 0 and current_index < power_list.size():
+		return power_list[current_index]
+	return null
 
 func _build_power_wheel():
 	for child in select_power_ui.get_children():
@@ -178,7 +165,7 @@ func _build_power_wheel():
 		var angle = deg_to_rad(-360.0 / count * i - 90) 
 		var slot = power_slot_scene.instantiate()
 		slot.position = Vector2(cos(angle), sin(angle)) * radius
-		slot.set_icon(power_list[i]["texture"])
+		slot.set_icon(power_list[i].texture)
 		select_power_ui.add_child(slot)
 		power_ui_nodes.append(slot)
 
@@ -245,27 +232,9 @@ func physics_step(_delta):
 			rotation = 0
 
 func use_power():
-	var power_id = get_current_power()["id"]
-	match power_id:
-		"basic_attack":
-			_attack_or_break_nearest("enemy")
-		"destroy_blocks":
-			_attack_or_break_nearest("breakable")
-		"remote_control":
-			if remote_cooldown <= 0:
-				controlling = !controlling
-				player_body.controlling = controlling
-				camera.enabled = !controlling
-				subcamera.enabled = controlling
-				fuel = max_fuel
-				fuel_bar.visible = controlling
-				fuel_label.visible = controlling
-				if !controlling:
-					remote_cooldown = remote_cooldown_time
-		"create_platforms":
-			_spawn_eye_platform()
-		"grappling_hook":
-			_start_grapple()
+	var power = get_current_power()
+	if power:
+		power.use(self)
 
 func _attack_or_break_nearest(group: String, radius: float = 200):
 	var target = _find_nearest_in_group(group, radius)

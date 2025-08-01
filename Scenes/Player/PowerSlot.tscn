@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b5yro1cqk34r0"]
 
-[ext_resource type="Script" uid="uid://bosd1c5cficwe" path="res://Scripts/Player/PowerSlot.gd" id="1_j8814"]
+[ext_resource type="Script" uid="uid://bosd1c5cficwe" path="res://Scripts/Player/power_slot.gd" id="1_j8814"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_j8814")
