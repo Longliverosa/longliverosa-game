@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://ge5t37d5i0es"]
+
+[ext_resource type="Texture2D" uid="uid://bvveikc1g3126" path="res://Sprites/Characters/Peppers/spr_orange_pepper_test.png" id="1_2r5mc"]
+[ext_resource type="Script" uid="uid://c81lnspdwdc66" path="res://Scripts/Player/companion.gd" id="2_x1gqq"]
+
+[node name="Companion" type="Sprite2D"]
+texture = ExtResource("1_2r5mc")
+script = ExtResource("2_x1gqq")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="FuelBar" type="ProgressBar" parent="."]
+visible = false
+offset_left = -21.714
+offset_top = -25.857
+offset_right = 21.286
+offset_bottom = -19.857
+step = 0.001
+show_percentage = false
+
+[node name="FuelLabel" type="Label" parent="."]
+visible = false
+offset_left = -22.714
+offset_top = -42.857
+offset_right = 17.286
+offset_bottom = -19.857
+scale = Vector2(1.35598, 0.861816)
+text = "Fuel"

@@ -40,6 +40,7 @@ texture = ExtResource("3_mjcty")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
 shape = SubResource("RectangleShape2D_tcq61")
+one_way_collision = true
 
 [node name="Player" parent="." instance=ExtResource("1_ukt2a")]
 position = Vector2(285, 222)

@@ -1,20 +1,42 @@
 class_name Companion
 extends Sprite2D
 
-@export var power_list: Array[Dictionary] = [
-	{"texture": preload("res://Sprites/Characters/Peppers/spr_orange_pepper_test.png"), "text": "Current Power: Basic Attack"},
-	{"texture": preload("res://Sprites/Characters/Peppers/spr_yellow_pepper_test.png"), "text": "Current Power: Destroy Blocks"},
-	{"texture": preload("res://Sprites/Characters/Peppers/spr_blue_pepper_test.png"), "text": "Current Power: Remote Control"},
-	{"texture": preload("res://Sprites/Characters/Peppers/spr_purple_pepper_test.png"), "text": "Current Power: Creates Platforms"},
-	{"texture": preload("res://Sprites/Characters/Peppers/spr_green_pepper_test.png"), "text": "Current Power: Grappling Hook"}
-]
+const ALL_POWERS := {
+	"basic_attack": {
+		"id": "basic_attack",
+		"texture": preload("res://Sprites/Characters/Peppers/spr_orange_pepper_test.png"),
+		"text": "Current Power: Basic Attack"
+	},
+	"destroy_blocks": {
+		"id": "destroy_blocks",
+		"texture": preload("res://Sprites/Characters/Peppers/spr_yellow_pepper_test.png"),
+		"text": "Current Power: Destroy Blocks"
+	},
+	"remote_control": {
+		"id": "remote_control",
+		"texture": preload("res://Sprites/Characters/Peppers/spr_blue_pepper_test.png"),
+		"text": "Current Power: Remote Control"
+	},
+	"create_platforms": {
+		"id": "create_platforms",
+		"texture": preload("res://Sprites/Characters/Peppers/spr_purple_pepper_test.png"),
+		"text": "Current Power: Creates Platforms"
+	},
+	"grappling_hook": {
+		"id": "grappling_hook",
+		"texture": preload("res://Sprites/Characters/Peppers/spr_green_pepper_test.png"),
+		"text": "Current Power: Grappling Hook"
+	}
+}
 
+@export var power_slot_scene: PackedScene = preload("res://Scenes/Player/PowerSlot.tscn")
 @onready var eye_platform_scene: PackedScene = preload("res://Scenes/Player/eyeplatform.tscn")
 @onready var pepper_animations: AnimationPlayer = $"../PepperAnimations"
 @onready var raycast: RayCast2D = $"../RayCast2D"
 @onready var plug: Line2D = $"../Plug"
 @onready var plug_head: Sprite2D = $"../PlugHead"
 @onready var select_power_ui: Node = $"../SelectPower"
+@onready var select_power_sprite: Node = $"../SelectPowerBg"
 @onready var player_body: CharacterBody2D = get_parent()
 @onready var camera: Camera2D = $"../Camera2D"
 @onready var subcamera: Camera2D = $Camera2D
@@ -22,6 +44,9 @@ extends Sprite2D
 @onready var fuel_bar: ProgressBar = $FuelBar
 @onready var fuel_label: Label = $FuelLabel
 
+var equipped_power_ids: Array = []
+var power_list: Array[Dictionary] = []
+var power_ui_nodes: Array = []
 var current_index: int = 0
 var platform_count: int = 0
 var cooldown_until: int = 0
@@ -44,16 +69,28 @@ const PLUG_RANGE: float = 300.0
 
 signal power_changed(power_data: Dictionary)
 
+func initialize(equipped_ids: Array) -> void:
+	equipped_power_ids = equipped_ids
+
 func _ready():
 	scale = Vector2(0.5, 0.5)
+	if equipped_power_ids.is_empty():
+		equipped_power_ids = ALL_POWERS.keys()
+
+	for id in equipped_power_ids:
+		if ALL_POWERS.has(id):
+			power_list.append(ALL_POWERS[id])
+
+	_build_power_wheel()
 	_set_power(power_list[current_index])
 	emit_signal("power_changed", power_list[current_index])
 	_update_highlight()
+
 	fuel_bar.max_value = max_fuel
 	var style_bg = StyleBoxFlat.new()
-	style_bg.bg_color = Color(1, 1, 1) 
+	style_bg.bg_color = Color(1, 1, 1)
 	var style_fill = StyleBoxFlat.new()
-	style_fill.bg_color = Color(0, 0, 0) 
+	style_fill.bg_color = Color(0, 0, 0)
 	fuel_bar.add_theme_stylebox_override("background", style_bg)
 	fuel_bar.add_theme_stylebox_override("fill", style_fill)
 
@@ -91,10 +128,9 @@ func _process(delta: float) -> void:
 	fuel_bar.value = fuel
 	fuel_bar.visible = controlling
 	fuel_label.visible = controlling
-	
+
 	if remote_cooldown > 0:
 		remote_cooldown -= delta
-
 
 func next_power():
 	current_index = (current_index + 1) % power_list.size()
@@ -121,24 +157,30 @@ func _set_power(power: Dictionary):
 func get_current_power():
 	return power_list[current_index]
 
+func _build_power_wheel():
+	for child in select_power_ui.get_children():
+		child.queue_free()
+	power_ui_nodes.clear()
+	var radius = 50.0
+	var count = power_list.size()
+	for i in range(count):
+		var angle = deg_to_rad(-360.0 / count * i - 90) 
+		var slot = power_slot_scene.instantiate()
+		slot.position = Vector2(cos(angle), sin(angle)) * radius
+		slot.set_icon(power_list[i]["texture"])
+		select_power_ui.add_child(slot)
+		power_ui_nodes.append(slot)
+
+	_update_highlight()
+
 func _update_highlight():
-	var area_names = [
-		"OrangeArea",
-		"YellowArea",
-		"BlueArea",
-		"PurpleArea",
-		"GreenArea"
-	]
-	for i in range(area_names.size()):
-		var area_node = select_power_ui.get_node(area_names[i])
-		if area_node:
-			var sprite_name = area_names[i].replace("Area", "Sprite")
-			var sprite = area_node.get_node(sprite_name)
-			if sprite:
-				if i == current_index:
-					sprite.modulate = Color(1, 1, 1)
-				else:
-					sprite.modulate = Color(0.5, 0.5, 0.5)
+	for i in range(power_ui_nodes.size()):
+		var slot = power_ui_nodes[i]
+		var sprite = slot.get_node("Sprite2D")
+		if i == current_index:
+			sprite.modulate = Color(1, 1, 1)
+		else:
+			sprite.modulate = Color(0.5, 0.5, 0.5)
 
 func physics_step(_delta):
 	if grappling:
@@ -173,13 +215,13 @@ func physics_step(_delta):
 			rotation = 0
 
 func use_power():
-	var power_text = get_current_power()["text"]
-	match power_text:
-		"Current Power: Basic Attack":
+	var power_id = get_current_power()["id"]
+	match power_id:
+		"basic_attack":
 			_attack_or_break_nearest("enemy")
-		"Current Power: Destroy Blocks":
+		"destroy_blocks":
 			_attack_or_break_nearest("breakable")
-		"Current Power: Remote Control":
+		"remote_control":
 			if remote_cooldown <= 0:
 				controlling = !controlling
 				player_body.controlling = controlling
@@ -190,9 +232,9 @@ func use_power():
 				fuel_label.visible = controlling
 				if !controlling:
 					remote_cooldown = remote_cooldown_time
-		"Current Power: Creates Platforms":
+		"create_platforms":
 			_spawn_eye_platform()
-		"Current Power: Grappling Hook":
+		"grappling_hook":
 			_start_grapple()
 
 func _attack_or_break_nearest(group: String, radius: float = 200):
@@ -233,16 +275,15 @@ func _start_grapple():
 		plug.clear_points()
 		plug_head.hide()
 		return
-
+		
 	var enemy = _find_nearest_in_group("enemy", PLUG_RANGE)
-
 	var hook = _find_nearest_in_group("hooks", PLUG_RANGE)
 	if enemy and (not hook or player_body.global_position.distance_to(enemy.global_position) < player_body.global_position.distance_to(hook.global_position)):
 		pulled_enemy = enemy
 		pulled_enemy.grappled = true
 		pulling_enemy = true
 		return
-
+		
 	var nearest_hook = hook
 	if not nearest_hook: return
 	raycast.target_position = nearest_hook.global_position - player_body.global_position
@@ -250,7 +291,6 @@ func _start_grapple():
 	if not raycast.is_colliding():
 		grapple_point = nearest_hook.global_position
 		grappling = true
-
 
 func _find_nearest_in_group(group: String, radius: float) -> Node2D:
 	var nearest = null
@@ -261,3 +301,13 @@ func _find_nearest_in_group(group: String, radius: float) -> Node2D:
 			nearest = node
 			nearest_dist = dist
 	return nearest
+	
+func cleanup()-> void:
+	if pulling_enemy:
+		pulling_enemy = false
+		if pulled_enemy:
+			pulled_enemy.grappled = false
+			pulled_enemy = null
+		plug.clear_points()
+		plug_head.hide()
+		
