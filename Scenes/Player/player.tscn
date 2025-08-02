@@ -1,134 +1,25 @@
-[gd_scene load_steps=18 format=3 uid="uid://dvldnxksorea7"]
+[gd_scene load_steps=6 format=3 uid="uid://dvldnxksorea7"]
 
 [ext_resource type="Script" uid="uid://bt3pfl5wow30c" path="res://Scripts/Player/player.gd" id="1_46r5w"]
 [ext_resource type="Texture2D" uid="uid://b00mm51luc0qm" path="res://Sprites/Characters/Peppers/wheel.png" id="2_htcer"]
 [ext_resource type="Texture2D" uid="uid://8kff6ifakcd" path="res://Sprites/Characters/Rosa/test_sprite.png" id="2_rcd5j"]
-[ext_resource type="Texture2D" uid="uid://bvveikc1g3126" path="res://Sprites/Characters/Peppers/spr_orange_pepper_test.png" id="3_xpcdj"]
-[ext_resource type="Script" uid="uid://c81lnspdwdc66" path="res://Scripts/Player/companion.gd" id="4_mtuoh"]
-[ext_resource type="Texture2D" uid="uid://bdby4qh4dmy6x" path="res://Sprites/Characters/Peppers/spr_yellow_pepper_test.png" id="6_gk6dx"]
-[ext_resource type="Texture2D" uid="uid://d1r0d18iqr3qq" path="res://Sprites/Characters/Peppers/spr_blue_pepper_test.png" id="7_jhyir"]
-[ext_resource type="Texture2D" uid="uid://b7iegcyc5c6u8" path="res://Sprites/Characters/Peppers/spr_purple_pepper_test.png" id="8_74mp2"]
-[ext_resource type="Texture2D" uid="uid://de0ys637srgvt" path="res://Sprites/Characters/Peppers/spr_green_pepper_test.png" id="9_oikmp"]
 [ext_resource type="Texture2D" uid="uid://csljihyxxlcp" path="res://Sprites/Characters/Peppers/plug_head.png" id="10_jhyir"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jhyir"]
 radius = 6.0
 height = 28.0
 
-[sub_resource type="Animation" id="Animation_jhyir"]
-resource_name = "OrangeAttack"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Player/Companion:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.18, 0.333333),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 0.380392, 0.129412, 1), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_gk6dx"]
-resource_name = "PurpleHaze"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Player/Companion:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.166667, 0.333333),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(0.68192, 0.000384372, 0.690389, 1), Color(1, 1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Player/Sprite2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.0333333, 0.2, 0.366667),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -2), Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_xs8mk"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Player:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Player/Companion:self_modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Player/Sprite2D:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_74mp2"]
-resource_name = "YellowAttack"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Player/Companion:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.18, 0.333333),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 0.94902, 0.129412, 1), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_lvkcr"]
-_data = {
-&"OrangeAttack": SubResource("Animation_jhyir"),
-&"PurpleHaze": SubResource("Animation_gk6dx"),
-&"RESET": SubResource("Animation_xs8mk"),
-&"YellowAttack": SubResource("Animation_74mp2")
-}
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_d6b26"]
-radius = 26.0183
-
 [node name="Player" type="CharacterBody2D"]
 physics_interpolation_mode = 2
 self_modulate = Color(0.52572, 0.723689, 0.712835, 1)
 script = ExtResource("1_46r5w")
+
+[node name="SelectPowerBg" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("2_htcer")
+
+[node name="SelectPower" type="Node2D" parent="."]
+visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_rcd5j")
@@ -150,100 +41,6 @@ offset_right = 125.0
 offset_bottom = 31.0
 scale = Vector2(2.06691, 2.74735)
 text = "Current Power: Basic Attack"
-
-[node name="Companion" type="Sprite2D" parent="."]
-position = Vector2(-44.286, -1.14301)
-texture = ExtResource("3_xpcdj")
-script = ExtResource("4_mtuoh")
-
-[node name="Camera2D" type="Camera2D" parent="Companion"]
-
-[node name="FuelBar" type="ProgressBar" parent="Companion"]
-visible = false
-offset_left = -21.714
-offset_top = -25.857
-offset_right = 21.286
-offset_bottom = -19.857
-step = 0.001
-show_percentage = false
-
-[node name="FuelLabel" type="Label" parent="Companion"]
-visible = false
-offset_left = -22.714
-offset_top = -42.857
-offset_right = 17.286
-offset_bottom = -19.857
-scale = Vector2(1.35598, 0.861816)
-text = "Fuel"
-
-[node name="PepperAnimations" type="AnimationPlayer" parent="."]
-root_node = NodePath("../..")
-libraries = {
-&"": SubResource("AnimationLibrary_lvkcr")
-}
-
-[node name="SelectPower" type="Node2D" parent="."]
-visible = false
-position = Vector2(-47, -52)
-
-[node name="Wheel" type="Sprite2D" parent="SelectPower"]
-position = Vector2(50, 50)
-texture = ExtResource("2_htcer")
-
-[node name="OrangeArea" type="Area2D" parent="SelectPower"]
-
-[node name="OrangeSprite" type="Sprite2D" parent="SelectPower/OrangeArea"]
-position = Vector2(8, 10)
-texture = ExtResource("3_xpcdj")
-
-[node name="OrangeCollision" type="CollisionShape2D" parent="SelectPower/OrangeArea"]
-position = Vector2(9, 10)
-scale = Vector2(1.07696, 1)
-shape = SubResource("CircleShape2D_d6b26")
-
-[node name="YellowArea" type="Area2D" parent="SelectPower"]
-
-[node name="YellowSprite" type="Sprite2D" parent="SelectPower/YellowArea"]
-position = Vector2(1, 74)
-texture = ExtResource("6_gk6dx")
-
-[node name="YellowCollision" type="CollisionShape2D" parent="SelectPower/YellowArea"]
-position = Vector2(0, 74)
-scale = Vector2(1.07696, 1)
-shape = SubResource("CircleShape2D_d6b26")
-
-[node name="BlueArea" type="Area2D" parent="SelectPower"]
-
-[node name="BlueSprite" type="Sprite2D" parent="SelectPower/BlueArea"]
-position = Vector2(56, 104)
-texture = ExtResource("7_jhyir")
-
-[node name="BlueCollision" type="CollisionShape2D" parent="SelectPower/BlueArea"]
-position = Vector2(55, 104)
-scale = Vector2(1.07696, 1)
-shape = SubResource("CircleShape2D_d6b26")
-
-[node name="PurpleArea" type="Area2D" parent="SelectPower"]
-
-[node name="PurpleSprite" type="Sprite2D" parent="SelectPower/PurpleArea"]
-position = Vector2(104, 57)
-texture = ExtResource("8_74mp2")
-
-[node name="PurpleCollision" type="CollisionShape2D" parent="SelectPower/PurpleArea"]
-position = Vector2(104, 57)
-scale = Vector2(1.07696, 1)
-shape = SubResource("CircleShape2D_d6b26")
-
-[node name="GreenArea" type="Area2D" parent="SelectPower"]
-
-[node name="GreenSprite" type="Sprite2D" parent="SelectPower/GreenArea"]
-position = Vector2(75, 3)
-texture = ExtResource("9_oikmp")
-
-[node name="GreenCollision" type="CollisionShape2D" parent="SelectPower/GreenArea"]
-position = Vector2(75, 0)
-scale = Vector2(1.07696, 1)
-shape = SubResource("CircleShape2D_d6b26")
 
 [node name="Plug" type="Line2D" parent="."]
 width = 1.0

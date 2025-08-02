@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0sidbqnjpjuy"]
+
+[ext_resource type="Script" uid="uid://dx56ppaynkjlt" path="res://Scripts/button.gd" id="1_5c45m"]
+[ext_resource type="Texture2D" uid="uid://qnheu6iu1pse" path="res://Sprites/Props/spr_button.png" id="2_5hfw7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rwtyl"]
+size = Vector2(42.0364, 20.5291)
+
+[node name="Button" type="Area2D"]
+script = ExtResource("1_5c45m")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_5hfw7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 3.5)
+rotation = -3.14159
+scale = Vector2(0.6423, -0.730672)
+shape = SubResource("RectangleShape2D_rwtyl")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

@@ -9,9 +9,11 @@ extends CharacterBody2D
 @export var friction: float = 0.15
 @onready var label: Label = $Canvas/Label
 @onready var select_power: Node = $SelectPower
+@onready var select_power_sprite: Node = $"SelectPowerBg"
 @onready var coyote_timer: Timer = $Timers/CoyoteTime
 @onready var jump_buffer: Timer = $Timers/JumpBuffer
-@onready var companion: Node = $Companion 
+@onready var companion_scene = preload("res://Scenes/Player/companion.tscn")
+@onready var companion = companion_scene.instantiate()
 var controlling: bool = false
 
 var shortcut_map = {
@@ -23,6 +25,8 @@ var shortcut_map = {
 }
 
 func _ready():
+	companion.initialize(["basic_attack", "remote_control", "grappling_hook", "create_platforms", "destroy_blocks", "freeze_time"])
+	add_child(companion)
 	companion.power_changed.connect(_on_power_changed)
 	_on_power_changed(companion.get_current_power())
 
@@ -49,12 +53,12 @@ func _physics_process(delta):
 	else:
 		velocity.x = lerp(velocity.x, 0.0, friction)
 
-	companion.physics_step(delta)
 	move_and_slide()
 
 func _input(_event):
 	if Input.is_action_just_pressed("menu") and !controlling:
 		select_power.visible = not select_power.visible
+		select_power_sprite.visible = not select_power_sprite.visible
 
 	if select_power.visible:
 		if Input.is_action_just_pressed("ui_right"):
@@ -68,6 +72,8 @@ func _input(_event):
 
 		if Input.is_action_just_pressed("pepper_power"):
 			select_power.hide()
+			select_power_sprite.hide()
+			companion.cleanup()
 	else:
 		if Input.is_action_just_pressed("pepper_power"):
 			companion.use_power()

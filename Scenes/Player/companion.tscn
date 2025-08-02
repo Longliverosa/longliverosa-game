@@ -1,0 +1,101 @@
+[gd_scene load_steps=8 format=3 uid="uid://ge5t37d5i0es"]
+
+[ext_resource type="Texture2D" uid="uid://bvveikc1g3126" path="res://Sprites/Characters/Peppers/spr_orange_pepper_test.png" id="1_2r5mc"]
+[ext_resource type="Script" uid="uid://c81lnspdwdc66" path="res://Scripts/Player/companion.gd" id="2_x1gqq"]
+
+[sub_resource type="Animation" id="Animation_2r5mc"]
+resource_name = "PurpleHaze"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 0.533333, 0.933333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.31092, 6.52894e-05, 0.310918, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_x1gqq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_w00u3"]
+resource_name = "OrangeAttack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 0.533333, 0.933333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.847511, 0.577801, 0.242927, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ymojb"]
+resource_name = "YellowAttack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 0.533333, 0.933333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.690196, 1, 0.101961, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w00u3"]
+_data = {
+&"OrangeAttack": SubResource("Animation_w00u3"),
+&"PurpleHaze": SubResource("Animation_2r5mc"),
+&"RESET": SubResource("Animation_x1gqq"),
+&"YellowAttack": SubResource("Animation_ymojb")
+}
+
+[node name="Companion" type="Sprite2D"]
+texture = ExtResource("1_2r5mc")
+script = ExtResource("2_x1gqq")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="FuelBar" type="ProgressBar" parent="."]
+visible = false
+offset_left = -21.714
+offset_top = -25.857
+offset_right = 21.286
+offset_bottom = -19.857
+step = 0.001
+show_percentage = false
+
+[node name="FuelLabel" type="Label" parent="."]
+visible = false
+offset_left = -22.714
+offset_top = -42.857
+offset_right = 17.286
+offset_bottom = -19.857
+scale = Vector2(1.35598, 0.861816)
+text = "Fuel"
+
+[node name="PepperAnimations" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_w00u3")
+}

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://vjf14st0ew3d"
-path="res://.godot/imported/spr_blue_pepper_test.png-3ee154fcaa7e3037163bc5af6315765d.ctex"
+uid="uid://dfqchg4ym5dor"
+path="res://.godot/imported/spr_door.png-773dcb9f92dbe118abe61e50c625154c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Characters/Peppers/spr_blue_pepper_test.png"
-dest_files=["res://.godot/imported/spr_blue_pepper_test.png-3ee154fcaa7e3037163bc5af6315765d.ctex"]
+source_file="res://Sprites/Props/spr_door.png"
+dest_files=["res://.godot/imported/spr_door.png-773dcb9f92dbe118abe61e50c625154c.ctex"]
 
 [params]
 

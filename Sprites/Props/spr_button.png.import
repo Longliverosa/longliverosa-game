@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://vjf14st0ew3d"
-path="res://.godot/imported/spr_blue_pepper_test.png-3ee154fcaa7e3037163bc5af6315765d.ctex"
+uid="uid://qnheu6iu1pse"
+path="res://.godot/imported/spr_button.png-faef38fc0246ef825ede34422cdcdae5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Characters/Peppers/spr_blue_pepper_test.png"
-dest_files=["res://.godot/imported/spr_blue_pepper_test.png-3ee154fcaa7e3037163bc5af6315765d.ctex"]
+source_file="res://Sprites/Props/spr_button.png"
+dest_files=["res://.godot/imported/spr_button.png-faef38fc0246ef825ede34422cdcdae5.ctex"]
 
 [params]
 
