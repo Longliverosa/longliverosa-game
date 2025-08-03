@@ -41,8 +41,14 @@ folder_colors={
 [global_group]
 
 ungrounded=""
-hooks=""
-enemy=""
+pullable=""
+hookable=""
+freezable=""
+breakable=""
+attackable=""
+magnetizable=""
+grounded=""
+obstacle=""
 
 [input]
 

@@ -15,8 +15,8 @@ func use(companion):
 	if pulling_enemy:
 		_stop_pulling_enemy(companion)
 		return
-	var enemy = companion._find_nearest_in_group("enemy", companion.PLUG_RANGE)
-	var hook = companion._find_nearest_in_group("hooks", companion.PLUG_RANGE)
+	var enemy = companion._find_nearest_in_group("pullable", companion.PLUG_RANGE)
+	var hook = companion._find_nearest_in_group("hookable", companion.PLUG_RANGE)
 	if enemy and (not hook or companion.player_body.global_position.distance_to(enemy.global_position) < companion.player_body.global_position.distance_to(hook.global_position)):
 		_start_pulling_enemy(companion, enemy)
 		return
@@ -72,7 +72,11 @@ func _stop_pulling_enemy(companion):
 	pulling_enemy = false
 	if pulled_enemy:
 		pulled_enemy.grappled = false
+		pulled_enemy.start_x = pulled_enemy.global_position.x
 		pulled_enemy = null
 	companion.plug.clear_points()
 	companion.plug_head.hide()
 	companion.rotation = 0
+	
+func on_deselect(companion):
+	_stop_pulling_enemy(companion)

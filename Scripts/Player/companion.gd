@@ -1,4 +1,4 @@
-extends Sprite2D
+extends CharacterBody2D
 class_name Companion
 
 @export var power_slot_scene: PackedScene = preload("res://Scenes/Player/PowerSlot.tscn")
@@ -15,6 +15,7 @@ class_name Companion
 @onready var player_sprite: Sprite2D = $"../Sprite2D"
 @onready var fuel_bar: ProgressBar = $FuelBar
 @onready var fuel_label: Label = $FuelLabel
+@onready var sprite: Sprite2D = $Sprite2D
 
 var equipped_power_ids: Array = []
 var power_list: Array = []
@@ -32,12 +33,12 @@ const ENEMY_PULL_SPEED: float = 200.0
 const PLUG_RANGE: float = 300.0
 
 signal power_changed(power)
-
+		
 func initialize(equipped_ids: Array) -> void:
 	equipped_power_ids = equipped_ids
 
 func _ready():
-	scale = Vector2(0.5, 0.5)
+	sprite.scale = Vector2(0.5, 0.5)
 	if equipped_power_ids.is_empty():
 		equipped_power_ids = ["basic_attack", "destroy_blocks", "remote_control", "create_platforms", "grappling_hook", "freeze_time"]
 
@@ -81,6 +82,7 @@ func _process(delta: float) -> void:
 			fuel = max_fuel
 			fuel_bar.visible = false
 	else:
+		#$CollisionShape2D.disabled = true
 		position = position.lerp(player_sprite.position + Vector2(-50,0), follow_speed * delta)
 		fuel = clamp(fuel + delta, 0, max_fuel)
 
@@ -117,7 +119,7 @@ func set_power_by_index(index: int):
 		_update_highlight()
 
 func _set_power(power):
-	texture = power.texture
+	sprite.texture = power.texture
 	power.on_select(self)
 
 func get_current_power():
@@ -141,11 +143,11 @@ func _build_power_wheel():
 func _update_highlight():
 	for i in range(power_ui_nodes.size()):
 		var slot = power_ui_nodes[i]
-		var sprite = slot.get_node("Sprite2D")
+		var wheel_sprite = slot.get_node("Sprite2D")
 		if i == current_index:
-			sprite.modulate = Color(1, 1, 1)
+			wheel_sprite.modulate = Color(1, 1, 1)
 		else:
-			sprite.modulate = Color(0.5, 0.5, 0.5)
+			wheel_sprite.modulate = Color(0.5, 0.5, 0.5)
 
 func use_power():
 	var power = get_current_power()
@@ -168,7 +170,7 @@ func _attack_or_break_nearest(group: String, radius: float = 200):
 		match group:
 			"breakable":
 				pepper_animations.play("YellowAttack")
-			"enemy":
+			"attackable":
 				pepper_animations.play("OrangeAttack")
 		var timer = 0.0
 		while timer < 0.5 and target:
@@ -177,7 +179,11 @@ func _attack_or_break_nearest(group: String, radius: float = 200):
 			timer += delta
 			await get_tree().process_frame
 		if target:
-			target.queue_free()
+			if group == "breakable":
+				target.queue_free()
+			elif group == "attackable":
+				target.rotation_degrees = 180
+				target.fainted = true
 
 func _create_power_instance(id: String) -> Power:
 	match id:
@@ -197,6 +203,6 @@ func _create_power_instance(id: String) -> Power:
 			return null
 
 func cleanup():
-	var power = get_current_power()
-	if power and power.has_method("_stop_pulling_enemy"):
-		power._stop_pulling_enemy(self)
+	for power in power_list:
+		if power:
+			power.on_deselect(self)
