@@ -5,6 +5,7 @@ var grappling: bool = false
 var grapple_point: Vector2 = Vector2.ZERO
 var pulling_enemy: bool = false
 var pulled_enemy: Node2D = null
+var hooked_collider: CollisionShape2D = null
 
 func _init():
 	id = "grappling_hook"
@@ -23,9 +24,13 @@ func use(companion):
 	if hook:
 		companion.raycast.target_position = hook.global_position - companion.player_body.global_position
 		companion.raycast.force_raycast_update()
-		if not companion.raycast.is_colliding():
+		var collider = companion.raycast.get_collider()
+		if not collider or collider == hook:
 			grapple_point = hook.global_position
 			grappling = true
+			hooked_collider = hook.get_node_or_null("CollisionShape2D")
+			if hooked_collider:
+				hooked_collider.disabled = true
 
 func update(companion, delta):
 	if grappling:
@@ -45,10 +50,8 @@ func _update_grapple(companion, _delta):
 	companion.plug_head.rotation = (grapple_point - companion.global_position).angle()
 	companion.plug_head.show()
 	if companion.player_body.global_position.distance_to(grapple_point) < 10:
-		grappling = false
-		companion.rotation = 0
-		companion.plug.clear_points()
-		companion.plug_head.hide()
+		companion.player_body.global_position = grapple_point + Vector2(0, -16)
+		_stop_grapple(companion)
 
 func _start_pulling_enemy(_companion, enemy: Node2D):
 	pulled_enemy = enemy
@@ -77,6 +80,16 @@ func _stop_pulling_enemy(companion):
 	companion.plug.clear_points()
 	companion.plug_head.hide()
 	companion.rotation = 0
-	
+
+func _stop_grapple(companion):
+	grappling = false
+	companion.rotation = 0
+	companion.plug.clear_points()
+	companion.plug_head.hide()
+	if hooked_collider:
+		hooked_collider.disabled = false
+		hooked_collider = null
+
 func on_deselect(companion):
 	_stop_pulling_enemy(companion)
+	_stop_grapple(companion)
