@@ -34,24 +34,18 @@ func update(companion, delta):
 		cooldown -= delta
 	if companion.controlling:
 		var magnet_target = _find_nearest_magnetizable(companion, 200)
-		print("Magnet target: ", magnet_target)
 		if magnet_target and _has_line_of_sight(companion, magnet_target):
-			print("Line of sight confirmed, pulling target")
 			var dir = (companion.global_position - magnet_target.global_position).normalized()
 			magnet_target.global_position += dir * magnet_speed * delta
-		elif magnet_target:
-			print("Target found but no line of sight")
 
 func _find_nearest_magnetizable(companion, radius: float):
 	var nearest = null
 	var nearest_dist = radius
 	for node in companion.get_tree().get_nodes_in_group("magnetizable"):
-		print("Checking magnetizable: ", node.name)
 		var dist = companion.global_position.distance_to(node.global_position)
 		if dist < nearest_dist:
 			nearest = node
 			nearest_dist = dist
-			print("New nearest magnetizable: ", node.name, " at distance ", dist)
 	return nearest
 
 func _has_line_of_sight(companion, target):
@@ -65,5 +59,4 @@ func _has_line_of_sight(companion, target):
 	raycast.add_exception(companion)
 	raycast.add_exception(target)
 	raycast.force_raycast_update()
-	print("Raycast colliding (after excluding self and target): ", raycast.is_colliding())
 	return not raycast.is_colliding()

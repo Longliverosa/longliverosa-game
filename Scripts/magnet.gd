@@ -1,8 +1,8 @@
 extends CharacterBody2D
 class_name MagnetizableObject
 
-@export var gravity: int = 400
-@export var max_fall_speed: int = 100
+@export var gravity: int = 50
+@export var max_fall_speed: int = 300
 @export var magnet_pull_speed: float = 100.0
 
 var is_magnetized: bool = false
