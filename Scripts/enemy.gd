@@ -6,15 +6,19 @@ extends CharacterBody2D
 var direction: int = 1
 var start_x: float
 var grappled: bool = false
+var fainted: bool = false
 
 func _ready():
 	start_x = global_position.x
-
+	
 func _physics_process(delta):
 	if grappled:
 		return
 	
-	velocity.x = speed * direction
+	if fainted:
+		velocity.x = 0
+	else:
+		velocity.x = speed * direction
 
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -23,9 +27,8 @@ func _physics_process(delta):
 
 	move_and_slide()
 
-	if global_position.x > start_x + patrol_distance:
-		global_position.x = start_x + patrol_distance
-		direction = -1
-	elif global_position.x < start_x - patrol_distance:
-		global_position.x = start_x - patrol_distance
-		direction = 1
+	if not fainted:
+		if global_position.x > start_x + patrol_distance:
+			direction = -1
+		elif global_position.x < start_x - patrol_distance:
+			direction = 1

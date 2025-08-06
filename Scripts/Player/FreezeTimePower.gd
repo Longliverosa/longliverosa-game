@@ -15,17 +15,23 @@ func use(companion):
 		return
 	frozen = true
 	timer = duration
-	for enemy in companion.get_tree().get_nodes_in_group("enemy"):
-		if enemy.has_method("set_physics_process"):
-			enemy.set_physics_process(false)
-			enemy.modulate = Color(0.3, 0.3, 1) 
+	for target in companion.get_tree().get_nodes_in_group("freezable"):
+		if target.has_method("set_physics_process"):
+			target.set_physics_process(false)
+			target.modulate = Color(0.3, 0.3, 1)
+		if "frozen" in target:
+			target.frozen = true
 
 func update(companion, delta):
 	if frozen:
 		timer -= delta
 		if timer <= 0:
 			frozen = false
-			for enemy in companion.get_tree().get_nodes_in_group("enemy"):
-				if enemy.has_method("set_physics_process"):
-					enemy.set_physics_process(true)
-					enemy.modulate = Color(1, 1, 1) 
+			for target in companion.get_tree().get_nodes_in_group("freezable"):
+				if target.has_method("set_physics_process"):
+					target.set_physics_process(true)
+					target.modulate = Color(1, 1, 1)
+				if "frozen" in target:
+					target.frozen = false
+					if target.has_method("close"):
+						target.close()
