@@ -91,6 +91,15 @@ offset_bottom = 300.0
 texture = ExtResource("3_m4o1t")
 expand_mode = 1
 
+[node name="BackButton" type="Button" parent="LevelInfo/Background"]
+offset_left = -152.0
+offset_top = -8.0
+offset_right = -71.0
+offset_bottom = 21.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_m4o1t")
+text = "Back"
+
 [connection signal="pressed" from="PreviousLevel" to="." method="_on_previous_level_pressed"]
 [connection signal="pressed" from="NextLevel" to="." method="_on_next_level_pressed"]
 [connection signal="pressed" from="LevelInfo/Background/PlayCurrentLevel" to="." method="_on_play_current_level_pressed"]
+[connection signal="pressed" from="LevelInfo/Background/BackButton" to="." method="_on_back_button_pressed"]

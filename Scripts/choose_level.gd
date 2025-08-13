@@ -64,3 +64,7 @@ func _on_next_level_pressed() -> void:
 	previous_button.visible = current_level_index != 0
 	next_button.visible = current_level_index != levels.size() - 1 
 	set_information_for_current_level()
+
+
+func _on_back_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://Scenes/Menu/main_menu.tscn")
