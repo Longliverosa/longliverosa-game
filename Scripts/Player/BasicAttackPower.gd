@@ -7,4 +7,4 @@ func _init():
 	text = "Current Power: Basic Attack"
 
 func use(companion):
-	companion._attack_or_break_nearest("enemy")
+	companion._attack_or_break_nearest("attackable")

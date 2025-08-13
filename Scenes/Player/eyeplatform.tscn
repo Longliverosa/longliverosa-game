@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_axdtn"]
 size = Vector2(48, 18)
 
-[node name="Eyeplatform" type="StaticBody2D" groups=["ungrounded"]]
+[node name="Eyeplatform" type="StaticBody2D" groups=["hookable", "ungrounded"]]
 script = ExtResource("1_3nbcr")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
