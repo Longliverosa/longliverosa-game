@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dqs2syn58gexv"]
+[gd_scene load_steps=5 format=3 uid="uid://dqs2syn58gexv"]
 
 [ext_resource type="Script" uid="uid://dg0p3ur7aden5" path="res://Scripts/level_editor.gd" id="1_bkpai"]
 [ext_resource type="TileSet" uid="uid://cvovyihqvkh1c" path="res://Scenes/LevelEditor/TileSet.tres" id="2_eyld0"]
 [ext_resource type="PackedScene" uid="uid://crnybjn75ot3p" path="res://Scenes/LevelEditor/entity_spawn.tscn" id="2_vteww"]
+[ext_resource type="Script" uid="uid://bfbhs6pxs4xyb" path="res://Scripts/level_editor_temp_scene.gd" id="3_7onm0"]
 
 [node name="LevelEditor" type="Control"]
 layout_mode = 3
@@ -20,6 +21,7 @@ anchor_mode = 0
 
 [node name="CreatedScene" type="Node2D" parent="."]
 unique_name_in_owner = true
+script = ExtResource("3_7onm0")
 
 [node name="TileMap" type="TileMapLayer" parent="CreatedScene"]
 unique_name_in_owner = true
@@ -70,6 +72,22 @@ offset_bottom = 23.0
 focus_mode = 0
 text = "Save"
 
+[node name="TestScene" type="Button" parent="CanvasLayer/EditInterface"]
+offset_left = 558.0
+offset_top = 25.0
+offset_right = 602.0
+offset_bottom = 56.0
+focus_mode = 0
+text = "Test"
+
+[node name="BackButton" type="Button" parent="CanvasLayer/EditInterface"]
+offset_left = 557.0
+offset_top = 57.0
+offset_right = 602.0
+offset_bottom = 88.0
+focus_mode = 0
+text = "Back"
+
 [node name="Label" type="Label" parent="CanvasLayer/EditInterface"]
 layout_mode = 0
 offset_left = 3.0
@@ -81,3 +99,5 @@ text = "Navigate using WASD, place with left click, remove with right, flip with
 [connection signal="item_selected" from="CanvasLayer/EditInterface/ItemSelect" to="." method="_on_item_select_item_selected"]
 [connection signal="item_selected" from="CanvasLayer/EditInterface/CategorySelect" to="." method="_on_category_select_item_selected"]
 [connection signal="pressed" from="CanvasLayer/EditInterface/SaveScene" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/EditInterface/TestScene" to="." method="_on_test_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/EditInterface/BackButton" to="." method="_on_back_button_pressed"]

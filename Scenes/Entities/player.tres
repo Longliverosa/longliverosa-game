@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EntityBase" load_steps=4 format=3 uid="uid://blclivjmm0221"]
 
-[ext_resource type="Script" uid="uid://dfb4e3qh10bly" path="res://Scripts/entitie_base.gd" id="1_i7lq7"]
+[ext_resource type="Script" uid="uid://dfb4e3qh10bly" path="res://Scripts/entity_base.gd" id="1_i7lq7"]
 [ext_resource type="PackedScene" uid="uid://dvldnxksorea7" path="res://Scenes/Player/player.tscn" id="1_ksdsn"]
 [ext_resource type="Texture2D" uid="uid://c4lble5jebjuf" path="res://Sprites/favicon.png" id="2_mjtef"]
 
