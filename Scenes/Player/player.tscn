@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dvldnxksorea7"]
+[gd_scene load_steps=7 format=3 uid="uid://dvldnxksorea7"]
 
 [ext_resource type="Script" uid="uid://bt3pfl5wow30c" path="res://Scripts/Player/player.gd" id="1_46r5w"]
 [ext_resource type="Texture2D" uid="uid://b00mm51luc0qm" path="res://Sprites/Characters/Peppers/wheel.png" id="2_htcer"]
@@ -8,6 +8,8 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jhyir"]
 radius = 6.0
 height = 28.0
+
+[sub_resource type="ImageTexture" id="ImageTexture_mtuoh"]
 
 [node name="Player" type="CharacterBody2D"]
 physics_interpolation_mode = 2
@@ -44,6 +46,17 @@ offset_bottom = 31.0
 scale = Vector2(2.06691, 2.74735)
 text = "Current Power: Basic Attack"
 
+[node name="ShieldSlider" type="HSlider" parent="Canvas"]
+offset_left = 10.0
+offset_top = 65.0
+offset_right = 440.0
+offset_bottom = 86.0
+theme_override_icons/grabber_disabled = SubResource("ImageTexture_mtuoh")
+step = 0.1
+value = 57.8
+editable = false
+scrollable = false
+
 [node name="Plug" type="Line2D" parent="."]
 width = 1.0
 default_color = Color(0.290196, 1, 0.0588235, 1)
@@ -62,6 +75,10 @@ one_shot = true
 
 [node name="JumpBuffer" type="Timer" parent="Timers"]
 wait_time = 0.2
+one_shot = true
+
+[node name="ShieldCooldown" type="Timer" parent="Timers"]
+wait_time = 10.0
 one_shot = true
 
 [node name="DamageCooldown" type="Timer" parent="Timers"]
