@@ -12,9 +12,14 @@ extends CharacterBody2D
 @onready var select_power_sprite: Node = $"SelectPowerBg"
 @onready var coyote_timer: Timer = $Timers/CoyoteTime
 @onready var jump_buffer: Timer = $Timers/JumpBuffer
+@onready var damage_cooldown : Timer = $Timers/DamageCooldown
 @onready var companion_scene = preload("res://Scenes/Player/companion.tscn")
 @onready var companion = companion_scene.instantiate()
+@onready var GFX = $GFX
+
 var controlling: bool = false
+
+var health = 20
 
 var shortcut_map = {
 	"orange_shortcut": 0,
@@ -26,7 +31,7 @@ var shortcut_map = {
 
 func _ready():
 	companion.initialize(["basic_attack", "remote_control", "grappling_hook", "create_platforms", "destroy_blocks", "freeze_time"])
-	add_child(companion)
+	get_parent().add_child.call_deferred(companion)
 	companion.power_changed.connect(_on_power_changed)
 	_on_power_changed(companion.get_current_power())
 
@@ -50,10 +55,20 @@ func _physics_process(delta):
 	var direction = Input.get_axis("move_left", "move_right")
 	if direction:
 		velocity.x = lerp(velocity.x, direction * max_speed, acceleration)
+		if(velocity.x < 0):
+			GFX.flip_h = true
+		else:
+			GFX.flip_h = false
 	else:
 		velocity.x = lerp(velocity.x, 0.0, friction)
-
-	move_and_slide()
+	var has_collisions = move_and_slide()
+	if has_collisions: 
+		var last_collision = get_last_slide_collision()
+		var collider = last_collision.get_collider()
+		if(collider.is_in_group("attackable")):
+			damage(1)
+			print(health)
+	
 
 func _input(_event):
 	if Input.is_action_just_pressed("menu") and !controlling:
@@ -77,6 +92,18 @@ func _input(_event):
 	else:
 		if Input.is_action_just_pressed("pepper_power"):
 			companion.use_power()
+
+func damage(damage: float) -> void:
+	if !damage_cooldown.is_stopped():
+		return
+	health -= damage
+	if(health <= 0):
+		reset_to_checkpoint()
+	damage_cooldown.start()
+
+func reset_to_checkpoint():
+	print("RESET TO CHECKPOINT")
+	health = 20
 
 func _on_power_changed(power):
 	label.text = power["text"]

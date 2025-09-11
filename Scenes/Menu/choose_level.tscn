@@ -92,6 +92,7 @@ texture = ExtResource("3_m4o1t")
 expand_mode = 1
 
 [node name="BackButton" type="Button" parent="LevelInfo/Background"]
+layout_mode = 0
 offset_left = -152.0
 offset_top = -8.0
 offset_right = -71.0
