@@ -4,20 +4,21 @@ class_name Companion
 @export var power_slot_scene: PackedScene = preload("res://Scenes/Player/PowerSlot.tscn")
 @onready var eye_platform_scene: PackedScene = preload("res://Scenes/Player/eyeplatform.tscn")
 @onready var pepper_animations: AnimationPlayer = $PepperAnimations
-@onready var raycast: RayCast2D = $"../RayCast2D"
-@onready var plug: Line2D = $"../Plug"
-@onready var plug_head: Sprite2D = $"../PlugHead"
-@onready var select_power_ui: Node = $"../SelectPower"
-@onready var select_power_sprite: Node = $"../SelectPowerBg"
-@onready var player_body: CharacterBody2D = get_parent()
-@onready var camera: Camera2D = $"../Camera2D"
 @onready var subcamera: Camera2D = $Camera2D
-@onready var player_sprite: Sprite2D = $"../Sprite2D"
-@onready var player_collider: CollisionShape2D = $"../CollisionShape2D"
 @onready var fuel_bar: ProgressBar = $FuelBar
 @onready var fuel_label: Label = $FuelLabel
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var sprite: Sprite2D = $GFX
 @onready var crosshair: Sprite2D = $Crosshair
+
+@onready var player_body: CharacterBody2D = get_parent().get_node("Player")
+@onready var camera: Camera2D = $"../Player/Camera2D"
+@onready var player_sprite: Sprite2D = $"../Player/GFX"
+@onready var player_collider: CollisionShape2D = $"../Player/CollisionShape2D"
+@onready var raycast: RayCast2D = $"../Player/RayCast2D"
+@onready var plug: Line2D = $"../Player/Plug"
+@onready var plug_head: Sprite2D = $"../Player/PlugHead"
+@onready var select_power_ui: Node = $"../Player/SelectPower"
+@onready var select_power_sprite: Node = $"../Player/SelectPowerBg"
 
 var equipped_power_ids: Array = []
 var power_list: Array = []
@@ -27,7 +28,7 @@ var controlling: bool = false
 var max_fuel: float = 5.0
 var boost_multiplier: float = 2.0
 var fuel: float = max_fuel
-var follow_speed: float = 2.0
+@export var follow_speed: float = 0.5
 var fluff_radius: float = 0.3
 
 const PLUG_SPEED: float = 300.0
@@ -45,15 +46,15 @@ signal power_changed(power)
 
 func initialize(equipped_ids: Array) -> void:
 	equipped_power_ids = equipped_ids
-
-func _ready():
-	sprite.scale = Vector2(0.5, 0.5)
-	if equipped_power_ids.is_empty():
-		equipped_power_ids = ["basic_attack", "destroy_blocks", "remote_control", "create_platforms", "grappling_hook", "freeze_time"]
 	for id in equipped_power_ids:
 		var power = _create_power_instance(id)
 		if power:
 			power_list.append(power)
+
+func _ready():
+	if equipped_power_ids.is_empty():
+		initialize(["basic_attack", "destroy_blocks", "remote_control", "create_platforms", "grappling_hook", "freeze_time"])
+	
 	_build_power_wheel()
 	_set_power(power_list[current_index])
 	emit_signal("power_changed", power_list[current_index])
@@ -67,7 +68,7 @@ func _ready():
 	fuel_bar.add_theme_stylebox_override("fill", style_fill)
 	crosshair.visible = false
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if controlling:
 		if fuel > 0:
 			var dir = Vector2(
@@ -91,7 +92,10 @@ func _process(delta: float) -> void:
 			fuel_bar.visible = false
 			get_node("CollisionShape2D").disabled = true
 	else:
-		position = position.lerp(player_sprite.position + Vector2(-50, 0), follow_speed * delta)
+		var target_position = player_sprite.global_position  
+		var current_target_distance = global_position.distance_to(target_position)
+		if current_target_distance > 30:
+			global_position = global_position.lerp(target_position, follow_speed * delta)
 		fuel = clamp(fuel + delta, 0, max_fuel)
 	var fluff = Vector2(
 		sin(Time.get_ticks_msec() / 200.0),

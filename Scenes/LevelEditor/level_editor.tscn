@@ -73,6 +73,7 @@ focus_mode = 0
 text = "Save"
 
 [node name="TestScene" type="Button" parent="CanvasLayer/EditInterface"]
+layout_mode = 0
 offset_left = 558.0
 offset_top = 25.0
 offset_right = 602.0
@@ -81,6 +82,7 @@ focus_mode = 0
 text = "Test"
 
 [node name="BackButton" type="Button" parent="CanvasLayer/EditInterface"]
+layout_mode = 0
 offset_left = 557.0
 offset_top = 57.0
 offset_right = 602.0

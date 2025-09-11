@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bvveikc1g3126"
-path="res://.godot/imported/spr_orange_pepper_test.png-eeab04129feb35e16b03a0827dc63bee.ctex"
+path="res://.godot/imported/pip_pepper.png-6803d4e8b430d1d9dba86f59fa0d9253.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Characters/Peppers/spr_orange_pepper_test.png"
-dest_files=["res://.godot/imported/spr_orange_pepper_test.png-eeab04129feb35e16b03a0827dc63bee.ctex"]
+source_file="res://Sprites/Characters/Peppers/pip_pepper.png"
+dest_files=["res://.godot/imported/pip_pepper.png-6803d4e8b430d1d9dba86f59fa0d9253.ctex"]
 
 [params]
 

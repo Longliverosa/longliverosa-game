@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bt3pfl5wow30c" path="res://Scripts/Player/player.gd" id="1_46r5w"]
 [ext_resource type="Texture2D" uid="uid://b00mm51luc0qm" path="res://Sprites/Characters/Peppers/wheel.png" id="2_htcer"]
-[ext_resource type="Texture2D" uid="uid://8kff6ifakcd" path="res://Sprites/Characters/Rosa/test_sprite.png" id="2_rcd5j"]
+[ext_resource type="Texture2D" uid="uid://8kff6ifakcd" path="res://Sprites/Characters/Rosa/rosa_sprite.png" id="2_rcd5j"]
 [ext_resource type="Texture2D" uid="uid://csljihyxxlcp" path="res://Sprites/Characters/Peppers/plug_head.png" id="10_jhyir"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jhyir"]
@@ -12,6 +12,8 @@ height = 28.0
 [node name="Player" type="CharacterBody2D"]
 physics_interpolation_mode = 2
 self_modulate = Color(0.52572, 0.723689, 0.712835, 1)
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_46r5w")
 
 [node name="SelectPowerBg" type="Sprite2D" parent="."]
@@ -21,7 +23,7 @@ texture = ExtResource("2_htcer")
 [node name="SelectPower" type="Node2D" parent="."]
 visible = false
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="GFX" type="Sprite2D" parent="."]
 texture = ExtResource("2_rcd5j")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -60,4 +62,8 @@ one_shot = true
 
 [node name="JumpBuffer" type="Timer" parent="Timers"]
 wait_time = 0.2
+one_shot = true
+
+[node name="DamageCooldown" type="Timer" parent="Timers"]
+wait_time = 0.5
 one_shot = true
