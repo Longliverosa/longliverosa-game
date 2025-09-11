@@ -30,10 +30,12 @@ var boost_multiplier: float = 2.0
 var fuel: float = max_fuel
 @export var follow_speed: float = 0.5
 var fluff_radius: float = 0.3
+var is_attacking: bool = false
 
 const PLUG_SPEED: float = 300.0
 const ENEMY_PULL_SPEED: float = 200.0
-const PLUG_RANGE: float = 300.0
+const PLUG_RANGE: float = 30.0
+const BASIC_ATTACK_RANGE = 150.0
 
 const CROSSHAIR_OFFSET = Vector2(0, -24)
 const CROSSHAIR_COLORS = {
@@ -94,7 +96,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		var target_position = player_sprite.global_position  
 		var current_target_distance = global_position.distance_to(target_position)
-		if current_target_distance > 30:
+		if current_target_distance > 30 and !is_attacking:
 			global_position = global_position.lerp(target_position, follow_speed * delta)
 		fuel = clamp(fuel + delta, 0, max_fuel)
 	var fluff = Vector2(
@@ -197,7 +199,7 @@ func _update_crosshair():
 			target = _find_nearest_in_groups(["hookable", "pullable"], PLUG_RANGE)
 			color = CROSSHAIR_COLORS["grappling_hook"]
 		"basic_attack":
-			target = _find_nearest_in_group("attackable", PLUG_RANGE)
+			target = _find_nearest_in_group("attackable", BASIC_ATTACK_RANGE)
 			color = CROSSHAIR_COLORS["basic_attack"]
 		"destroy_blocks":
 			target = _find_nearest_in_group("breakable", PLUG_RANGE)
@@ -213,17 +215,17 @@ func _update_crosshair():
 
 func _attack_or_break_nearest(group: String, radius: float = 200):
 	var target = _find_nearest_in_group(group, radius)
+	is_attacking = true
 	if target:
 		match group:
 			"breakable":
 				pepper_animations.play("YellowAttack")
 			"attackable":
 				pepper_animations.play("OrangeAttack")
-		var timer = 0.0
-		while timer < 0.5 and target:
+
+		while target and target.global_position.distance_to(global_position) > 3.0:
 			var delta = get_process_delta_time()
-			global_position = global_position.lerp(target.global_position, delta * 5)
-			timer += delta
+			global_position = global_position.lerp(target.global_position, follow_speed * delta)
 			await get_tree().process_frame
 		if target:
 			if group == "breakable":
@@ -231,7 +233,8 @@ func _attack_or_break_nearest(group: String, radius: float = 200):
 			elif group == "attackable":
 				target.rotation_degrees = 180
 				target.fainted = true
-
+	is_attacking = false
+	
 func _create_power_instance(id: String) -> Power:
 	match id:
 		"basic_attack":

@@ -69,7 +69,7 @@ func _physics_process(delta):
 	if has_collisions: 
 		var last_collision = get_last_slide_collision()
 		var collider = last_collision.get_collider()
-		if(collider.is_in_group("attackable")):
+		if(collider.is_in_group("attackable") and collider is Enemy and !collider.fainted):
 			damage(1)
 	
 
