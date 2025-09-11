@@ -47,6 +47,7 @@ scale = Vector2(2.06691, 2.74735)
 text = "Current Power: Basic Attack"
 
 [node name="ShieldSlider" type="HSlider" parent="Canvas"]
+visible = false
 offset_left = 10.0
 offset_top = 65.0
 offset_right = 440.0
