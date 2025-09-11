@@ -8,10 +8,12 @@ extends CharacterBody2D
 @export var acceleration: float = 0.06
 @export var friction: float = 0.15
 @onready var label: Label = $Canvas/Label
+@onready var shield_slider: HSlider = $Canvas/ShieldSlider
 @onready var select_power: Node = $SelectPower
 @onready var select_power_sprite: Node = $"SelectPowerBg"
 @onready var coyote_timer: Timer = $Timers/CoyoteTime
 @onready var jump_buffer: Timer = $Timers/JumpBuffer
+@onready var shield_cooldown : Timer = $Timers/ShieldCooldown
 @onready var damage_cooldown : Timer = $Timers/DamageCooldown
 @onready var companion_scene = preload("res://Scenes/Player/companion.tscn")
 @onready var companion = companion_scene.instantiate()
@@ -19,7 +21,8 @@ extends CharacterBody2D
 
 var controlling: bool = false
 
-var health = 20
+var has_shield: bool = true
+var level_start_pos: Vector2
 
 var shortcut_map = {
 	"orange_shortcut": 0,
@@ -34,6 +37,7 @@ func _ready():
 	get_parent().add_child.call_deferred(companion)
 	companion.power_changed.connect(_on_power_changed)
 	_on_power_changed(companion.get_current_power())
+	level_start_pos = global_position
 
 func _physics_process(delta):
 	if select_power.visible or controlling:
@@ -67,8 +71,14 @@ func _physics_process(delta):
 		var collider = last_collision.get_collider()
 		if(collider.is_in_group("attackable")):
 			damage(1)
-			print(health)
 	
+
+func _process(delta: float) -> void:
+	if !shield_cooldown.is_stopped():
+		shield_slider.value = shield_cooldown.time_left / 10.0 * 100.0
+	elif !has_shield:
+		shield_slider.visible = false
+		has_shield = true
 
 func _input(_event):
 	if Input.is_action_just_pressed("menu") and !controlling:
@@ -94,16 +104,20 @@ func _input(_event):
 			companion.use_power()
 
 func damage(damage: float) -> void:
-	if !damage_cooldown.is_stopped():
-		return
-	health -= damage
-	if(health <= 0):
+	if has_shield:
+		has_shield = false
+		shield_slider.visible = true
+		shield_cooldown.start()
+		damage_cooldown.start()
+	elif damage_cooldown.is_stopped():
 		reset_to_checkpoint()
-	damage_cooldown.start()
 
 func reset_to_checkpoint():
 	print("RESET TO CHECKPOINT")
-	health = 20
+	global_position = level_start_pos
+	has_shield = true
+	shield_cooldown.stop()
+	shield_slider.visible = false
 
 func _on_power_changed(power):
 	label.text = power["text"]
