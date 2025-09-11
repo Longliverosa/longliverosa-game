@@ -60,7 +60,7 @@ scrollable = false
 
 [node name="Plug" type="Line2D" parent="."]
 width = 1.0
-default_color = Color(0.290196, 1, 0.0588235, 1)
+default_color = Color(0.329412, 0.14902, 0.0784314, 1)
 
 [node name="PlugHead" type="Sprite2D" parent="."]
 visible = false

@@ -34,7 +34,7 @@ var is_attacking: bool = false
 
 const PLUG_SPEED: float = 300.0
 const ENEMY_PULL_SPEED: float = 200.0
-const PLUG_RANGE: float = 30.0
+const PLUG_RANGE: float = 300.0
 const BASIC_ATTACK_RANGE = 150.0
 
 const CROSSHAIR_OFFSET = Vector2(0, -24)
@@ -116,12 +116,14 @@ func next_power():
 	_set_power(power_list[current_index])
 	emit_signal("power_changed", power_list[current_index])
 	_update_highlight()
+	cleanup()
 
 func prev_power():
 	current_index = (current_index - 1 + power_list.size()) % power_list.size()
 	_set_power(power_list[current_index])
 	emit_signal("power_changed", power_list[current_index])
 	_update_highlight()
+	cleanup()
 
 func set_power_by_index(index: int):
 	if index >= 0 and index < power_list.size():
@@ -148,6 +150,7 @@ func _build_power_wheel():
 		var slot = power_slot_scene.instantiate()
 		slot.position = Vector2(cos(angle), sin(angle)) * radius
 		slot.set_icon(power_list[i].texture)
+		slot.scale = Vector2(2, 2)
 		select_power_ui.add_child(slot)
 		power_ui_nodes.append(slot)
 	_update_highlight()

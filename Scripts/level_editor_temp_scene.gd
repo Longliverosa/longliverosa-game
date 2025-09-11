@@ -29,7 +29,7 @@ func _ready() -> void:
 			entity.global_position = node.global_position
 			node.queue_free()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_pressed("cancel") and ResourceLoader.exists("res://Scenes/LevelEditor/temp.tscn"):
 		get_tree().change_scene_to_file("res://Scenes/LevelEditor/level_editor.tscn")
 		
