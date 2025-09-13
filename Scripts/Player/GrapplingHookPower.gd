@@ -7,6 +7,12 @@ var pulling_enemy: bool = false
 var pulled_enemy: Node2D = null
 var hooked_collider: CollisionShape2D = null
 
+const MAX_ROPE_LENGTH := 300.0
+const SWING_FORCE := 1100.0
+
+var sprite_active = preload("res://Sprites/Characters/Peppers/spr_green_pepper_test_active.png")
+var sprite = preload("res://Sprites/Characters/Peppers/spr_green_pepper_test.png")
+
 func _init():
 	id = "grappling_hook"
 	texture = preload("res://Sprites/Characters/Peppers/spr_green_pepper_test.png")
@@ -15,7 +21,9 @@ func _init():
 func use(companion):
 	if pulling_enemy:
 		_stop_pulling_enemy(companion)
+		companion.get_node("GFX").texture = sprite
 		return
+	companion.get_node("GFX").texture = sprite_active
 	var enemy = companion._find_nearest_in_group("pullable", companion.PLUG_RANGE)
 	var hook = companion._find_nearest_in_group("hookable", companion.PLUG_RANGE)
 	if enemy and (not hook or companion.player_body.global_position.distance_to(enemy.global_position) < companion.player_body.global_position.distance_to(hook.global_position)):
@@ -38,19 +46,35 @@ func update(companion, delta):
 	elif pulling_enemy:
 		_update_enemy_pull(companion, delta)
 
-func _update_grapple(companion, _delta):
-	var dir = (grapple_point - companion.player_body.global_position).normalized()
-	companion.player_body.velocity = dir * companion.PLUG_SPEED
-	companion.global_position = companion.player_body.global_position + Vector2(0, -16)
-	companion.rotation = (grapple_point - companion.global_position).angle() + PI + 1.5
+func _update_grapple(companion, delta):
+	var player = companion.player_body
+	companion.global_position = player.global_position
+	var player_pos = player.global_position
+	var rope_vec = grapple_point - player_pos
+	var distance = rope_vec.length()
+	if distance > MAX_ROPE_LENGTH:
+		_stop_grapple(companion)
+		return
+	var rope_dir = rope_vec.normalized()
+	var tangent = Vector2(-rope_dir.y, rope_dir.x)
+	var tangential_speed = player.velocity.dot(tangent)
+	player.velocity = tangent * tangential_speed
+	var gravity_tangential = Vector2(0, player.gravity).dot(tangent)
+	player.velocity += tangent * gravity_tangential * delta
+	if Input.is_action_pressed("move_left"):
+		player.velocity -= tangent * SWING_FORCE * delta
+	if Input.is_action_pressed("move_right"):
+		player.velocity += tangent * SWING_FORCE * delta
+	player.global_position = grapple_point - rope_dir * distance
 	companion.plug.clear_points()
 	companion.plug.add_point(companion.plug.to_local(companion.global_position))
 	companion.plug.add_point(companion.plug.to_local(grapple_point))
+	companion.rotation = rope_vec.angle() + PI + 1.5
 	companion.plug_head.global_position = grapple_point
-	companion.plug_head.rotation = (grapple_point - companion.global_position).angle()
+	companion.plug_head.rotation = rope_vec.angle()
 	companion.plug_head.show()
-	if companion.player_body.global_position.distance_to(grapple_point) < 10:
-		companion.player_body.global_position = grapple_point + Vector2(0, -16)
+	if Input.is_action_just_pressed("jump"):
+		companion.get_node("GFX").texture = sprite
 		_stop_grapple(companion)
 
 func _start_pulling_enemy(_companion, enemy: Node2D):
@@ -61,6 +85,7 @@ func _start_pulling_enemy(_companion, enemy: Node2D):
 func _update_enemy_pull(companion, delta):
 	if pulled_enemy.test_move(pulled_enemy.transform, Vector2.ZERO) or pulled_enemy.global_position.distance_to(companion.player_body.global_position) < 40:
 		_stop_pulling_enemy(companion)
+		companion.get_node("GFX").texture = sprite
 		return
 	var dir = (companion.global_position - pulled_enemy.global_position).normalized()
 	pulled_enemy.global_position += dir * companion.ENEMY_PULL_SPEED * delta
@@ -69,6 +94,7 @@ func _update_enemy_pull(companion, delta):
 	companion.plug.add_point(companion.plug.to_local(pulled_enemy.global_position))
 	companion.rotation = (pulled_enemy.global_position - companion.global_position).angle() + PI + 1.5
 	companion.plug_head.global_position = pulled_enemy.global_position
+	companion.plug_head.rotation = (pulled_enemy.global_position - companion.global_position).angle()
 	companion.plug_head.show()
 
 func _stop_pulling_enemy(companion):

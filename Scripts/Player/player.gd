@@ -33,7 +33,7 @@ var shortcut_map = {
 }
 
 func _ready():
-	companion.initialize(["basic_attack", "remote_control", "grappling_hook", "create_platforms", "destroy_blocks", "freeze_time"])
+	companion.initialize(["basic_attack", "remote_control", "grappling_hook", "create_platforms", "freeze_time"])
 	get_parent().add_child.call_deferred(companion)
 	companion.power_changed.connect(_on_power_changed)
 	_on_power_changed(companion.get_current_power())
@@ -73,7 +73,7 @@ func _physics_process(delta):
 			damage(1)
 	
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if !shield_cooldown.is_stopped():
 		shield_slider.value = shield_cooldown.time_left / 10.0 * 100.0
 	elif !has_shield:
