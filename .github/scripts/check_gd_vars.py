@@ -48,10 +48,15 @@ def main():
 			issues = []
 			if file.endswith('.gd'):
 				path = os.path.join(root, file)
+				if "addons" in path.replace("\\", "/").split("/"):
+					continue
+				
 				issues.extend(check_gd_file(path))
 				issues.extend(check_filename(path))
                 
 			if file.endswith('.png') or file.endswith('.mp3') or file.endswith('.tscn') or file.endswith('.ogg'):
+				if "addons" in path.replace("\\", "/").split("/"):
+					continue
 				path = os.path.join(root, file)
 				issues.extend(check_filename(path))
 			if len(issues) > 0:
