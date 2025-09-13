@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://0dmkabm72w8c"]
+
+[ext_resource type="Script" uid="uid://cex2rj88yk8rx" path="res://Scripts/audio_stream_player.gd" id="1_ue73k"]
+[ext_resource type="AudioStream" uid="uid://rrprmkdlx2f6" path="res://Sounds/Music/beach_music.mp3" id="2_5psad"]
+
+[node name="AudioManager" type="Node"]
+process_mode = 3
+script = ExtResource("1_ue73k")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_5psad")
+autoplay = true
+bus = &"Music"
+
+[connection signal="finished" from="AudioStreamPlayer" to="." method="_on_finished"]

@@ -39,6 +39,7 @@ position = Vector2(1, 1)
 [node name="Canvas" type="CanvasLayer" parent="."]
 
 [node name="Label" type="Label" parent="Canvas"]
+visible = false
 offset_left = 7.0
 offset_top = 7.99998
 offset_right = 125.0

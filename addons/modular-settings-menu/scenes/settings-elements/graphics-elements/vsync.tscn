@@ -1,0 +1,96 @@
+[gd_scene load_steps=3 format=3 uid="uid://idtbqnsqlvb6"]
+
+[sub_resource type="GDScript" id="GDScript_kwfgn"]
+resource_name = "vsync"
+script/source = "extends OptionElement
+
+
+func _init() -> void:
+	OPTION_LIST_ = {
+	\"Disabled\": DisplayServer.VSYNC_DISABLED,
+	\"Enabled\": DisplayServer.VSYNC_ENABLED,
+	\"Adaptive\": DisplayServer.VSYNC_ADAPTIVE
+}
+
+
+# Loads the saved/default values of the element
+func load_settings() -> void:
+	super.load_settings()
+	# Toggle the max fps element
+	call_deferred(\"toggle_max_fps\")
+
+
+func option_selected(index: int) -> void:
+	super.option_selected(index)
+	# Toggle the max fps element
+	toggle_max_fps()
+
+
+# Called to apply the settings in the settings cache
+func _apply_settings() -> void:
+	# Set the vsync mode to the selected option
+	DisplayServer.window_set_vsync_mode(OPTION_LIST_[currentValue])
+	
+	# Set the max fps to unlimited if vsync is being enabled
+	if currentValue != \"Disabled\":
+		Engine.set_max_fps(0)
+	
+	# Check if the max fps element exists and if vsync is disabled
+	if (
+		ParentRef.ELEMENT_REFERENCE_TABLE_.has(\"MaxFPS\")
+		and currentValue == \"Disabled\"
+	):
+		# Check if max fps has been changed
+		if not ParentRef.changedElements_.has(\"MaxFPS\"):
+			# Apply the max fps settings manually
+			ParentRef.ELEMENT_REFERENCE_TABLE_[\"MaxFPS\"]._apply_settings()
+	elif currentValue == \"Disabled\":
+		# Set the max fps to the max fps read from the project settings
+		Engine.set_max_fps(ProjectSettings.get_setting(\"application/run/max_fps\"))
+	
+
+
+# Disable/Enable the max fps element according to if vsync is on or not
+func toggle_max_fps() -> void:
+	if not ParentRef.ELEMENT_REFERENCE_TABLE_.has(\"MaxFPS\"):
+		return
+	
+	# Reference to the slider value node of the max fps element
+	var MaxFpsRef: SettingsElement =\\
+		ParentRef.ELEMENT_REFERENCE_TABLE_[\"MaxFPS\"]
+	
+	if currentValue == \"Disabled\":
+		# Enable the max fps element
+		MaxFpsRef.SliderRef.set_editable(true)
+		MaxFpsRef.ValueBoxRef.modulate = Color.WHITE
+	else:
+		# Disable the max fps element
+		MaxFpsRef.SliderRef.set_editable(false)
+		MaxFpsRef.ValueBoxRef.modulate = Color.GRAY
+"
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_drjjf"]
+
+[node name="VSync" type="HBoxContainer" node_paths=PackedStringArray("OptionsRef")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_kwfgn")
+DEFAULT_VALUE = "Disabled"
+OptionsRef = NodePath("Options")
+IDENTIFIER = "VSync"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "V-Sync"
+vertical_alignment = 1
+
+[node name="Options" type="OptionButton" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_drjjf")

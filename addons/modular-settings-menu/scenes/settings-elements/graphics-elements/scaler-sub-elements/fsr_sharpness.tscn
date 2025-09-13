@@ -1,0 +1,61 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdoaqhvw440eh"]
+
+[sub_resource type="GDScript" id="GDScript_ng2w8"]
+resource_name = "fsr_sharpness"
+script/source = "extends SliderElement
+
+
+# Element specific script for applying its value to the game
+func _apply_settings() -> void:
+	get_viewport().set_fsr_sharpness((MAX_VALUE - currentValue) * 2.0)
+"
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hae3h"]
+size = Vector2(0, 0)
+
+[sub_resource type="Theme" id="Theme_0xoq4"]
+SpinBox/icons/updown = SubResource("PlaceholderTexture2D_hae3h")
+
+[node name="FSRSharpness" type="HBoxContainer" node_paths=PackedStringArray("SliderRef", "ValueBoxRef")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_ng2w8")
+STEP_VALUE = 0.01
+DEFAULT_VALUE = 0.9
+DISPLAY_PERCENT_VALUE = true
+VALUE_SUFFIX = "%"
+SliderRef = NodePath("SliderValue/Slider")
+ValueBoxRef = NodePath("SliderValue/Value")
+IDENTIFIER = "FSRSharpness"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "FSR Sharpness"
+vertical_alignment = 1
+
+[node name="SliderValue" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+
+[node name="Slider" type="HSlider" parent="SliderValue"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+max_value = 0.0
+step = 0.0
+ticks_on_borders = true
+
+[node name="Value" type="SpinBox" parent="SliderValue"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme = SubResource("Theme_0xoq4")
+max_value = 0.0
+step = 0.0
+alignment = 2

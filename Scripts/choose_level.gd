@@ -48,6 +48,7 @@ func set_information_for_current_level():
 	play_button.disabled = current_level.locked
 	
 func _on_play_current_level_pressed() -> void:
+	PauseManager.set_pausable(true)
 	get_tree().change_scene_to_packed(current_level.scene)
 
 func _on_previous_level_pressed() -> void:

@@ -1,0 +1,68 @@
+[gd_scene load_steps=5 format=3 uid="uid://csysejogvdd8s"]
+
+[ext_resource type="Script" uid="uid://cklol6xbb3qra" path="res://Scripts/pause_menu.gd" id="1_i0al5"]
+[ext_resource type="PackedScene" uid="uid://txlnsvtkj715" path="res://Scenes/Menu/settings_menu.tscn" id="3_jnmi5"]
+
+[sub_resource type="Gradient" id="Gradient_i0al5"]
+offsets = PackedFloat32Array(0, 0.0025974)
+colors = PackedColorArray(0.27451, 0.27451, 0.27451, 0.796078, 0.301961, 0.301961, 0.301961, 0.72549)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6pfc5"]
+gradient = SubResource("Gradient_i0al5")
+
+[node name="PauseMenu" type="Control"]
+z_index = 4096
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_i0al5")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Background" type="TextureRect" parent="CanvasLayer"]
+visible = false
+offset_right = 642.0
+offset_bottom = 361.0
+texture = SubResource("GradientTexture1D_6pfc5")
+
+[node name="Menu" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ContinueButton" type="Button" parent="CanvasLayer/Menu"]
+layout_mode = 2
+offset_left = 245.0
+offset_top = 122.5
+offset_right = 395.0
+offset_bottom = 157.5
+text = "Continue"
+
+[node name="SettingsButton" type="Button" parent="CanvasLayer/Menu"]
+layout_mode = 2
+offset_left = 245.0
+offset_top = 162.5
+offset_right = 395.0
+offset_bottom = 197.5
+text = "Settings"
+
+[node name="MainMenuButton" type="Button" parent="CanvasLayer/Menu"]
+layout_mode = 0
+offset_left = 245.0
+offset_top = 202.5
+offset_right = 395.0
+offset_bottom = 237.5
+text = "Main Menu"
+
+[node name="SettingsMenu" parent="CanvasLayer" node_paths=PackedStringArray("MenuPanelRef") instance=ExtResource("3_jnmi5")]
+visible = false
+MenuPanelRef = NodePath("../..")
+
+[connection signal="pressed" from="CanvasLayer/Menu/ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Menu/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Menu/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
