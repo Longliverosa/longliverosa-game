@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2tgt7fu0n5wp"]
+
+[sub_resource type="GDScript" id="GDScript_te2ja"]
+resource_name = "invert_y"
+script/source = "extends ToggleElement
+
+
+# Called to apply the settings in the settings cache
+func _apply_settings() -> void:
+	apply_in_game_setting(currentValue)
+"
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_drjjf"]
+
+[node name="InvertY" type="HBoxContainer" node_paths=PackedStringArray("ToggleRef")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_te2ja")
+ToggleRef = NodePath("Toggle")
+IDENTIFIER = "InvertY"
+IS_IN_GAME_SETTING = true
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Invert Y-Axis"
+vertical_alignment = 1
+
+[node name="Toggle" type="CheckButton" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_drjjf")

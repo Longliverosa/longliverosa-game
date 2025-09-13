@@ -1,0 +1,305 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqqhgk8ufkmqa"]
+
+[ext_resource type="PackedScene" uid="uid://bbtri7oyxvehi" path="res://addons/modular-settings-menu/scenes/settings-elements/controls-elements/input-settings-panel/input-settings-panel-elements/input_button.tscn" id="1_1y7ch"]
+
+[sub_resource type="GDScript" id="GDScript_0eq0v"]
+resource_name = "input_settings_panel"
+script/source = "extends Control
+
+# Button scene for actions
+@export var InputButtonScene: PackedScene
+
+# Panel node references
+@onready var ActionListRef: VBoxContainer = %ActionList
+@onready var ResetButtonRef: Button = %ResetButton
+@onready var BackButtonRef: Button = $VBoxContainer/HBoxContainer/BackButton
+@onready var ApplyButtonRef: Button = $VBoxContainer/HBoxContainer/ApplyButton
+
+# List of events for each action
+var actionEvents_: Dictionary
+# Cache for changed actions
+var panelCache_: Dictionary
+# Reference list to the button for each action
+var actionReferenceList_: Dictionary
+
+# Reference to the element this panel belongs to
+var PanelOwnerRef: ButtonElement
+
+# For remapping
+var isRemapping: bool = false
+var actionToRemap: String
+var ActionInputButtonRef: Button
+
+
+func _ready():
+	# Connect necessary signals
+	ResetButtonRef.connect(\"pressed\", on_reset_button_pressed)
+	BackButtonRef.connect(\"pressed\", on_back_button_pressed)
+	ApplyButtonRef.connect(\"pressed\", on_apply_button_pressed)
+
+
+# Called to populate the action list with actions
+func create_action_list(reset: bool = false) -> void:
+	# All the remappable actions
+	var INPUT_ACTIONS_: Dictionary = PanelOwnerRef.ACTION_LIST_.duplicate()
+	INPUT_ACTIONS_.make_read_only()
+	
+	# Get the events for the actions
+	actionEvents_ = get_events(INPUT_ACTIONS_, reset)
+	
+	# Check if the action list is already populated
+	if ActionListRef.get_child_count() > 0:
+		# Remove all the existing actions from the action list
+		for child in ActionListRef.get_children():
+			child.queue_free()
+	
+	# Create the actions for the action list
+	for action in INPUT_ACTIONS_:
+		# Instantiate the button scene
+		var ButtonRef: PanelContainer = InputButtonScene.instantiate()
+		# Get references to the elements of the button scene
+		var ActionLabelRef: Label = ButtonRef.find_child(\"ActionLabel\")
+		var ActionInputRef: Button = ButtonRef.find_child(\"ActionInput\")
+		# Get the event for the action
+		var event = actionEvents_[action]
+		
+		# Add a reference of the instantiated button to the reference list
+		actionReferenceList_[action] = ButtonRef
+		# Change the label text of the button to the action it corresponds to
+		ActionLabelRef.set_text(INPUT_ACTIONS_[action])
+		ActionInputRef.set_text(event.as_text())
+		
+		ActionListRef.add_child(ButtonRef)
+		ActionInputRef.connect(
+			\"pressed\",
+			on_input_button_pressed.bind(action, ActionInputRef)
+		)
+
+
+func on_input_button_pressed(action: String, ActionInputRef: Button) -> void:
+	# Check if a button is not being remapped currently
+	if not isRemapping:
+		isRemapping = true
+		actionToRemap = action
+		ActionInputButtonRef = ActionInputRef
+		ActionInputRef.set_text(\"Press key to bind...\")
+
+
+func _input(event: InputEvent):
+	# Check if an action is being remapped currently
+	if isRemapping:
+		# Check if the desired input is either a keyboard or mouse input
+		if (
+			event is InputEventKey
+			or event is InputEventMouseButton
+			and event.pressed
+		):
+			# Check if the event is a mouse event and if it was a double click
+			if event is InputEventMouseButton and event.double_click:
+				# Disable the double click flag
+				event.double_click = false
+			
+			# Set the input button's text to the inputted event
+			ActionInputButtonRef.set_text(event.as_text())
+			
+			# Check if the inputted event is different compared to the saved one for the action
+			if not check_matching_event(event):
+				var duplicateEvent: String = check_duplicate_event(event)
+				actionEvents_[actionToRemap] = event
+				panelCache_[actionToRemap] = event
+				ApplyButtonRef.set_disabled(false)
+				
+				if duplicateEvent:
+					var ActionInputRef: Button =\\
+						actionReferenceList_[duplicateEvent].find_child(
+							\"ActionInput\"
+						)
+					actionEvents_[duplicateEvent] = InputEventKey.new()
+					panelCache_[duplicateEvent] = actionEvents_[duplicateEvent]
+					ActionInputRef.set_text(
+						actionEvents_[duplicateEvent].as_text()
+					)
+			
+			isRemapping = false
+			actionToRemap = \"\"
+			ActionInputButtonRef = null
+			
+			accept_event()
+
+
+# Checks if the inputted event matches the one saved for the action
+func check_matching_event(event: InputEvent) -> bool:
+	var eventType: String = event.get_class()
+	var eventButton: int = get_event_button(event)
+	var currentEvent = actionEvents_[actionToRemap]
+	
+	# Check if the event matches the action to be remapped
+	if (
+		currentEvent.is_class(eventType)
+		and get_event_button(currentEvent) == eventButton
+	):
+		return true
+	
+	return false
+
+
+# Checks if any other action has the inputted event as it's event
+func check_duplicate_event(event: InputEvent) -> String:
+	var eventType: String = event.get_class()
+	var eventButton: int = get_event_button(event)
+	
+	# Check for duplicates in other actions
+	for action in actionEvents_:
+		# Check if the action is not the one being remapped
+		if action != actionToRemap:
+			var storedEvent = actionEvents_[action]
+			
+			# Check if the input type and event matches the inputted event
+			if (
+				storedEvent.is_class(eventType)
+				and get_event_button(storedEvent) == eventButton
+			):
+				return action
+	
+	return \"\"
+
+
+# Called to get the physical index for the inputted event depending on the input event's type
+func get_event_button(event: InputEvent) -> int:
+	# Check for the input event's type
+	match event.get_class():
+		\"InputEventKey\":
+			return event.get_keycode()
+		\"InputEventMouseButton\":
+			return event.get_button_index()
+	
+	return -1
+
+
+# Called to update the action's events to the cached events
+func update_action_events(actionList_: Dictionary) -> void:
+	# Itterate through all the recieved actions
+	for action in actionList_:
+		# Remove all events for the action
+		InputMap.action_erase_events(action)
+		
+		# Check if the action has an event assigned to it
+		if actionList_[action]:
+			# Add the new event to the action
+			InputMap.action_add_event(action, actionList_[action])
+
+
+# Called to get all the events for the remappable actions
+func get_events(actions_: Dictionary, reset: bool = false) -> Dictionary:
+	var events_: Dictionary = {}
+	
+	if PanelOwnerRef.noSaveFile or PanelOwnerRef.invalidSaveFile or reset:
+		InputMap.load_from_project_settings()
+		for action in actions_:
+			# Retrieve the first event for the action
+			events_[action] = InputMap.action_get_events(action)[0]
+		panelCache_ = events_.duplicate(true)
+	else:
+		# Retrieve the events from the loaded data
+		events_ = PanelOwnerRef.inputSettingsData_.duplicate()
+	
+	return events_
+
+
+func on_reset_button_pressed():
+	panelCache_.clear()
+	create_action_list(true)
+	ApplyButtonRef.set_disabled(false)
+
+
+func on_back_button_pressed():
+	# Check if there have been any changes made
+	if ApplyButtonRef.is_disabled():
+		# Clear the cache and return normally
+		panelCache_.clear()
+		hide()
+		owner.SettingsPanelRef.show()
+	else:
+		# Display the discard changes popup
+		owner.display_discard_changes(self)
+
+
+func on_apply_button_pressed():
+	# Update the input map
+	update_action_events(panelCache_)
+	panelCache_.clear()
+	# Send the new data to the parent element
+	PanelOwnerRef.panel_settings_changed(actionEvents_)
+	ApplyButtonRef.set_disabled(true)
+"
+
+[node name="InputSettingsPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_0eq0v")
+InputButtonScene = ExtResource("1_1y7ch")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -194.0
+offset_top = -29.0
+offset_right = 194.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 280)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ActionList" type="VBoxContainer" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ResetButton" type="Button" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+text = "Reset to default"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ApplyButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+disabled = true
+text = "Apply"
+
+[node name="BackButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "Back"

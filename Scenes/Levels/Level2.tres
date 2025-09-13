@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="LevelBase" load_steps=3 format=3 uid="uid://cseyudjbi357f"]
 
-[ext_resource type="Texture2D" uid="uid://yq8rtoqp7yvl" path="res://Sprites/DougDougRosa.png" id="1_u8a4e"]
+[ext_resource type="Texture2D" uid="uid://yq8rtoqp7yvl" path="res://Sprites/doug_doug_rosa.png" id="1_u8a4e"]
 [ext_resource type="Script" uid="uid://ijd7s5ydo7go" path="res://Scripts/level_base.gd" id="2_85pgh"]
 
 [resource]

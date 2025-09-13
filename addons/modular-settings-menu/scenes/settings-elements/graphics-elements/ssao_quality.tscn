@@ -1,0 +1,78 @@
+[gd_scene load_steps=3 format=3 uid="uid://bk5ky60jln7ag"]
+
+[sub_resource type="GDScript" id="GDScript_h10e0"]
+resource_name = "ssao_quality"
+script/source = "extends OptionElement
+
+
+func _init() -> void:
+	OPTION_LIST_ = {
+		\"Disabled\": null,
+		\"Low\": {
+			\"quality\": RenderingServer.ENV_SSAO_QUALITY_LOW,
+			\"halfSize\": true,
+			\"blurPasses\": 1,
+			\"fadeOutFrom\": 25,
+			\"fadeOutTo\": 150
+		},
+		\"Medium\": {
+			\"quality\": RenderingServer.ENV_SSAO_QUALITY_MEDIUM,
+			\"halfSize\": true,
+			\"blurPasses\": 2,
+			\"fadeOutFrom\": 50,
+			\"fadeOutTo\": 300
+		},
+		\"High\": {
+			\"quality\": RenderingServer.ENV_SSAO_QUALITY_HIGH,
+			\"halfSize\": false,
+			\"blurPasses\": 4,
+			\"fadeOutFrom\": 100,
+			\"fadeOutTo\": 600
+		}
+	}
+
+
+# Called to apply the settings in the settings cache
+func _apply_settings() -> void:
+	apply_in_game_setting(currentValue)
+	
+	if currentValue == \"Disabled\":
+		return
+	
+	RenderingServer.environment_set_ssao_quality(
+		OPTION_LIST_[currentValue][\"quality\"], 
+		OPTION_LIST_[currentValue][\"halfSize\"], 
+		0.5, 
+		OPTION_LIST_[currentValue][\"blurPasses\"], 
+		OPTION_LIST_[currentValue][\"fadeOutFrom\"], 
+		OPTION_LIST_[currentValue][\"fadeOutTo\"]
+	)
+"
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_drjjf"]
+
+[node name="SSAOQuality" type="HBoxContainer" node_paths=PackedStringArray("OptionsRef")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "Screen Space Ambient Occlusion"
+script = SubResource("GDScript_h10e0")
+DEFAULT_VALUE = "Disabled"
+OptionsRef = NodePath("Options")
+IDENTIFIER = "SSAOQuality"
+IS_IN_GAME_SETTING = true
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "SSAO Quality"
+vertical_alignment = 1
+
+[node name="Options" type="OptionButton" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_drjjf")

@@ -31,19 +31,35 @@ def check_gd_file(filepath):
 
     return issues
 
+def check_filename(filepath):
+	issues = []
+	filename = os.path.basename(filepath)
+	name, ext = os.path.splitext(filename)
+	# Must be snake_case
+	if not re.fullmatch(r'[a-z0-9_]+', name):
+		issues.append(f"{filepath} - filename '{filename}' must be snake_case.")
+	return issues
+
+
 def main():
-    failed = False
-    for root, _, files in os.walk('.'):
-        for file in files:
-            if file.endswith('.gd'):
-                path = os.path.join(root, file)
-                issues = check_gd_file(path)
-                if issues:
-                    for issue in issues:
-                        print(issue)
-                    failed = True
-    if failed:
-        exit(1)
+	failed = False
+	for root, _, files in os.walk('.'):
+		for file in files:
+			issues = []
+			if file.endswith('.gd'):
+				path = os.path.join(root, file)
+				issues.extend(check_gd_file(path))
+				issues.extend(check_filename(path))
+                
+			if file.endswith('.png') or file.endswith('.mp3') or file.endswith('.tscn') or file.endswith('.ogg'):
+				path = os.path.join(root, file)
+				issues.extend(check_filename(path))
+			if len(issues) > 0:
+				for issue in issues:
+					print(issue)
+					failed = True
+	if failed:
+		exit(1)
 
 if __name__ == "__main__":
     main()

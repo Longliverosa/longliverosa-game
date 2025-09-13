@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://4vjk881onlb1"]
 
 [ext_resource type="Script" uid="uid://ba35hlsyfcm6k" path="res://Scripts/choose_level.gd" id="1_1tlw4"]
-[ext_resource type="Texture2D" uid="uid://yq8rtoqp7yvl" path="res://Sprites/DougDougRosa.png" id="1_p3w3h"]
-[ext_resource type="Texture2D" uid="uid://c287xer5dkn46" path="res://Sprites/LockIcon.png" id="3_m4o1t"]
+[ext_resource type="Texture2D" uid="uid://yq8rtoqp7yvl" path="res://Sprites/doug_doug_rosa.png" id="1_p3w3h"]
+[ext_resource type="Texture2D" uid="uid://c287xer5dkn46" path="res://Sprites/lock_icon.png" id="3_m4o1t"]
 
 [sub_resource type="Gradient" id="Gradient_1tlw4"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)

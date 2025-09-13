@@ -1,0 +1,109 @@
+[gd_scene load_steps=3 format=3 uid="uid://byff0jwaicxvr"]
+
+[sub_resource type="GDScript" id="GDScript_duwn0"]
+resource_name = "display_mode"
+script/source = "extends OptionElement
+
+
+func _init() -> void:
+	OPTION_LIST_ = {
+		\"Fullscreen\": DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN,
+		\"Borderless Windowed\": DisplayServer.WINDOW_MODE_WINDOWED,
+		\"Windowed\": DisplayServer.WINDOW_MODE_WINDOWED
+	}
+
+
+func load_settings() -> void:
+	super.load_settings()
+	# Check if the resolution element should be disabled
+	call_deferred(\"check_resolution\")
+
+
+func option_selected(index: int) -> void:
+	super.option_selected(index)
+	# Check if the resolution element should be disabled
+	check_resolution()
+
+
+func _apply_settings() -> void:
+	DisplayServer.window_set_mode(OPTION_LIST_[currentValue])
+	
+	if currentValue == \"Borderless Windowed\":
+		DisplayServer.window_set_flag(
+			DisplayServer.WINDOW_FLAG_BORDERLESS,
+			true
+		)
+		adjust_resolution()
+	else:
+		DisplayServer.window_set_flag(
+			DisplayServer.WINDOW_FLAG_BORDERLESS,
+			false
+		)
+	
+	if currentValue == \"Windowed\":
+		# Set the resolution to 80% if the resolution setting doesnt exist
+		if not ParentRef.ELEMENT_REFERENCE_TABLE_.has(\"Resolution\"):
+			adjust_resolution(0.8)
+			return
+		
+		# Apply the selected resolution manually if it has not been changed
+		if not ParentRef.changedElements_.has(\"Resolution\"):
+			# Resolution change has to be delayed by at least 2 frames.
+			# Otherwise height of the window will be off by a bit.
+			await get_tree().process_frame
+			await get_tree().process_frame
+			# Apply the resolution settings manually
+			ParentRef.ELEMENT_REFERENCE_TABLE_[\"Resolution\"]._apply_settings()
+
+
+# Called to check if the resolution element should be disabled
+func check_resolution() -> void:
+	if not ParentRef.ELEMENT_REFERENCE_TABLE_.has(\"Resolution\"):
+		return
+	
+	var ResolutionRef: SettingsElement =\\
+		ParentRef.ELEMENT_REFERENCE_TABLE_[\"Resolution\"]
+	
+	if currentValue != \"Windowed\":
+		ResolutionRef.OptionsRef.set_disabled(true)
+	else:
+		ResolutionRef.OptionsRef.set_disabled(false)
+
+
+# Called to scale the resolution to the provided percentage
+func adjust_resolution(sizeScale: float = 1.0) -> void:
+	var displaySize: Vector2i =\\
+		DisplayServer.screen_get_size(
+			DisplayServer.window_get_current_screen()
+		) * sizeScale
+	
+	get_window().set_size(displaySize)
+	get_viewport().set_size(displaySize)
+	get_window().move_to_center()
+"
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_drjjf"]
+
+[node name="DisplayMode" type="HBoxContainer" node_paths=PackedStringArray("OptionsRef")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_duwn0")
+DEFAULT_VALUE = "Fullscreen"
+IDENTIFIER = "DisplayMode"
+OptionsRef = NodePath("Options")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Display Mode"
+vertical_alignment = 1
+
+[node name="Options" type="OptionButton" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_drjjf")

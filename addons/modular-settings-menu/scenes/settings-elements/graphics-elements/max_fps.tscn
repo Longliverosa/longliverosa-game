@@ -1,0 +1,85 @@
+[gd_scene load_steps=2 format=3 uid="uid://dghfxwcbi5ig"]
+
+[sub_resource type="GDScript" id="GDScript_eitn6"]
+resource_name = "max_fps"
+script/source = "extends SliderElement
+
+
+func init_element() -> void:
+	super.init_element()
+	# Increase UI max value by one for unlimited fps
+	SliderRef.set_max(MAX_VALUE + 1)
+	if ValueBoxRef is SpinBox:
+		ValueBoxRef.set_max(MAX_VALUE + 1)
+
+
+func load_settings() -> void:
+	super.load_settings()
+	if currentValue == 0:
+		ValueBoxRef.set_text(\"Unlimited\")
+		SliderRef.set_value(MAX_VALUE + 1)
+
+
+func value_changed(value: float) -> void:
+	if value > MAX_VALUE:
+		value = 0
+		ValueBoxRef.set_text(\"Unlimited\")
+	
+	super.value_changed(value)
+	
+
+
+# Element specific script for applying its value to the game
+func _apply_settings() -> void:
+	if (
+		ParentRef.ELEMENT_REFERENCE_TABLE_.has(\"VSync\")
+		and ParentRef.ELEMENT_REFERENCE_TABLE_[\"VSync\"].currentValue != \"Disabled\"
+	):
+		return
+	
+	Engine.set_max_fps(currentValue)
+"
+
+[node name="MaxFPS" type="HBoxContainer" node_paths=PackedStringArray("SliderRef", "ValueBoxRef")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_eitn6")
+MIN_VALUE = 30.0
+MAX_VALUE = 240.0
+STEP_VALUE = 1.0
+DEFAULT_VALUE = 60.0
+SliderRef = NodePath("SliderValue/Slider")
+ValueBoxRef = NodePath("SliderValue/Value")
+IDENTIFIER = "MaxFPS"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Max FPS"
+vertical_alignment = 1
+
+[node name="SliderValue" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="Slider" type="HSlider" parent="SliderValue"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+max_value = 0.0
+step = 0.0
+ticks_on_borders = true
+
+[node name="Value" type="Label" parent="SliderValue"]
+custom_minimum_size = Vector2(80, 31)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 1
+text = "240"
+horizontal_alignment = 2
+vertical_alignment = 1

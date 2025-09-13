@@ -1,0 +1,170 @@
+[gd_scene load_steps=3 format=3 uid="uid://i0w5gftb0j16"]
+
+[ext_resource type="PackedScene" uid="uid://cqqhgk8ufkmqa" path="res://addons/modular-settings-menu/scenes/settings-elements/controls-elements/input-settings-panel/input_settings_panel.tscn" id="1_6pc66"]
+
+[sub_resource type="GDScript" id="GDScript_te2ja"]
+resource_name = "input_settings"
+script/source = "extends ButtonElement
+
+##List of actions to make remappable and how the name they should display.
+@export var ACTION_LIST_: Dictionary = {
+	\"move_up\": \"Up\",
+	\"move_down\": \"Down\",
+	\"move_left\": \"Left\",
+	\"move_right\": \"Right\",
+	\"jump\": \"Jump\",
+	\"menu\": \"Power Wheel\",
+	\"pepper_power\": \"Power Activation\"
+}
+
+# Path to the settings save file
+var DATA_FOLDER: String = SettingsDataManager.DATA_FOLDER
+const FILE_NAME: String = \"keybinds\"
+const FILE_EXTENSION: String = \".json\"
+var PATH: String = DATA_FOLDER + \"/\" + FILE_NAME + FILE_EXTENSION
+
+# Currently stored input data
+var inputSettingsData_: Dictionary
+
+# Flag for checking if a save file exists for input settings
+var noSaveFile: bool
+# Flag for checking if an invalid value was found in the save file
+var invalidSaveFile: bool = false
+
+
+func _ready():
+	super._ready()
+	ACTION_LIST_.make_read_only()
+	SettingsDataManager.connect(\"settings_retrieved\", load_settings)
+	# Verify the directory
+	DirAccess.make_dir_absolute(DATA_FOLDER)
+	# Check if a save file exists
+	if not FileAccess.file_exists(PATH):
+		noSaveFile = true
+
+
+# Loads the saved/default values of the element
+func load_settings() -> void:
+	# Get the current value for the element
+	if noSaveFile:
+		# Get the events for the remappable actions from the project settings
+		inputSettingsData_ = ElementPanelRef.get_events(ACTION_LIST_)
+		save_input_settings()
+	else:
+		get_input_settings()
+	
+	# Check if save file is valid
+	if invalidSaveFile:
+		# Get the events for the remappable actions from the project settings
+		inputSettingsData_ = ElementPanelRef.get_events(ACTION_LIST_)
+		save_input_settings()
+	else:
+		call_deferred(\"apply_settings\")
+
+
+func pressed() -> void:
+	# Check if a save file exists
+	if not FileAccess.file_exists(PATH):
+		noSaveFile = true
+	
+	ElementPanelRef.create_action_list()
+	# Switch panels
+	ParentRef.SettingsMenuRef.SettingsPanelRef.hide()
+	ElementPanelRef.show()
+
+
+# Called to apply the settings in the settings cache
+func apply_settings() -> void:
+	# Assign the events for the remappable actions
+	ElementPanelRef.update_action_events(inputSettingsData_)
+
+
+# Called to update the input settings data
+func panel_settings_changed(newValue_: Dictionary) -> void:
+	inputSettingsData_ = newValue_.duplicate()
+	save_input_settings()
+
+
+# Called to save the input settings
+func save_input_settings() -> void:
+	var file := FileAccess.open(PATH, FileAccess.WRITE)
+	var data_: Dictionary = {}
+	
+	# Itterate through the input settings
+	for input in inputSettingsData_:
+		var inputEvent = inputSettingsData_[input]
+		# Serialize the InputEvent of the action
+		match inputEvent.get_class():
+			\"InputEventKey\":
+				data_[input] = {
+					\"type\": \"keyboard\",
+					\"key\": inputEvent.get_keycode(),
+					\"physical_key\": inputEvent.physical_keycode
+				}
+			\"InputEventMouseButton\":
+				data_[input] = {
+					\"type\": \"mouse\",
+					\"button\": inputEvent.get_button_index()
+				}
+	
+	# Save the string to a json file
+	file.store_string(JSON.stringify(data_, \"\\t\", false))
+	file.close()
+	noSaveFile = false
+
+
+# Called to retrieve the input settings data from the save file
+func get_input_settings() -> void:
+	var file := FileAccess.open(PATH, FileAccess.READ)
+	# Parse the json string to a dictionary
+	var data_ = JSON.parse_string(file.get_as_text())
+	file.close()
+	
+	# Check if there were any errors or if the save file is empty
+	if data_ == null or data_.is_empty():
+		push_error(\"Failed to parse input settings\")
+		invalidSaveFile = true
+		return
+	
+	verify_settings_data(data_)
+
+
+# Used for verifying the integrity of the save file
+func verify_settings_data(data_: Dictionary) -> void:
+	# Itterate through all the retrieved data
+	for input in data_:
+		# Check if the action exists
+		if not ACTION_LIST_.has(input):
+			push_warning(\"Invalid input settings entry: \", input)
+			invalidSaveFile = true
+			continue
+		
+		# Reconstruct the InputEvent for the action
+		match data_[input][\"type\"]:
+			\"keyboard\":
+				var key := InputEventKey.new()
+				key.set_keycode(data_[input][\"key\"])
+				key.set_physical_keycode(data_[input][\"physical_key\"])
+				inputSettingsData_[input] = key
+			\"mouse\":
+				var button := InputEventMouseButton.new()
+				button.set_button_index(data_[input][\"button\"])
+				inputSettingsData_[input] = button
+	
+	# Itterate through all the expected actions
+	for action in ACTION_LIST_:
+		if not data_.has(action):
+			data_[action] = InputMap.action_get_events(action)[0]
+			invalidSaveFile = true
+			push_warning(\"Input action is missing: \", action)
+"
+
+[node name="InputSettings" type="Button"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Input Settings"
+script = SubResource("GDScript_te2ja")
+ElementPanelScene = ExtResource("1_6pc66")

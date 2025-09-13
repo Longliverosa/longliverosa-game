@@ -1,7 +1,7 @@
 extends CharacterBody2D
 class_name Companion
 
-@export var power_slot_scene: PackedScene = preload("res://Scenes/Player/PowerSlot.tscn")
+@export var power_slot_scene: PackedScene = preload("res://Scenes/Player/power_slot.tscn")
 @onready var eye_platform_scene: PackedScene = preload("res://Scenes/Player/eyeplatform.tscn")
 @onready var pepper_animations: AnimationPlayer = $PepperAnimations
 @onready var subcamera: Camera2D = $Camera2D
