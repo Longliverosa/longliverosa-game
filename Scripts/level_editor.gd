@@ -75,6 +75,7 @@ func _on_item_select_item_selected(index: int) -> void:
 func _process(_delta: float) -> void:
 	if Input.is_action_pressed("drag", true) or edit_interface.is_mouse_over:
 		return 
+		
 	if current_category == Categories.TILES:
 		var selected_tile = tile_map.local_to_map(get_local_mouse_position())
 		if Input.is_action_pressed("click"):
