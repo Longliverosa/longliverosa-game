@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dqs2syn58gexv"]
+[gd_scene load_steps=6 format=3 uid="uid://dqs2syn58gexv"]
 
 [ext_resource type="Script" uid="uid://dg0p3ur7aden5" path="res://Scripts/level_editor.gd" id="1_bkpai"]
 [ext_resource type="TileSet" uid="uid://cvovyihqvkh1c" path="res://Scenes/LevelEditor/TileSet.tres" id="2_eyld0"]
 [ext_resource type="PackedScene" uid="uid://crnybjn75ot3p" path="res://Scenes/LevelEditor/entity_spawn.tscn" id="2_vteww"]
 [ext_resource type="Script" uid="uid://bfbhs6pxs4xyb" path="res://Scripts/level_editor_temp_scene.gd" id="3_7onm0"]
+[ext_resource type="Script" uid="uid://wsnh25lasgk0" path="res://Scripts/level_edit_interface.gd" id="5_eyld0"]
 
 [node name="LevelEditor" type="Control"]
 layout_mode = 3
@@ -31,12 +32,14 @@ tile_set = ExtResource("2_eyld0")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="EditInterface" type="Control" parent="CanvasLayer"]
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
 offset_left = 25.0
 offset_top = 20.0
 offset_right = 140.0
 offset_bottom = 334.0
+script = ExtResource("5_eyld0")
 
 [node name="ItemSelect" type="ItemList" parent="CanvasLayer/EditInterface"]
 unique_name_in_owner = true
@@ -44,6 +47,7 @@ layout_mode = 0
 offset_right = 112.0
 offset_bottom = 250.0
 focus_mode = 0
+mouse_filter = 1
 auto_width = true
 item_count = 1
 fixed_column_width = 100
@@ -56,6 +60,7 @@ offset_top = 250.0
 offset_right = 112.0
 offset_bottom = 312.0
 focus_mode = 0
+mouse_filter = 1
 auto_width = true
 auto_height = true
 item_count = 2
@@ -98,6 +103,8 @@ offset_right = 583.0
 offset_bottom = 334.0
 text = "Navigate using WASD, place with left click, remove with right, flip with z"
 
+[connection signal="mouse_entered" from="CanvasLayer/EditInterface" to="CanvasLayer/EditInterface" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/EditInterface" to="CanvasLayer/EditInterface" method="_on_mouse_exited"]
 [connection signal="item_selected" from="CanvasLayer/EditInterface/ItemSelect" to="." method="_on_item_select_item_selected"]
 [connection signal="item_selected" from="CanvasLayer/EditInterface/CategorySelect" to="." method="_on_category_select_item_selected"]
 [connection signal="pressed" from="CanvasLayer/EditInterface/SaveScene" to="." method="_on_save_button_pressed"]
