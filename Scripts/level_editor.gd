@@ -6,6 +6,7 @@ class_name LevelEditor
 @onready var category_select : ItemList = %CategorySelect
 @onready var camera : Camera2D = %Camera
 @onready var created_scene : Node2D = %CreatedScene
+@onready var edit_interface : Control = %EditInterface
 
 @export var entity_placeholder_scene : PackedScene
 
@@ -61,6 +62,8 @@ func set_item_select_for_category(category : int) -> void:
 			var index = item_select.add_item(entity.name, entity.icon)
 			if entity.name == "Player" and is_player_placed:
 				item_select.set_item_disabled(index, true)
+			else:
+				item_select.set_item_disabled(index, false)
 		for item in created_scene.get_children():
 			if item is EntitySpawn:
 				item.mouse_filter = Control.MOUSE_FILTER_PASS
@@ -69,9 +72,9 @@ func set_item_select_for_category(category : int) -> void:
 func _on_item_select_item_selected(index: int) -> void:
 	current_tile_index = index
 
-func _unhandled_input(_event: InputEvent) -> void:
-	if Input.is_action_pressed("drag", true):
-		return
+func _process(_delta: float) -> void:
+	if Input.is_action_pressed("drag", true) or edit_interface.is_mouse_over:
+		return 
 	if current_category == Categories.TILES:
 		var selected_tile = tile_map.local_to_map(get_local_mouse_position())
 		if Input.is_action_pressed("click"):
@@ -79,7 +82,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 		if Input.is_action_pressed("alt_click"):
 			tile_map.set_cells_terrain_connect([selected_tile], 0, -1)
 	elif current_category == Categories.ENTITIES and not item_select.is_item_disabled(current_tile_index):
-		if Input.is_action_pressed("click"):
+		if Input.is_action_just_pressed("click"):
 			var scene = entity_placeholder_scene.instantiate()
 			scene.position = get_local_mouse_position() + Vector2(-20, -20)
 			if should_flip:
@@ -91,7 +94,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 			if(entities[current_tile_index].name == "Player"):
 				item_select.set_item_disabled(current_tile_index, true)
 				is_player_placed = true
-	if Input.is_action_pressed("pepper_power"):
+	if Input.is_action_just_pressed("pepper_power"):
 		should_flip = !should_flip
 		
 var move_delta_start = Vector3.ZERO
