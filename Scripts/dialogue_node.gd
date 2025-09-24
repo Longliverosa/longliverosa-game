@@ -3,10 +3,10 @@ class_name DialogueNode
 
 enum NodeTypes {REPLYABLE, RESPONSE}
 
-var node_id:String = ""
-var node_speaker:String = ""
-var node_text:String = ""
-var node_choice:Array = []
+var node_id:String
+var node_speaker:String
+var node_text:String
+var node_choice:Array
 var node_next_id:String = "end"
 
 
@@ -75,16 +75,16 @@ func validate() -> bool:
 	return is_valid
 ### --------------------------------
 
-### internal node content export ---
-func export() -> String:
-	if !validate():
-		return ""
+### internal content export --------
+func export() -> Dictionary:
 	var final_node:Dictionary = {}
+	if !validate():
+		return final_node
 	
 	if node_choice.size() > 0:
 		final_node = {
 			"id": node_id,
-			"type": NodeTypes.REPLYABLE,
+			"type": "replyable",
 			"speaker": node_speaker,
 			"text": node_text,
 			"choices": node_choice
@@ -92,12 +92,30 @@ func export() -> String:
 	else:
 			final_node = {
 			"id": node_id,
-			"type": NodeTypes.RESPONSE,
+			"type": "response",
 			"speaker": node_speaker,
 			"text": node_text,
 			"next_id": node_next_id
 		} 
-	
-	var node_content:String = JSON.stringify(final_node,"\t")
-	return node_content
+
+	return final_node
 ### --------------------------------
+
+### internal content import --------
+func import(data:Dictionary):
+	node_id = data["id"]
+	node_speaker = data["speaker"]
+	node_text = data["text"]
+	
+	if data["type"] == "response":
+		node_next_id = data["next_id"]
+	elif data["type"] == "replyable":
+		node_choice = data["choices"]
+### --------------------------------
+
+
+func display_node(ui_node:DialogueUiFrontend):
+	if node_choice.size() > 0:
+		ui_node.start_choice(node_speaker,node_text,node_choice)
+	else:
+		ui_node.start(node_speaker, node_text, node_next_id)

@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://ba76ct7vgkyn1"]
+
+[ext_resource type="Script" uid="uid://mbm55h1mnnnw" path="res://Scripts/dialogue_ui_frontend.gd" id="1_b1oqd"]
+[ext_resource type="Texture2D" uid="uid://bp0p5v2rrvleq" path="res://Sprites/Props/spr_dialogue_box.png" id="1_htj4e"]
+
+[node name="Dialogue" type="CanvasLayer"]
+script = ExtResource("1_b1oqd")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+offset_left = 19.0
+offset_top = 243.0
+offset_right = 627.0
+offset_bottom = 345.0
+texture = ExtResource("1_htj4e")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="Name" type="RichTextLabel" parent="NinePatchRect"]
+offset_left = 11.0
+offset_top = 7.0
+offset_right = 139.0
+offset_bottom = 33.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "[NAME]"
+
+[node name="Text" type="RichTextLabel" parent="NinePatchRect"]
+offset_left = 12.0
+offset_top = 34.0
+offset_right = 589.0
+offset_bottom = 83.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "[THIS IS A TEST TEXT LABLE] "
+fit_content = true
+scroll_active = false
+scroll_following = true
+
+[node name="GridContainer" type="GridContainer" parent="NinePatchRect"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 64.0
+offset_right = 590.0
+offset_bottom = 96.0
+columns = 4

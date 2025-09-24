@@ -2,64 +2,84 @@
 extends Area2D
 class_name DialogueManager
 
-#func load_dialogue_data():
+# each containing node is an orphan, implement better solution @ later point
+var dialogue_cluster_collection:Array
 
-#func _on_body_entered(body):
-	#generate_example_script()
+func _on_body_entered(_body):
+	if dialogue_cluster_collection.is_empty():
+		return
+	
+	dialogue_cluster_collection[0].initiate_dialogue(get_parent())
 
 func _ready():
 	generate_example_script()
+	var dialogue_data:String = load_game()
+	if dialogue_data == "":
+		return
+	parse_dialogue_data(dialogue_data)
 
 func generate_example_script():
-	var node:DialogueNode = DialogueNode.new("Hello, traveler! It's me, the voice behind the curtains.","VOID")
+	var dialogue_cluster:DialogueCluster = DialogueCluster.new("Intro")
+	var node:DialogueNode
+
+	node = DialogueNode.new("Hello, traveler! It's me, the voice behind the curtains.","VOID")
 	node.add_choice("Hello!","greet_back")
 	node.add_choice("I'm scared!","scary_reply")
+	dialogue_cluster.add_node(node)
 	
-	#node.export()
-	node.validate()
-	
-	var response_node:DialogueNode = DialogueNode.new("Hello back!","PLAYER","greet_back")
-	print(response_node.export())
-	
-	## output example for later data processing
-	var my_dict = {
-		"dialogue_name": "Intro",
-		"nodes":[
-			{
-				"id": "start", # standartized "start"
-				"type": "replyable", # change to enum of sorts
-				"speaker": "VOID", # change to character enum of sorts
-				"text": "Hello, traveler! It's me, the voice behind the curtains.",
-				"choices":[
-					{"reply": "Hello!", "next":"greet_back"},
-					{"reply": "I'm scared!", "next":"scary_reply"}
-				]
-			},
-			{
-				"id": "greet_back",
-				"type": "response", # change to enum of sorts
-				"speaker": "PLAYER",
-				"text": "Hello back!",
-				"next_id": "end"
-			},
-			{
-				"id": "scary_reply",
-				"type": "response", # change to enum of sorts
-				"speaker": "PLAYER",
-				"text": "WHO ARE YOU?! I'm scared!",
-				"next_id": "end"
-			}
-		]
-	}
-	var json_string = JSON.stringify(my_dict, "\t")
-	#print(json_string)
+	dialogue_cluster.add_node(DialogueNode.new("Hello back!","PLAYER","greet_back"))
+	dialogue_cluster.add_node(DialogueNode.new("WHO ARE YOU?! I'm scared!","PLAYER","scary_reply"))
+
+	var dialogue_cluster_arr:Array = [dialogue_cluster.export()]
+	var json_string:String = JSON.stringify(dialogue_cluster_arr,"\t",false)
 	save_game(json_string)
 
+func parse_dialogue_data(data:String):
+	var json = JSON.new()
+	var error = json.parse(data)
+	
+	if error == OK:
+		var data_recieved:Array = json.data
+		for n in data_recieved.size():
+			var dialogue_cluster_dict:Dictionary = data_recieved[n]
+			var dialogue_cluster = DialogueCluster.new(dialogue_cluster_dict["cluster_name"])
+			dialogue_cluster.import(dialogue_cluster_dict)
+			dialogue_cluster_collection.push_back(dialogue_cluster)
+	else:
+		print("JSON Parse Error: ", json.get_error_message(), " at line ", json.get_error_line())
+	
+	# Debugging purposes only
+	#var temp_arr:Array = [dialogue_cluster_collection[0].export()]
+	#var json_string:String = JSON.stringify(temp_arr,"\t",false)
+	#print(json_string)
 
-func save_game(data):
+func save_game(data:String):
+	const FILE_NAME: String = "sample_dialogue"
+	const FILE_EXTENSION: String = ".json"
+	const FULL_PATH: String = "user://" + FILE_NAME + FILE_EXTENSION
+
+	var save_file = FileAccess.open(FULL_PATH,FileAccess.WRITE)
+	save_file.store_line(data)
+	save_file.close()
+
+# change name to load dialogue file???
+func load_game() -> String:
 	const FILE_NAME: String = "sample_dialogue"
 	const FILE_EXTENSION: String = ".json"
 	const FULL_PATH: String = "user://" + FILE_NAME + FILE_EXTENSION
 	
-	var save_file = FileAccess.open(FULL_PATH,FileAccess.WRITE)
-	save_file.store_line(data)
+	if not FileAccess.file_exists(FULL_PATH):
+		printerr("couldn't find dialogue file")
+		return ""
+	var save_file = FileAccess.open(FULL_PATH,FileAccess.READ)
+	var save_file_content:String = save_file.get_as_text()
+	
+	return save_file_content
+
+func _exit_tree() -> void:
+	for dialogue_cluster:DialogueCluster in dialogue_cluster_collection:
+		for dialogue_node:DialogueNode in dialogue_cluster.dialogue_nodes:
+			dialogue_node.queue_free()
+		dialogue_cluster.queue_free()
+	print_orphan_nodes()
+	#TODO find the other 4 orphan nodes still left
