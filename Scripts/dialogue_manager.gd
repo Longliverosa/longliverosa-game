@@ -13,7 +13,7 @@ func _on_body_entered(_body):
 
 func _ready():
 	generate_example_script()
-	var dialogue_data:String = load_game()
+	var dialogue_data:String = load_dialogue_file()
 	if dialogue_data == "":
 		return
 	parse_dialogue_data(dialogue_data)
@@ -32,7 +32,7 @@ func generate_example_script():
 
 	var dialogue_cluster_arr:Array = [dialogue_cluster.export()]
 	var json_string:String = JSON.stringify(dialogue_cluster_arr,"\t",false)
-	save_game(json_string)
+	save_dialogue_file(json_string)
 	
 	for dialogue_node:DialogueNode in dialogue_cluster.dialogue_nodes:
 		dialogue_node.queue_free()
@@ -59,7 +59,7 @@ func parse_dialogue_data(data:String):
 	#var json_string:String = JSON.stringify(temp_arr,"\t",false)
 	#print(json_string)
 
-func save_game(data:String):
+func save_dialogue_file(data:String):
 	const FILE_NAME: String = "sample_dialogue"
 	const FILE_EXTENSION: String = ".json"
 	const FULL_PATH: String = "user://" + FILE_NAME + FILE_EXTENSION
@@ -68,8 +68,7 @@ func save_game(data:String):
 	save_file.store_line(data)
 	save_file.close()
 
-# change name to load dialogue file???
-func load_game() -> String:
+func load_dialogue_file() -> String:
 	const FILE_NAME: String = "sample_dialogue"
 	const FILE_EXTENSION: String = ".json"
 	const FULL_PATH: String = "user://" + FILE_NAME + FILE_EXTENSION

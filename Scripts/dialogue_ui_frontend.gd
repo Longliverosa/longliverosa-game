@@ -2,10 +2,11 @@ extends Node
 class_name DialogueUiFrontend
 
 signal dialogue_continue(next_id:String)
+const TIME_FADEIN_FACTOR:float = 50.0
 
 var button_instances:Array
 var node_next_id:String
-
+var tween
 
 func reset() -> void:
 	$NinePatchRect/GridContainer.visible = false
@@ -13,25 +14,39 @@ func reset() -> void:
 		button_node.queue_free()
 		$NinePatchRect/GridContainer.remove_child(button_node)
 	button_instances.clear()
+	tween = create_tween()
 
 func start(character_name:String, text:String, next_id:String = ""):
 	reset()
 	$NinePatchRect.visible = true
 	$NinePatchRect/Name.text = character_name
+	
+	$NinePatchRect/Text.visible_characters = 0
 	$NinePatchRect/Text.text = text
+	var text_length = $NinePatchRect/Text.get_total_character_count()
+	var dynamic_size_duration = text_length / TIME_FADEIN_FACTOR
+	tween.tween_property($NinePatchRect/Text,"visible_characters",text_length,dynamic_size_duration)
+	
 	node_next_id = next_id
 
 func start_choice(character_name:String, text:String, choices:Array):
 	reset()
-	$NinePatchRect/GridContainer.visible = true
 	$NinePatchRect.visible = true
+	
+	$NinePatchRect/Name.text = character_name
+	
+	$NinePatchRect/Text.visible_characters = 0
+	$NinePatchRect/Text.text = text
+	var text_length = $NinePatchRect/Text.get_total_character_count()
+	var dynamic_size_duration = text_length / TIME_FADEIN_FACTOR
+	tween.tween_property($NinePatchRect/Text,"visible_characters",text_length,dynamic_size_duration)
+	
+	$NinePatchRect/GridContainer.visible = false
+	tween.tween_property($NinePatchRect/GridContainer, "visible",true, 0)
 	
 	for choice_dict:Dictionary in choices:
 		var button_inst:Button = generate_button(choice_dict["reply"],choice_dict["next_id"])
 		button_instances.push_back(button_inst)
-	
-	$NinePatchRect/Name.text = character_name
-	$NinePatchRect/Text.text = text
 
 func generate_button(text:String,next_id:String) -> Button:
 	var button_instance = Button.new()
@@ -58,8 +73,13 @@ func on_button_clicked(next_id:String):
 	emit_signal("dialogue_continue",next_id)
 
 func _input(event:InputEvent):
-	if event.is_pressed() && $NinePatchRect/GridContainer.visible == false:
+	if event.is_pressed() && $NinePatchRect/GridContainer.visible == false && $NinePatchRect/Text.visible_ratio == 1:
 		on_button_clicked(node_next_id)
+	elif event.is_pressed() && $NinePatchRect/GridContainer.visible == false:
+		tween.kill()
+		$NinePatchRect/Text.visible_ratio = 1
+		if $NinePatchRect/GridContainer.get_child_count() > 0:
+			$NinePatchRect/GridContainer.visible = true
 
 func clear():
 	$NinePatchRect/GridContainer.queue_free()
