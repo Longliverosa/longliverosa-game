@@ -33,6 +33,12 @@ func generate_example_script():
 	var dialogue_cluster_arr:Array = [dialogue_cluster.export()]
 	var json_string:String = JSON.stringify(dialogue_cluster_arr,"\t",false)
 	save_game(json_string)
+	
+	for dialogue_node:DialogueNode in dialogue_cluster.dialogue_nodes:
+		dialogue_node.queue_free()
+	
+	dialogue_cluster.queue_free()
+	node.queue_free()
 
 func parse_dialogue_data(data:String):
 	var json = JSON.new()
@@ -77,9 +83,8 @@ func load_game() -> String:
 	return save_file_content
 
 func _exit_tree() -> void:
+	# clears all the orphaned nodes accumulated to avoid memory leaks
 	for dialogue_cluster:DialogueCluster in dialogue_cluster_collection:
 		for dialogue_node:DialogueNode in dialogue_cluster.dialogue_nodes:
 			dialogue_node.queue_free()
 		dialogue_cluster.queue_free()
-	print_orphan_nodes()
-	#TODO find the other 4 orphan nodes still left

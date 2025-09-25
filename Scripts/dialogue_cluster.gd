@@ -17,6 +17,8 @@ func add_node(node:DialogueNode):
 
 ### clear methods ------------------
 func clear_nodes():
+	for dialogue_node:DialogueNode in dialogue_nodes:
+		dialogue_node.queue_free()
 	dialogue_nodes.clear()
 ### --------------------------------
 
@@ -47,6 +49,7 @@ func import(data:Dictionary):
 		dialogue_nodes.push_back(dialogue_node)
 ### --------------------------------
 
+### node lookup --------------------
 func find_node_by_id(node_id:String) -> DialogueNode:
 	var response_node:DialogueNode = DialogueNode.new("Can't find node by id","ERROR")
 	for dialogue_node:DialogueNode in dialogue_nodes:
@@ -54,8 +57,9 @@ func find_node_by_id(node_id:String) -> DialogueNode:
 			response_node.queue_free()
 			return dialogue_node
 	return response_node
+### --------------------------------
 
-
+### dialogue handler ---------------
 func initiate_dialogue(game_scene:Node):
 	var dialogue_object:DialogueUiFrontend = preload("res://Scenes/Player/dialogue.tscn").instantiate()
 	game_scene.add_child(dialogue_object)
@@ -86,6 +90,4 @@ func reset_ui():
 	ui = null
 	
 	game_scene_ref = null
-	print_orphan_nodes()
-
-### method which takes in next_id and loads next dialogue box
+### --------------------------------

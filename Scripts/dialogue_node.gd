@@ -1,8 +1,6 @@
 extends Node
 class_name DialogueNode
 
-enum NodeTypes {REPLYABLE, RESPONSE}
-
 var node_id:String
 var node_speaker:String
 var node_text:String
@@ -113,9 +111,10 @@ func import(data:Dictionary):
 		node_choice = data["choices"]
 ### --------------------------------
 
-
+### dialogue handler ---------------
 func display_node(ui_node:DialogueUiFrontend):
 	if node_choice.size() > 0:
 		ui_node.start_choice(node_speaker,node_text,node_choice)
 	else:
 		ui_node.start(node_speaker, node_text, node_next_id)
+### --------------------------------
