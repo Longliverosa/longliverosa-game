@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://d0mer00ituels"]
 
 [ext_resource type="Script" uid="uid://dxkeftgpdeo8" path="res://Scripts/enemy.gd" id="1_kfkw2"]
-[ext_resource type="Texture2D" path="res://Sprites/Characters/Peppers/crab_placeholder.png" id="2_ahjfl"]
+[ext_resource type="Texture2D" uid="uid://c2ivboeq415v6" path="res://Sprites/Enemies/crab_placeholder.png" id="2_ahjfl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tcq61"]
 
