@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://3qos2y3uqpnw"
-path="res://.godot/imported/Seagull.png-28dd11952748d9df908d918ee0bf94c5.ctex"
+path="res://.godot/imported/seagull.png-c8f05c4a50d3fab6076437b533ba237b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Enemies/Seagull.png"
-dest_files=["res://.godot/imported/Seagull.png-28dd11952748d9df908d918ee0bf94c5.ctex"]
+source_file="res://Sprites/Enemies/seagull.png"
+dest_files=["res://.godot/imported/seagull.png-c8f05c4a50d3fab6076437b533ba237b.ctex"]
 
 [params]
 

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://d0mer00ituels" path="res://Scenes/Entities/base_enemy.tscn" id="1_gwovj"]
 [ext_resource type="Script" uid="uid://bb4pxb426cdam" path="res://Scripts/seagull_enemy.gd" id="2_ew1id"]
-[ext_resource type="Texture2D" uid="uid://3qos2y3uqpnw" path="res://Sprites/Enemies/Seagull.png" id="3_3s5ug"]
+[ext_resource type="Texture2D" uid="uid://3qos2y3uqpnw" path="res://Sprites/Enemies/seagull.png" id="3_3s5ug"]
 
 [node name="Enemy" instance=ExtResource("1_gwovj")]
 script = ExtResource("2_ew1id")
