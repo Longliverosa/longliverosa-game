@@ -7,6 +7,7 @@ extends CharacterBody2D
 @export var max_speed: int = 200
 @export var acceleration: float = 0.06
 @export var friction: float = 0.15
+
 @onready var label: Label = $Canvas/Label
 @onready var shield_slider: HSlider = $Canvas/ShieldSlider
 @onready var select_power: Node = $SelectPower
@@ -23,6 +24,8 @@ var controlling: bool = false
 
 var has_shield: bool = true
 var level_start_pos: Vector2
+
+var impulse_velocity: Vector2 = Vector2.ZERO
 
 var shortcut_map = {
 	"orange_shortcut": 0,
@@ -65,12 +68,17 @@ func _physics_process(delta):
 			GFX.flip_h = false
 	else:
 		velocity.x = lerp(velocity.x, 0.0, friction)
+		
+	if impulse_velocity != Vector2.ZERO:
+		velocity += impulse_velocity
+		impulse_velocity = Vector2.ZERO
+		print(velocity.y)
 	var has_collisions = move_and_slide()
 	if has_collisions: 
 		var last_collision = get_last_slide_collision()
 		var collider = last_collision.get_collider()
-		if(collider.is_in_group("attackable") and collider is Enemy and !collider.fainted):
-			damage(1)
+		if(collider.is_in_group("damage_player")):
+			damage(global_position.angle_to_point(Vector2(collider.global_position.x, collider.global_position.y - 20)))
 	
 
 func _process(_delta: float) -> void:
@@ -103,12 +111,15 @@ func _input(_event):
 		if Input.is_action_just_pressed("pepper_power"):
 			companion.use_power()
 
-func damage(damage: float) -> void:
+func damage(angle: float) -> void:
 	if has_shield:
 		has_shield = false
 		shield_slider.visible = true
 		shield_cooldown.start()
 		damage_cooldown.start()
+		
+		var direction_vector = Vector2(-cos(angle), sin(angle)).normalized() 
+		impulse_velocity = Vector2(direction_vector.x * 400, direction_vector.y * (-300 if is_on_floor() else -800)) 
 	elif damage_cooldown.is_stopped():
 		reset_to_checkpoint()
 
