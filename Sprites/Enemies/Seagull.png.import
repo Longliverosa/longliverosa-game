@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c2ivboeq415v6"
-path="res://.godot/imported/crab_placeholder.png-761016b83c32647c275b3ab7529d6b4f.ctex"
+uid="uid://3qos2y3uqpnw"
+path="res://.godot/imported/Seagull.png-28dd11952748d9df908d918ee0bf94c5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Characters/Peppers/crab_placeholder.png"
-dest_files=["res://.godot/imported/crab_placeholder.png-761016b83c32647c275b3ab7529d6b4f.ctex"]
+source_file="res://Sprites/Enemies/Seagull.png"
+dest_files=["res://.godot/imported/Seagull.png-28dd11952748d9df908d918ee0bf94c5.ctex"]
 
 [params]
 

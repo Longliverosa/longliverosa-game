@@ -56,6 +56,7 @@ attackable=""
 magnetizable=""
 grounded=""
 obstacle=""
+damage_player="Damages player if touched"
 
 [input]
 
@@ -182,6 +183,7 @@ pause={
 2d_physics/layer_1="Environment"
 2d_physics/layer_2="Player"
 2d_physics/layer_3="Enemies"
+2d_physics/layer_4="Pepper"
 
 [rendering]
 

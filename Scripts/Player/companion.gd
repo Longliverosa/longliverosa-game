@@ -201,9 +201,6 @@ func _update_crosshair():
 		"grappling_hook":
 			target = _find_nearest_in_groups(["hookable", "pullable"], PLUG_RANGE)
 			color = CROSSHAIR_COLORS["grappling_hook"]
-		"basic_attack":
-			target = _find_nearest_in_group("attackable", BASIC_ATTACK_RANGE)
-			color = CROSSHAIR_COLORS["basic_attack"]
 		"destroy_blocks":
 			target = _find_nearest_in_group("breakable", PLUG_RANGE)
 			color = CROSSHAIR_COLORS["destroy_blocks"]
@@ -216,26 +213,37 @@ func _update_crosshair():
 	else:
 		crosshair.visible = false
 
-func _attack_or_break_nearest(group: String, radius: float = 200):
+func _attack(range: float):
+	if is_attacking:
+		return
+	is_attacking = true
+	pepper_animations.play("OrangeAttack")
+	var attacked = []
+	var target = Vector2(player_body.global_position.x + (-range if player_body.GFX.flip_h else range), player_body.global_position.y)
+	while target.distance_to(global_position) > 5.0:
+		var delta = get_process_delta_time()
+		global_position = global_position.lerp(target, follow_speed * delta)
+		for node in get_tree().get_nodes_in_group("attackable"):
+			if node in attacked:
+				continue
+			if global_position.distance_to(node.global_position) <= 25: 
+				attacked.append(node)
+				node.get_parent().damage()
+		await get_tree().process_frame
+	is_attacking = false
+
+func break_nearest(group: String, radius: float = 200):
 	var target = _find_nearest_in_group(group, radius)
 	is_attacking = true
 	if target:
-		match group:
-			"breakable":
-				pepper_animations.play("YellowAttack")
-			"attackable":
-				pepper_animations.play("OrangeAttack")
+		pepper_animations.play("YellowAttack")
 
 		while target and target.global_position.distance_to(global_position) > 3.0:
 			var delta = get_process_delta_time()
 			global_position = global_position.lerp(target.global_position, follow_speed * delta)
 			await get_tree().process_frame
 		if target:
-			if group == "breakable":
-				target.queue_free()
-			elif group == "attackable":
-				target.rotation_degrees = 180
-				target.fainted = true
+			target.queue_free()
 	is_attacking = false
 	
 func _create_power_instance(id: String) -> Power:
