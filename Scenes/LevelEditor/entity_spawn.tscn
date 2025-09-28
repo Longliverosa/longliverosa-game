@@ -1,10 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://crnybjn75ot3p"]
+[gd_scene load_steps=3 format=3 uid="uid://crnybjn75ot3p"]
 
+[ext_resource type="Texture2D" uid="uid://3qos2y3uqpnw" path="res://Sprites/Enemies/seagull.png" id="1_evh07"]
 [ext_resource type="Script" uid="uid://dwbaplg5no0va" path="res://Scripts/entity_spawn.gd" id="1_f4kw6"]
 
 [node name="EntitySpawn" type="TextureRect"]
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -340.0
+offset_top = -200.0
+offset_right = -300.0
+offset_bottom = -160.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_evh07")
+expand_mode = 1
+stretch_mode = 5
 script = ExtResource("1_f4kw6")
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
