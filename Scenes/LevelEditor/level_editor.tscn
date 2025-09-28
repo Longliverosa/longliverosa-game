@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dqs2syn58gexv"]
+[gd_scene load_steps=7 format=3 uid="uid://dqs2syn58gexv"]
 
 [ext_resource type="Script" uid="uid://dg0p3ur7aden5" path="res://Scripts/level_editor.gd" id="1_bkpai"]
 [ext_resource type="TileSet" uid="uid://cvovyihqvkh1c" path="res://Scenes/LevelEditor/TileSet.tres" id="2_eyld0"]
 [ext_resource type="PackedScene" uid="uid://crnybjn75ot3p" path="res://Scenes/LevelEditor/entity_spawn.tscn" id="2_vteww"]
 [ext_resource type="Script" uid="uid://bfbhs6pxs4xyb" path="res://Scripts/level_editor_temp_scene.gd" id="3_7onm0"]
 [ext_resource type="Script" uid="uid://wsnh25lasgk0" path="res://Scripts/level_edit_interface.gd" id="5_eyld0"]
+[ext_resource type="Texture2D" uid="uid://3qos2y3uqpnw" path="res://Sprites/Enemies/seagull.png" id="6_te4j6"]
 
 [node name="LevelEditor" type="Control"]
 layout_mode = 3
@@ -48,10 +49,13 @@ offset_right = 112.0
 offset_bottom = 250.0
 focus_mode = 0
 mouse_filter = 1
+mouse_default_cursor_shape = 2
 auto_width = true
 item_count = 1
 fixed_column_width = 100
+fixed_icon_size = Vector2i(32, 32)
 item_0/text = "test"
+item_0/icon = ExtResource("6_te4j6")
 
 [node name="CategorySelect" type="ItemList" parent="CanvasLayer/EditInterface"]
 unique_name_in_owner = true
@@ -61,6 +65,7 @@ offset_right = 112.0
 offset_bottom = 312.0
 focus_mode = 0
 mouse_filter = 1
+mouse_default_cursor_shape = 2
 auto_width = true
 auto_height = true
 item_count = 2
@@ -75,6 +80,8 @@ offset_top = -8.0
 offset_right = 602.0
 offset_bottom = 23.0
 focus_mode = 0
+mouse_filter = 1
+mouse_default_cursor_shape = 2
 text = "Save"
 
 [node name="TestScene" type="Button" parent="CanvasLayer/EditInterface"]
@@ -84,6 +91,8 @@ offset_top = 25.0
 offset_right = 602.0
 offset_bottom = 56.0
 focus_mode = 0
+mouse_filter = 1
+mouse_default_cursor_shape = 2
 text = "Test"
 
 [node name="BackButton" type="Button" parent="CanvasLayer/EditInterface"]
@@ -93,6 +102,8 @@ offset_top = 57.0
 offset_right = 602.0
 offset_bottom = 88.0
 focus_mode = 0
+mouse_filter = 1
+mouse_default_cursor_shape = 2
 text = "Back"
 
 [node name="Label" type="Label" parent="CanvasLayer/EditInterface"]

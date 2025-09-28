@@ -77,7 +77,7 @@ func _physics_process(delta):
 	if has_collisions: 
 		var last_collision = get_last_slide_collision()
 		var collider = last_collision.get_collider()
-		if(collider.is_in_group("damage_player")):
+		if(collider.is_in_group("damage_player") and not collider.get_parent().fainted):
 			damage(global_position.angle_to_point(Vector2(collider.global_position.x, collider.global_position.y - 20)))
 	
 

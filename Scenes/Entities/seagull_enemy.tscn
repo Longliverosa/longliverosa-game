@@ -15,7 +15,8 @@ aggro_enter_range = 90.0
 aggro_exit_range = 90.0
 
 [node name="GFX" parent="Enemy" index="1"]
-position = Vector2(0, -10.205)
+position = Vector2(0, -12.075)
+scale = Vector2(0.11, 0.11)
 texture = ExtResource("3_3s5ug")
 
 [node name="WaitTimer" parent="." index="2"]
