@@ -7,6 +7,9 @@ var dialogue_nodes:Array
 var ui:DialogueUiFrontend
 var game_scene_ref:Node
 
+signal freeze_player
+signal unfreeze_player
+
 func _init(cluster_name:String):
 	dialogue_cluster_name = cluster_name
 
@@ -62,8 +65,12 @@ func find_node_by_id(node_id:String) -> DialogueNode:
 ### dialogue handler ---------------
 func initiate_dialogue(game_scene:Node):
 	var dialogue_object:DialogueUiFrontend = preload("res://Scenes/Player/dialogue.tscn").instantiate()
+	if not dialogue_object:
+		push_error("Dialogue Object Missing!")
+		return
 	game_scene.add_child(dialogue_object)
 	dialogue_object.dialogue_continue.connect(on_dialogue_continue)
+	emit_signal("freeze_player")
 	
 	if ui == null:
 		ui = dialogue_object
@@ -83,6 +90,7 @@ func on_dialogue_continue(next_id:String):
 	entry_node.display_node(ui)
 
 func reset_ui():
+	emit_signal("unfreeze_player")
 	game_scene_ref.remove_child(ui)
 	
 	ui.clear()

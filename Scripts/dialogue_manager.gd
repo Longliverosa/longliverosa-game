@@ -6,9 +6,11 @@ class_name DialogueManager
 var dialogue_cluster_collection:Array
 
 func _on_body_entered(_body):
+	# Implement start_dialogue function with following functionality
 	if dialogue_cluster_collection.is_empty():
 		return
-	
+	dialogue_cluster_collection[0].connect("freeze_player",func(): freeze_player())
+	dialogue_cluster_collection[0].connect("unfreeze_player",func(): unfreeze_player())
 	dialogue_cluster_collection[0].initiate_dialogue(get_parent())
 
 func _ready():
@@ -87,3 +89,13 @@ func _exit_tree() -> void:
 		for dialogue_node:DialogueNode in dialogue_cluster.dialogue_nodes:
 			dialogue_node.queue_free()
 		dialogue_cluster.queue_free()
+
+func freeze_player():
+	var player_obj:CharacterBody2D = self.get_parent().get_node("Player")
+	if player_obj:
+		player_obj.dialogue_active = true
+
+func unfreeze_player():
+	var player_obj:CharacterBody2D = self.get_parent().get_node("Player")
+	if player_obj:
+		player_obj.dialogue_active = false
