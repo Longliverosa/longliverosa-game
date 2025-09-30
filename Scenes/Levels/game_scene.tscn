@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://bq6oq5v2mk5ay"]
+[gd_scene load_steps=15 format=4 uid="uid://bq6oq5v2mk5ay"]
 
 [ext_resource type="Script" uid="uid://s8wfcvltuxo7" path="res://Scripts/game_scene.gd" id="1_sxkof"]
 [ext_resource type="TileSet" uid="uid://cvovyihqvkh1c" path="res://Scenes/LevelEditor/TileSet.tres" id="1_tcq61"]
@@ -10,7 +10,9 @@
 [ext_resource type="Script" uid="uid://be7t57y5ukhhj" path="res://Scripts/magnet.gd" id="9_iukr2"]
 [ext_resource type="Texture2D" uid="uid://b3mmvqi4y760p" path="res://Sprites/Props/magnetball.png" id="9_mwoug"]
 [ext_resource type="PackedScene" uid="uid://b1n3kruxhwkje" path="res://Scenes/Props/message_bubble.tscn" id="10_iukr2"]
-[ext_resource type="Script" uid="uid://c25w5dbgbmwis" path="res://Scripts/dialogue_manager.gd" id="11_5lneo"]
+[ext_resource type="Script" uid="uid://c25w5dbgbmwis" path="res://Scripts/Dialogue/dialogue_manager.gd" id="11_5lneo"]
+[ext_resource type="Script" uid="uid://btqetnj6xow5g" path="res://Scripts/Dialogue/dialogue_trigger.gd" id="11_jfqkh"]
+[ext_resource type="Script" uid="uid://byu6kr7gy1tuk" path="res://Scripts/Dialogue/dialogue_script_generator.gd" id="13_snyua"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_iukr2"]
 radius = 4.0
@@ -61,9 +63,20 @@ texture = ExtResource("9_mwoug")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MagnetTest"]
 shape = SubResource("CircleShape2D_iukr2")
 
-[node name="MessageBubble" parent="." instance=ExtResource("10_iukr2")]
+[node name="MessageBubble" parent="." groups=["dialogue_trigger"] instance=ExtResource("10_iukr2")]
 position = Vector2(-8, 212)
 collision_mask = 3
+script = ExtResource("11_jfqkh")
+dialogue_label = "Intro"
+
+[node name="MessageBubble2" parent="." groups=["dialogue_trigger"] instance=ExtResource("10_iukr2")]
+position = Vector2(46, 263)
+collision_mask = 3
+script = ExtResource("11_jfqkh")
+dialogue_label = "Intro2"
+
+[node name="DialogueManager" type="Node2D" parent="."]
 script = ExtResource("11_5lneo")
 
-[connection signal="body_entered" from="MessageBubble" to="MessageBubble" method="_on_body_entered"]
+[node name="DialogueScriptGenerator" type="Node" parent="DialogueManager"]
+script = ExtResource("13_snyua")

@@ -45,11 +45,18 @@ func import(data:Dictionary):
 	
 	var dialogue_nodes_arr:Array = data["nodes"]
 	
+	var dialogue_nodes_label = Node.new()
+	dialogue_nodes_label.name = "DialogueNodes"
+	self.add_child(dialogue_nodes_label)
+	
 	for n in dialogue_nodes_arr.size():
 		var dialogue_node_dict:Dictionary = dialogue_nodes_arr[n]
 		var dialogue_node:DialogueNode = DialogueNode.new("import default","import default")
 		dialogue_node.import(dialogue_node_dict)
 		dialogue_nodes.push_back(dialogue_node)
+		
+		dialogue_node.name = dialogue_node.node_id
+		dialogue_nodes_label.add_child(dialogue_node)
 ### --------------------------------
 
 ### node lookup --------------------
@@ -64,7 +71,7 @@ func find_node_by_id(node_id:String) -> DialogueNode:
 
 ### dialogue handler ---------------
 func initiate_dialogue(game_scene:Node):
-	var dialogue_object:DialogueUiFrontend = preload("res://Scenes/Player/dialogue.tscn").instantiate()
+	var dialogue_object:DialogueUiFrontend = preload("res://Scenes/UIElements/dialogue.tscn").instantiate()
 	if not dialogue_object:
 		push_error("Dialogue Object Missing!")
 		return
@@ -81,7 +88,7 @@ func initiate_dialogue(game_scene:Node):
 	entry_node.display_node(dialogue_object)
 
 func on_dialogue_continue(next_id:String):
-	print("Cluster recieved call: " + next_id)
+	#print("Cluster recieved call: " + next_id) # Debugging only!
 	if next_id == "end":
 		reset_ui()
 		return

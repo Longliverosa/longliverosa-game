@@ -56,6 +56,7 @@ attackable=""
 magnetizable=""
 grounded=""
 obstacle=""
+dialogue_trigger=""
 
 [input]
 

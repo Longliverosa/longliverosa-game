@@ -16,6 +16,7 @@ func reset() -> void:
 	button_instances.clear()
 	tween = create_tween()
 
+### starting methods ------------------
 func start(character_name:String, text:String, next_id:String = ""):
 	reset()
 	$NinePatchRect.visible = true
@@ -47,7 +48,9 @@ func start_choice(character_name:String, text:String, choices:Array):
 	for choice_dict:Dictionary in choices:
 		var button_inst:Button = generate_button(choice_dict["reply"],choice_dict["next_id"])
 		button_instances.push_back(button_inst)
+### -----------------------------------
 
+### ui generator ----------------------
 func generate_button(text:String,next_id:String) -> Button:
 	var button_instance = Button.new()
 	# Content Filling
@@ -67,7 +70,9 @@ func generate_button(text:String,next_id:String) -> Button:
 	# Signal linking internaly
 	button_instance.pressed.connect(func(): on_button_clicked(next_id))
 	return button_instance
+### -----------------------------------
 
+### input handler ---------------------
 func on_button_clicked(next_id:String):
 	# Singal exposure externaly
 	emit_signal("dialogue_continue",next_id)
@@ -80,9 +85,12 @@ func _input(event:InputEvent):
 		$NinePatchRect/Text.visible_ratio = 1
 		if $NinePatchRect/GridContainer.get_child_count() > 0:
 			$NinePatchRect/GridContainer.visible = true
+### -----------------------------------
 
+### garbage collector -----------------
 func clear():
 	$NinePatchRect/GridContainer.queue_free()
 	$NinePatchRect/Name.queue_free()
 	$NinePatchRect/Text.queue_free()
 	$NinePatchRect.queue_free()
+### -----------------------------------
