@@ -8,8 +8,8 @@ Check out the newest release on the release page, or clone the project and play 
 
 ## Helping out with the game
 
--> See the CONTRIBUTING.md document
-
+- See the [CONTRIBUTING.md document](https://github.com/Longliverosa/longliverosa-game?tab=contributing-ov-file) 
+- See the [Contributing to the game](https://github.com/Longliverosa/longliverosa-game/wiki/Contributing-to-the-game) wiki page
 
 ## Repository conventions and rules
 We use the default GDScript naming and style conventions:
