@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dkc0tbyqxgiu6" path="res://Scenes/Entities/seagull_enemy.tscn" id="6_iukr2"]
 [ext_resource type="PackedScene" uid="uid://r7hftsak24ry" path="res://Scenes/Props/door.tscn" id="6_mjcty"]
 [ext_resource type="PackedScene" uid="uid://c1q808d2ol1xa" path="res://Scenes/Entities/crab_enemy.tscn" id="6_mwoug"]
-[ext_resource type="Script" uid="uid://be7t57y5ukhhj" path="res://Scripts/magnet.gd" id="9_iukr2"]
+[ext_resource type="Script" path="res://Scripts/magnet.gd" id="9_iukr2"]
 [ext_resource type="Texture2D" uid="uid://b3mmvqi4y760p" path="res://Sprites/Props/magnetball.png" id="9_mwoug"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_iukr2"]

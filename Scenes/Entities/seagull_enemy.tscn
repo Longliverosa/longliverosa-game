@@ -1,13 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dkc0tbyqxgiu6"]
+[gd_scene load_steps=4 format=3 uid="uid://dkc0tbyqxgiu6"]
 
 [ext_resource type="PackedScene" uid="uid://d0mer00ituels" path="res://Scenes/Entities/base_enemy.tscn" id="1_gwovj"]
 [ext_resource type="Script" uid="uid://bb4pxb426cdam" path="res://Scripts/seagull_enemy.gd" id="2_ew1id"]
 [ext_resource type="Texture2D" uid="uid://3qos2y3uqpnw" path="res://Sprites/Enemies/seagull.png" id="3_3s5ug"]
-[ext_resource type="Shader" uid="uid://cknedsmvjbdxw" path="res://Scenes/Entities/base_enemy.tres" id="3_31dq1"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_a2qar"]
-shader = ExtResource("3_31dq1")
-shader_parameter/enabled = false
 
 [node name="Enemy" instance=ExtResource("1_gwovj")]
 script = ExtResource("2_ew1id")
@@ -20,7 +15,6 @@ aggro_enter_range = 90.0
 aggro_exit_range = 90.0
 
 [node name="GFX" parent="Enemy" index="1"]
-material = SubResource("ShaderMaterial_a2qar")
 position = Vector2(0, -12.075)
 scale = Vector2(0.11, 0.11)
 texture = ExtResource("3_3s5ug")
