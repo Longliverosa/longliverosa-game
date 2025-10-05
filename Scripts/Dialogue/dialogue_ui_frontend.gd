@@ -24,6 +24,8 @@ func start(character_name:String, text:String, next_id:String = ""):
 	
 	$NinePatchRect/Text.visible_characters = 0
 	$NinePatchRect/Text.text = text
+	
+	# Typewriter Animation
 	var text_length = $NinePatchRect/Text.get_total_character_count()
 	var dynamic_size_duration = text_length / TIME_FADEIN_FACTOR
 	tween.tween_property($NinePatchRect/Text,"visible_characters",text_length,dynamic_size_duration)
@@ -33,11 +35,12 @@ func start(character_name:String, text:String, next_id:String = ""):
 func start_choice(character_name:String, text:String, choices:Array):
 	reset()
 	$NinePatchRect.visible = true
-	
 	$NinePatchRect/Name.text = character_name
-	
+
 	$NinePatchRect/Text.visible_characters = 0
 	$NinePatchRect/Text.text = text
+	
+	# Typewriter Animation
 	var text_length = $NinePatchRect/Text.get_total_character_count()
 	var dynamic_size_duration = text_length / TIME_FADEIN_FACTOR
 	tween.tween_property($NinePatchRect/Text,"visible_characters",text_length,dynamic_size_duration)

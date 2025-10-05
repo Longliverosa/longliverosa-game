@@ -20,19 +20,21 @@ patch_margin_bottom = 8
 [node name="Name" type="RichTextLabel" parent="NinePatchRect"]
 layout_mode = 0
 offset_left = 11.0
-offset_top = 7.0
+offset_top = 3.0
 offset_right = 139.0
-offset_bottom = 33.0
+offset_bottom = 27.0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 16
 text = "[NAME]"
 
 [node name="Text" type="RichTextLabel" parent="NinePatchRect"]
 layout_mode = 0
 offset_left = 12.0
-offset_top = 34.0
+offset_top = 25.0
 offset_right = 589.0
 offset_bottom = 83.0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 15
 text = "[THIS IS A TEST TEXT LABLE] "
 fit_content = true
 scroll_active = false
@@ -41,7 +43,7 @@ scroll_following = true
 [node name="GridContainer" type="GridContainer" parent="NinePatchRect"]
 layout_mode = 0
 offset_left = 10.0
-offset_top = 64.0
+offset_top = 67.0
 offset_right = 590.0
-offset_bottom = 96.0
+offset_bottom = 99.0
 columns = 4

@@ -10,6 +10,10 @@ func _ready():
 	parse_dialogue_data(dialogue_data)
 	connect_trigger()
 
+# ANNOUNCEMENT: Dialogue file has to be generated for the Dialogue System to work!!!
+# To generate Dialogue, enter level, press "G" and reload the game.
+# Godot should output an info after the script has been generated
+
 ### dialogue file handler -------------
 func parse_dialogue_data(data:String):
 	var json = JSON.new()
