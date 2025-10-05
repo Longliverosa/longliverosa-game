@@ -35,6 +35,7 @@ var move_direction: Vector2 = Vector2.ZERO
 var grappled: bool = false
 var fainted: bool = false
 var current_gravity: float = 0
+var stunned: bool = false
 
 var is_aggro: bool = false
 @onready var target: Node2D = $"Target"
@@ -53,7 +54,12 @@ func _physics_process(delta):
 	if grappled:
 		return
 	
-	if fainted:
+	if stunned:
+		$Enemy/GFX.material.set("shader_parameter/enabled", true)
+	else:
+		$Enemy/GFX.material.set("shader_parameter/enabled", false)
+	
+	if fainted or stunned:
 		character_body.velocity.x = 0
 	else:
 		var current_target = calculate_target()
@@ -103,11 +109,14 @@ func calculate_gravity(delta: float):
 
 func damage():
 	health -= 1
-	if health <= 0:
-		fainted = true
+	if health <= 0 and !stunned:
+		if stunned:
+			fainted = true
+		else: 
+			stunned = true
 		gravity = 1000
 		sprite_node.flip_v = true
-	
+
 func check_if_stuck(delta: float):
 	if not is_aggro and movement_mode != MoveMode.None and character_body.velocity.length() == 0:
 		stuck_timer += delta

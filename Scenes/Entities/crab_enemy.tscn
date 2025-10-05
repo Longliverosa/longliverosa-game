@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://c1q808d2ol1xa"]
+[gd_scene load_steps=4 format=3 uid="uid://c1q808d2ol1xa"]
 
 [ext_resource type="PackedScene" uid="uid://d0mer00ituels" path="res://Scenes/Entities/base_enemy.tscn" id="1_7wxf3"]
+[ext_resource type="Shader" uid="uid://cknedsmvjbdxw" path="res://Scenes/Entities/base_enemy.tres" id="2_sqfps"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hmudg"]
+shader = ExtResource("2_sqfps")
+shader_parameter/enabled = false
 
 [node name="Enemy" instance=ExtResource("1_7wxf3")]
 speed = 40.0
@@ -10,6 +15,7 @@ aggro_enter_range = 60.0
 aggro_exit_range = 120.0
 
 [node name="GFX" parent="Enemy" index="1"]
+material = SubResource("ShaderMaterial_hmudg")
 position = Vector2(0, -8.175)
 
 [node name="WaitTimer" parent="." index="2"]
