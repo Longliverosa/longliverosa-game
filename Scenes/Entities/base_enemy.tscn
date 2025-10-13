@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3 uid="uid://d0mer00ituels"]
+
+[ext_resource type="Script" uid="uid://dxkeftgpdeo8" path="res://Scripts/enemy.gd" id="1_kfkw2"]
+[ext_resource type="Texture2D" uid="uid://c2ivboeq415v6" path="res://Sprites/Enemies/crab_placeholder.png" id="2_ahjfl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tcq61"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kfkw2"]
+radius = 72.76
+
+[node name="Enemy" type="Node2D"]
+script = ExtResource("1_kfkw2")
+flip_sprite_with_direction = false
+
+[node name="Enemy" type="CharacterBody2D" parent="." groups=["attackable", "damage_player", "freezable", "hookable", "pullable"]]
+collision_layer = 4
+collision_mask = 3
+floor_constant_speed = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
+position = Vector2(0, -6)
+scale = Vector2(0.97878, 0.560718)
+shape = SubResource("RectangleShape2D_tcq61")
+
+[node name="GFX" type="Sprite2D" parent="Enemy"]
+position = Vector2(0, -16.325)
+texture = ExtResource("2_ahjfl")
+
+[node name="AggroEnterArea" type="Area2D" parent="Enemy"]
+position = Vector2(0, -7)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="AggroShape" type="CollisionShape2D" parent="Enemy/AggroEnterArea"]
+shape = SubResource("CircleShape2D_kfkw2")
+
+[node name="AggroExitArea" type="Area2D" parent="Enemy"]
+position = Vector2(0, -7)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="AggroShape" type="CollisionShape2D" parent="Enemy/AggroExitArea"]
+shape = SubResource("CircleShape2D_kfkw2")
+
+[node name="Target" type="Node2D" parent="."]
+position = Vector2(-74.035, 0)
+
+[node name="WaitTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="body_entered" from="Enemy/AggroEnterArea" to="." method="player_entered"]
+[connection signal="body_exited" from="Enemy/AggroExitArea" to="." method="player_left"]

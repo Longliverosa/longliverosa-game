@@ -73,9 +73,11 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2r5mc"]
-radius = 9.48683
+radius = 9.5
 
 [node name="Companion" type="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 4
 script = ExtResource("2_x1gqq")
 follow_speed = 2.2
 

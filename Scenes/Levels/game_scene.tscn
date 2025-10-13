@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dvldnxksorea7" path="res://Scenes/Player/player.tscn" id="1_ukt2a"]
 [ext_resource type="Texture2D" uid="uid://drl35eqdl2llb" path="res://Sprites/Characters/Peppers/hook.png" id="2_2nmlx"]
 [ext_resource type="PackedScene" uid="uid://dqi2b8x4bhgtk" path="res://Scenes/Props/button.tscn" id="4_sxkof"]
+[ext_resource type="PackedScene" uid="uid://dkc0tbyqxgiu6" path="res://Scenes/Entities/seagull_enemy.tscn" id="6_iukr2"]
 [ext_resource type="PackedScene" uid="uid://r7hftsak24ry" path="res://Scenes/Props/door.tscn" id="6_mjcty"]
 [ext_resource type="PackedScene" uid="uid://drpt1wg7i26qo" path="res://Scenes/Entities/enemy.tscn" id="6_mwoug"]
 [ext_resource type="Script" uid="uid://be7t57y5ukhhj" path="res://Scripts/magnet.gd" id="9_iukr2"]
@@ -47,8 +48,11 @@ position = Vector2(652, 192)
 position = Vector2(562, 215)
 collision_mask = 3
 
-[node name="Enemy" parent="." instance=ExtResource("6_mwoug")]
-position = Vector2(438, 264)
+[node name="SeagullEnemy" parent="." instance=ExtResource("6_iukr2")]
+position = Vector2(439, 107)
+
+[node name="CrabEnemy" parent="." instance=ExtResource("6_mwoug")]
+position = Vector2(100, 273)
 
 [node name="Player" parent="." instance=ExtResource("1_ukt2a")]
 position = Vector2(285, 222)
