@@ -59,7 +59,7 @@ func set_item_select_for_category(category : int) -> void:
 				item.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	elif category == Categories.ENTITIES:
 		for entity in entities:
-			var index = item_select.add_item(entity.name, entity.icon)
+			var index = item_select.add_item(tr(entity.name), entity.icon)
 			if entity.name == "Player" and is_player_placed:
 				item_select.set_item_disabled(index, true)
 			else:

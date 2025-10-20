@@ -43,7 +43,7 @@ IS_IN_GAME_SETTING = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "Depth of Field"
+text = "GRAPHICS_DOF"
 vertical_alignment = 1
 
 [node name="Options" type="OptionButton" parent="."]

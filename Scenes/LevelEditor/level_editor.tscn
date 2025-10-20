@@ -70,8 +70,8 @@ auto_width = true
 auto_height = true
 item_count = 2
 fixed_column_width = 100
-item_0/text = "Tiles"
-item_1/text = "Entities"
+item_0/text = "CATEGORY_TILE"
+item_1/text = "CATEGORY_ENTITY"
 
 [node name="SaveScene" type="Button" parent="CanvasLayer/EditInterface"]
 layout_mode = 0
@@ -82,7 +82,7 @@ offset_bottom = 23.0
 focus_mode = 0
 mouse_filter = 1
 mouse_default_cursor_shape = 2
-text = "Save"
+text = "SAVE_BUTTON"
 
 [node name="TestScene" type="Button" parent="CanvasLayer/EditInterface"]
 layout_mode = 0
@@ -93,7 +93,7 @@ offset_bottom = 56.0
 focus_mode = 0
 mouse_filter = 1
 mouse_default_cursor_shape = 2
-text = "Test"
+text = "TEST_BUTTON"
 
 [node name="BackButton" type="Button" parent="CanvasLayer/EditInterface"]
 layout_mode = 0
@@ -104,7 +104,7 @@ offset_bottom = 88.0
 focus_mode = 0
 mouse_filter = 1
 mouse_default_cursor_shape = 2
-text = "Back"
+text = "BACK_BUTTON"
 
 [node name="Label" type="Label" parent="CanvasLayer/EditInterface"]
 layout_mode = 0
@@ -112,7 +112,7 @@ offset_left = 3.0
 offset_top = 311.0
 offset_right = 583.0
 offset_bottom = 334.0
-text = "Navigate using WASD, place with left click, remove with right, flip with z"
+text = "EDITOR_INSTRUCTION"
 
 [connection signal="mouse_entered" from="CanvasLayer/EditInterface" to="CanvasLayer/EditInterface" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/EditInterface" to="CanvasLayer/EditInterface" method="_on_mouse_exited"]
