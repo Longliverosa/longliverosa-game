@@ -27,7 +27,7 @@ IDENTIFIER = "MusicVolume"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "Music"
+text = "AUDIO_MUSIC"
 vertical_alignment = 1
 
 [node name="SliderValue" type="HBoxContainer" parent="."]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c66v42g6gs7gr"]
 
-[ext_resource type="Script" path="res://addons/modular-settings-menu/scripts/settings_section.gd" id="1_i11k5"]
+[ext_resource type="Script" uid="uid://cqg7c7dnllqdt" path="res://addons/modular-settings-menu/scripts/settings_section.gd" id="1_i11k5"]
 [ext_resource type="PackedScene" uid="uid://elu1vc0ox472" path="res://addons/modular-settings-menu/scenes/settings-elements/gameplay-elements/fov.tscn" id="2_c8t76"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e0spm"]
@@ -54,7 +54,7 @@ layout_mode = 2
 [node name="SubSectionName" type="Label" parent="MarginContainer/ScrollContainer/MarginContainer/ElementList/GeneralSettings"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "General Settings"
+text = "GAMEPLAY_SECTION_GENERAL"
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/ScrollContainer/MarginContainer/ElementList/GeneralSettings"]
 layout_mode = 2

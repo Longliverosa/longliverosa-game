@@ -1,0 +1,20 @@
+keys,en
+NEWGAME_BUTTON,New Game
+SETTINGS_BUTTON,Settings
+EDITOR_BUTTON,Level Editor
+QUIT_BUTTON,Quit
+MENU_BUTTON,Main Menu
+CONTINUE_BUTTON,Continue
+SAND_TERRAIN,Sand
+ENEMY_CRAB,Crab
+ENEMY_SEAGULL,Seagull
+SAVE_BUTTON,Save
+TEST_BUTTON,Test
+BACK_BUTTON,Back
+EDITOR_INSTRUCTION,"Navigate using WASD, place with left click, remove with right, flip with z"
+ENTITY_PLAYER,Player
+LEVEL_ONE,The First Level
+LEVEL_TWO,The Doughole
+PLAY_BUTTON,Play
+CATEGORY_TILE,Tiles
+CATEGORY_ENTITY,Entities

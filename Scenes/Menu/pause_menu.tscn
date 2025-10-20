@@ -36,20 +36,20 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="ContinueButton" type="Button" parent="CanvasLayer/Menu"]
-layout_mode = 2
+layout_mode = 0
 offset_left = 245.0
 offset_top = 122.5
 offset_right = 395.0
 offset_bottom = 157.5
-text = "Continue"
+text = "CONTINUE_BUTTON"
 
 [node name="SettingsButton" type="Button" parent="CanvasLayer/Menu"]
-layout_mode = 2
+layout_mode = 0
 offset_left = 245.0
 offset_top = 162.5
 offset_right = 395.0
 offset_bottom = 197.5
-text = "Settings"
+text = "SETTINGS_BUTTON"
 
 [node name="MainMenuButton" type="Button" parent="CanvasLayer/Menu"]
 layout_mode = 0
@@ -57,7 +57,7 @@ offset_left = 245.0
 offset_top = 202.5
 offset_right = 395.0
 offset_bottom = 237.5
-text = "Main Menu"
+text = "MENU_BUTTON"
 
 [node name="SettingsMenu" parent="CanvasLayer" node_paths=PackedStringArray("MenuPanelRef") instance=ExtResource("3_jnmi5")]
 visible = false

@@ -81,7 +81,7 @@ offset_top = 196.0
 offset_right = 225.0
 offset_bottom = 232.0
 theme_override_styles/normal = SubResource("StyleBoxFlat_m4o1t")
-text = "Play"
+text = "PLAY_BUTTON"
 
 [node name="LevelLocked" type="TextureRect" parent="LevelInfo/Background"]
 unique_name_in_owner = true
@@ -98,7 +98,7 @@ offset_top = -8.0
 offset_right = -71.0
 offset_bottom = 21.0
 theme_override_styles/normal = SubResource("StyleBoxFlat_m4o1t")
-text = "Back"
+text = "BACK_BUTTON"
 
 [connection signal="pressed" from="PreviousLevel" to="." method="_on_previous_level_pressed"]
 [connection signal="pressed" from="NextLevel" to="." method="_on_next_level_pressed"]

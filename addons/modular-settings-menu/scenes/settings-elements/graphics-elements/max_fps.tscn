@@ -59,7 +59,7 @@ IDENTIFIER = "MaxFPS"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "Max FPS"
+text = "GRAPHICS_MAXFPS"
 vertical_alignment = 1
 
 [node name="SliderValue" type="HBoxContainer" parent="."]
