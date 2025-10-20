@@ -46,8 +46,8 @@ def main():
 	for root, _, files in os.walk('.'):
 		for file in files:
 			issues = []
+			path = os.path.join(root, file)
 			if file.endswith('.gd'):
-				path = os.path.join(root, file)
 				if "addons" in path.replace("\\", "/").split("/"):
 					continue
 				
@@ -57,7 +57,6 @@ def main():
 			if file.endswith('.png') or file.endswith('.mp3') or file.endswith('.tscn') or file.endswith('.ogg'):
 				if "addons" in path.replace("\\", "/").split("/"):
 					continue
-				path = os.path.join(root, file)
 				issues.extend(check_filename(path))
 			if len(issues) > 0:
 				for issue in issues:
