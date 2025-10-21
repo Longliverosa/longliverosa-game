@@ -8,5 +8,5 @@
 script = ExtResource("1_i7lq7")
 entity_scene = ExtResource("1_ksdsn")
 icon = ExtResource("2_mjtef")
-name = "Player"
+name = "ENTITY_PLAYER"
 metadata/_custom_type_script = "uid://dfb4e3qh10bly"

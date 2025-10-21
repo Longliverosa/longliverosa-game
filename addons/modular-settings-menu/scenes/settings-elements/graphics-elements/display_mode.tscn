@@ -92,14 +92,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_duwn0")
 DEFAULT_VALUE = "Fullscreen"
-IDENTIFIER = "DisplayMode"
 OptionsRef = NodePath("Options")
+IDENTIFIER = "DisplayMode"
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "Display Mode"
+text = "GRAPHICS_DISPLAYMODE"
 vertical_alignment = 1
 
 [node name="Options" type="OptionButton" parent="."]
