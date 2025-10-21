@@ -71,7 +71,7 @@ shape = SubResource("CircleShape2D_iukr2")
 position = Vector2(-8, 212)
 collision_mask = 3
 script = ExtResource("11_jfqkh")
-dialogue_label = "HKKJCSHZ"
+dialogue_label = "DE4R8SIE"
 
 [node name="DialogueManager" type="Node2D" parent="."]
 script = ExtResource("11_5lneo")
