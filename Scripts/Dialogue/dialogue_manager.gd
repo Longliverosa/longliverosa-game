@@ -28,7 +28,7 @@ func parse_dialogue_data(data:String):
 		
 		for n in data_recieved.size():
 			var dialogue_cluster_dict:Dictionary = data_recieved[n]
-			var dialogue_cluster = DialogueCluster.new(dialogue_cluster_dict["cluster_name"])
+			var dialogue_cluster = DialogueCluster.new(dialogue_cluster_dict["Identifier"])
 			dialogue_cluster.import(dialogue_cluster_dict)
 			dialogue_cluster_collection.push_back(dialogue_cluster)
 			
@@ -48,9 +48,9 @@ func save_dialogue_file(data:String):
 	save_file.close()
 
 func load_dialogue_file() -> String:
-	const FILE_NAME: String = "sample_dialogue"
+	const FILE_NAME: String = "test-dialog"
 	const FILE_EXTENSION: String = ".json"
-	const FULL_PATH: String = "user://" + FILE_NAME + FILE_EXTENSION
+	const FULL_PATH: String = "res://Assets/Dialog/" + FILE_NAME + FILE_EXTENSION
 	
 	if not FileAccess.file_exists(FULL_PATH):
 		printerr("couldn't find dialogue file")

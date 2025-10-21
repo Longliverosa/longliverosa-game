@@ -41,22 +41,30 @@ func export() ->Dictionary:
 
 ### internal content import --------
 func import(data:Dictionary):
-	dialogue_cluster_name = data["cluster_name"]
+	dialogue_cluster_name = data["Identifier"]
 	
-	var dialogue_nodes_arr:Array = data["nodes"]
+	var dialogue_nodes_arr:Array = data["Nodes"]
 	
 	var dialogue_nodes_label = Node.new()
 	dialogue_nodes_label.name = "DialogueNodes"
 	self.add_child(dialogue_nodes_label)
 	
-	for n in dialogue_nodes_arr.size():
-		var dialogue_node_dict:Dictionary = dialogue_nodes_arr[n]
-		var dialogue_node:DialogueNode = DialogueNode.new("import default","import default")
-		dialogue_node.import(dialogue_node_dict)
-		dialogue_nodes.push_back(dialogue_node)
-		
-		dialogue_node.name = dialogue_node.node_id
-		dialogue_nodes_label.add_child(dialogue_node)
+	for i in dialogue_nodes_arr.size():
+		var dialogue_node_dict: Dictionary = dialogue_nodes_arr[i]
+		for j in range(dialogue_node_dict["Text"].size()):
+			
+			var dialogue_node: DialogueNode = DialogueNode.new("import default","import default")
+			var override_id = "" 
+			if j == 0:
+				override_id = dialogue_node_dict["Identifier"]
+			if j + 1 == dialogue_node_dict["Text"].size():
+				dialogue_node.import(dialogue_cluster_name, dialogue_node_dict["Text"][j], "", dialogue_node_dict["Choices"], override_id)
+			else:
+				dialogue_node.import(dialogue_cluster_name, dialogue_node_dict["Text"][j], dialogue_node_dict["Text"][j + 1]["Identifier"], [], override_id)
+			dialogue_nodes.push_back(dialogue_node)
+			
+			dialogue_node.name = dialogue_node.node_id
+			dialogue_nodes_label.add_child(dialogue_node)
 ### --------------------------------
 
 ### node lookup --------------------
@@ -84,7 +92,7 @@ func initiate_dialogue(game_scene:Node):
 	if game_scene_ref == null:
 		game_scene_ref = game_scene
 	
-	var entry_node:DialogueNode = find_node_by_id("start")
+	var entry_node:DialogueNode = dialogue_nodes[0]
 	entry_node.display_node(dialogue_object)
 
 func on_dialogue_continue(next_id:String):

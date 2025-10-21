@@ -38,6 +38,7 @@ enabled=PackedStringArray("res://addons/modular-settings-menu/plugin.cfg")
 [file_customization]
 
 folder_colors={
+"res://Assets/": "purple",
 "res://Autoloads/": "red",
 "res://Locale/": "teal",
 "res://Scenes/": "orange",
@@ -184,7 +185,7 @@ pause={
 [internationalization]
 
 locale/translation_remaps={}
-locale/translations=PackedStringArray("res://Locale/Menu.en.translation", "res://Locale/Settings.en.translation")
+locale/translations=PackedStringArray("res://Locale/Menu.en.translation", "res://Locale/Settings.en.translation", "res://Locale/Test-dialog.en.translation")
 
 [layer_names]
 

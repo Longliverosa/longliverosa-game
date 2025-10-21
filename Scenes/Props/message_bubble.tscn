@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b1n3kruxhwkje"]
 
-[ext_resource type="Texture2D" uid="uid://nm5kv4vimsqr" path="res://Sprites/Props/spr_message_bubble.png" id="1_gvcf3"]
+[ext_resource type="Texture2D" uid="uid://nm5kv4vimsqr" path="res://Assets/Sprites/Props/spr_message_bubble.png" id="1_gvcf3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wvaeg"]
 size = Vector2(16, 14)
@@ -8,6 +8,7 @@ size = Vector2(16, 14)
 [node name="MessageBubble" type="Area2D"]
 
 [node name="SprMessageBubble" type="Sprite2D" parent="."]
+z_index = -175
 scale = Vector2(0.5625, 0.5625)
 texture = ExtResource("1_gvcf3")
 

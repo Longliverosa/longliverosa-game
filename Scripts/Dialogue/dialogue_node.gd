@@ -100,15 +100,19 @@ func export() -> Dictionary:
 ### --------------------------------
 
 ### internal content import --------
-func import(data:Dictionary):
-	node_id = data["id"]
-	node_speaker = data["speaker"]
-	node_text = data["text"]
+func import(tree_id: String, data:Dictionary, next_id: String, choices: Array, override_id: String):
+	node_id = data["Identifier"] if override_id == "" else override_id
+	node_speaker = data["Speaker"]["Name"]
+	node_text = tree_id + "_" + data["Identifier"]
 	
-	if data["type"] == "response":
-		node_next_id = data["next_id"]
-	elif data["type"] == "replyable":
-		node_choice = data["choices"]
+		
+	if next_id != "":
+		node_next_id = next_id
+	elif choices.size() > 0:
+		var parsed_choices: Array = []
+		for choice in choices:
+			parsed_choices.append({ "reply": tree_id + "_" + choice["Identifier"], "next_id": choice["DialogNodeId"] })	
+		node_choice = parsed_choices
 ### --------------------------------
 
 ### dialogue handler ---------------
