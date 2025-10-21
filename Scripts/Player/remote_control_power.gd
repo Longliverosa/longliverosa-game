@@ -3,14 +3,14 @@ class_name RemoteControlPower
 
 var cooldown: float = 0.0
 var cooldown_time: float = 2.5
-var sprite_charging: Texture2D = preload("res://Sprites/Characters/Peppers/spr_grey_pepper_test_charging.png")
-var sprite_normal: Texture2D = preload("res://Sprites/Characters/Peppers/spr_grey_pepper_test.png")
+var sprite_charging: Texture2D = preload("res://Assets/Sprites/Characters/Peppers/spr_grey_pepper_test_charging.png")
+var sprite_normal: Texture2D = preload("res://Assets/Sprites/Characters/Peppers/spr_grey_pepper_test.png")
 var magnet_speed: float = 150.0
 var raycast: RayCast2D
 
 func _init():
 	id = "remote_control"
-	texture = preload("res://Sprites/Characters/Peppers/spr_grey_pepper_test.png")
+	texture = preload("res://Assets/Sprites/Characters/Peppers/spr_grey_pepper_test.png")
 	text = "Current Power: Remote Control"
 
 func use(companion):

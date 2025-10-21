@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://crnybjn75ot3p" path="res://Scenes/LevelEditor/entity_spawn.tscn" id="2_vteww"]
 [ext_resource type="Script" uid="uid://bfbhs6pxs4xyb" path="res://Scripts/level_editor_temp_scene.gd" id="3_7onm0"]
 [ext_resource type="Script" uid="uid://wsnh25lasgk0" path="res://Scripts/level_edit_interface.gd" id="5_eyld0"]
-[ext_resource type="Texture2D" uid="uid://3qos2y3uqpnw" path="res://Sprites/Enemies/seagull.png" id="6_te4j6"]
+[ext_resource type="Texture2D" uid="uid://3qos2y3uqpnw" path="res://Assets/Sprites/Enemies/seagull.png" id="6_te4j6"]
 
 [node name="LevelEditor" type="Control"]
 layout_mode = 3

@@ -7,7 +7,7 @@ var timer: float = 0.0
 
 func _init():
 	id = "freeze_time"
-	texture = preload("res://Sprites/Characters/Peppers/spr_blue_pepper_test.png")
+	texture = preload("res://Assets/Sprites/Characters/Peppers/spr_blue_pepper_test.png")
 	text = "Current Power: Freeze Time"
 
 func use(companion):

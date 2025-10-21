@@ -22,6 +22,7 @@ extends CharacterBody2D
 
 var controlling: bool = false
 
+var dialogue_active:bool = false
 var has_shield: bool = true
 var level_start_pos: Vector2
 
@@ -51,7 +52,7 @@ func _physics_process(delta):
 	else:
 		coyote_timer.start()
 
-	if Input.is_action_just_pressed("jump"):
+	if Input.is_action_just_pressed("jump") and not dialogue_active:
 		jump_buffer.start()
 
 	if !jump_buffer.is_stopped() and !coyote_timer.is_stopped():
@@ -60,7 +61,7 @@ func _physics_process(delta):
 		jump_buffer.stop()
 
 	var direction = Input.get_axis("move_left", "move_right")
-	if direction:
+	if direction and not dialogue_active:
 		velocity.x = lerp(velocity.x, direction * max_speed, acceleration)
 		if(velocity.x < 0):
 			GFX.flip_h = true

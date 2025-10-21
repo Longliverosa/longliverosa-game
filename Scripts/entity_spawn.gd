@@ -12,7 +12,7 @@ func _process(_delta) -> void:
 	var level_editor : LevelEditor = get_parent().get_parent()
 	if Input.is_action_pressed("alt_click") and is_mouse_on_me \
 	and level_editor.current_category == level_editor.Categories.ENTITIES:
-		if entity.name == "Player":
+		if entity.name == "ENTITY_PLAYER":
 			for i in range(level_editor.item_select.item_count):
 				if level_editor.entities[i].name == "Player":
 					level_editor.item_select.set_item_disabled(i, false)
