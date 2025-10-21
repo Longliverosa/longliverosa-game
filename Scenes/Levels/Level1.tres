@@ -6,10 +6,8 @@
 
 [resource]
 script = ExtResource("3_p8m1a")
-name = "First level"
-order = 0
+name = "LEVEL_ONE"
 id = 0
-depends_on = -1
 scene = ExtResource("1_yheis")
 icon = ExtResource("1_lx3b7")
 metadata/_custom_type_script = "uid://ijd7s5ydo7go"

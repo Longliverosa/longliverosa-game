@@ -8,5 +8,5 @@
 script = ExtResource("3_c3d2t")
 entity_scene = ExtResource("1_bjg6o")
 icon = ExtResource("2_226qr")
-name = "Seagull"
+name = "ENEMY_SEAGULL"
 metadata/_custom_type_script = "uid://dfb4e3qh10bly"

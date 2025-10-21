@@ -165,6 +165,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Input Settings"
+text = "INPUT_BUTTON"
 script = SubResource("GDScript_te2ja")
 ElementPanelScene = ExtResource("1_6pc66")

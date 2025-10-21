@@ -54,7 +54,7 @@ layout_mode = 2
 [node name="SubSectionName" type="Label" parent="MarginContainer/ScrollContainer/MarginContainer/ElementList/MouseSettings"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "Mouse Settings"
+text = "CONTROLS_SECTION_MOUSE"
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/ScrollContainer/MarginContainer/ElementList/MouseSettings"]
 layout_mode = 2
@@ -74,7 +74,7 @@ layout_mode = 2
 [node name="SubSectionName" type="Label" parent="MarginContainer/ScrollContainer/MarginContainer/ElementList/KeyboardSettings"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "Keyboard Settings"
+text = "CONTROLS_SECTION_KEYBOARD"
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/ScrollContainer/MarginContainer/ElementList/KeyboardSettings"]
 layout_mode = 2

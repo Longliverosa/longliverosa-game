@@ -66,7 +66,7 @@ func create_action_list(reset: bool = false) -> void:
 		# Add a reference of the instantiated button to the reference list
 		actionReferenceList_[action] = ButtonRef
 		# Change the label text of the button to the action it corresponds to
-		ActionLabelRef.set_text(INPUT_ACTIONS_[action])
+		ActionLabelRef.set_text(tr(INPUT_ACTIONS_[action]))
 		ActionInputRef.set_text(event.as_text())
 		
 		ActionListRef.add_child(ButtonRef)
@@ -284,7 +284,7 @@ size_flags_horizontal = 3
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
-text = "Reset to default"
+text = "CONTROLS_RESET"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -295,11 +295,11 @@ layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 disabled = true
-text = "Apply"
+text = "APPLY_BUTTON"
 
 [node name="BackButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_direction = 1
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
-text = "Back"
+text = "BACK_BUTTON"

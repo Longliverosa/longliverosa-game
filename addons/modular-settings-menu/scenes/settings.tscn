@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://px6a2dg8cawb"]
 
-[ext_resource type="Script" path="res://addons/modular-settings-menu/scripts/settings_menu.gd" id="1_crapp"]
+[ext_resource type="Script" uid="uid://boxskoeqyunk" path="res://addons/modular-settings-menu/scripts/settings_menu.gd" id="1_crapp"]
 [ext_resource type="PackedScene" uid="uid://c66v42g6gs7gr" path="res://addons/modular-settings-menu/scenes/settings-sections/gameplay.tscn" id="2_kjxrg"]
 [ext_resource type="PackedScene" uid="uid://buqq0kms2dbb4" path="res://addons/modular-settings-menu/scenes/settings-sections/graphics.tscn" id="3_8fcn6"]
 [ext_resource type="PackedScene" uid="uid://dfswr81erouhj" path="res://addons/modular-settings-menu/scenes/settings-sections/controls.tscn" id="4_3a4pu"]
@@ -45,6 +45,7 @@ current_tab = 0
 
 [node name="Gameplay" parent="SettingsPanel/SettingsTabs" instance=ExtResource("2_kjxrg")]
 layout_mode = 2
+IDENTIFIER = "Gameplayd"
 metadata/_tab_index = 0
 
 [node name="Graphics" parent="SettingsPanel/SettingsTabs" instance=ExtResource("3_8fcn6")]
@@ -71,13 +72,13 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ntlmy")
 disabled = true
-text = "Apply"
+text = "APPLY_BUTTON"
 
 [node name="BackButton" type="Button" parent="SettingsPanel/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/focus = SubResource("StyleBoxEmpty_qp71p")
-text = "Back"
+text = "BACK_BUTTON"
 
 [node name="ElementPanels" type="Control" parent="."]
 layout_mode = 1

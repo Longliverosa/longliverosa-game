@@ -381,6 +381,7 @@ texture = ExtResource("2_0mfga")
 11:3/0/terrains_peering_bit/top_left_corner = 0
 11:3/0/terrains_peering_bit/top_side = 0
 11:3/0/terrains_peering_bit/top_right_corner = 0
+0:0/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_v3u1m"]
 texture = ExtResource("3_7ngoq")
@@ -392,7 +393,7 @@ texture = ExtResource("3_7ngoq")
 physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 0
 terrain_set_0/mode = 0
-terrain_set_0/terrain_0/name = "Sand"
+terrain_set_0/terrain_0/name = "SAND_TERRAIN"
 terrain_set_0/terrain_0/color = Color(0, 0, 0, 1)
 custom_data_layer_0/name = "Breakable"
 custom_data_layer_0/type = 1

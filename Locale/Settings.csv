@@ -1,0 +1,35 @@
+keys,en
+AUDIO_MASTER,Master
+AUDIO_MUSIC,Music
+AUDIO_SFX,SFX
+CONTROLS_RESET,Reset to default
+APPLY_BUTTON,Apply
+INPUT_BUTTON,Input Settings
+CONTROLS_INVERTY,Invert Y-Axis
+CONTROLS_SENS,Sensitivity
+GAMEPLAY_FOV,Field of View
+DISCARD_CHANGES,Would you like to discard all changes done?
+YES_BUTTON,Yes
+NO_BUTTON,No
+GRAPHICS_SECTION_BASIC,Basic Settings
+GRAPHICS_SECTION_ADVANCED,Advanced Settings
+GAMEPLAY_SECTION_GENERAL,General Settings
+GAMEPLAY_TAB,Gameplay
+GRAPHICS_TAB,Graphics
+CONTROLS_TAB,Controls
+AUDIO_TAB,Audio
+GRAPHICS_ANTIALIASING,Anti Aliasing
+GRAPHICS_DOF,Depth of Field
+GRAPHICS_DISPLAYMODE,Display Mode
+GRAPHICS_MAXFPS,Max FPS
+GRAPHICS_RESOLUTION,Resolution
+GRAPHICS_SHADOW,Shadow Quality
+CONTROLS_SECTION_MOUSE,Mouse Settings
+CONTROLS_SECTION_KEYBOARD,Keyboard Settings
+Up,Up
+Down,Down
+Left,Left
+Right,Right
+Jump,Jump
+Power Wheel,Power Wheel
+Power Activation,Power Activation

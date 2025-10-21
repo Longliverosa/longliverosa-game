@@ -62,7 +62,7 @@ layout_mode = 2
 [node name="SubSectionName" type="Label" parent="MarginContainer/ScrollContainer/MarginContainer/ElementList/BasicSettings"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "Basic Settings"
+text = "GRAPHICS_SECTION_BASIC"
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/ScrollContainer/MarginContainer/ElementList/BasicSettings"]
 layout_mode = 2
@@ -79,8 +79,7 @@ layout_mode = 2
 [node name="SubSectionName" type="Label" parent="MarginContainer/ScrollContainer/MarginContainer/ElementList/AdvancedSettings"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "Advanced Settings
-"
+text = "GRAPHICS_SECTION_ADVANCED"
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/ScrollContainer/MarginContainer/ElementList/AdvancedSettings"]
 layout_mode = 2
@@ -104,16 +103,21 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="GlowQuality" parent="MarginContainer/ScrollContainer/MarginContainer/ElementList/AdvancedSettings/SubSectionElements" instance=ExtResource("10_m0pim")]
+visible = false
 layout_mode = 2
 
 [node name="SSRQuality" parent="MarginContainer/ScrollContainer/MarginContainer/ElementList/AdvancedSettings/SubSectionElements" instance=ExtResource("10_cfuis")]
+visible = false
 layout_mode = 2
 
 [node name="SSAOQuality" parent="MarginContainer/ScrollContainer/MarginContainer/ElementList/AdvancedSettings/SubSectionElements" instance=ExtResource("11_xa1gl")]
+visible = false
 layout_mode = 2
 
 [node name="SSILQuality" parent="MarginContainer/ScrollContainer/MarginContainer/ElementList/AdvancedSettings/SubSectionElements" instance=ExtResource("12_jqvyp")]
+visible = false
 layout_mode = 2
 
 [node name="SDFGIQuality" parent="MarginContainer/ScrollContainer/MarginContainer/ElementList/AdvancedSettings/SubSectionElements" instance=ExtResource("13_ifeh4")]
+visible = false
 layout_mode = 2
