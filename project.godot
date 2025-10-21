@@ -58,6 +58,7 @@ attackable=""
 magnetizable=""
 grounded=""
 obstacle=""
+dialogue_trigger=""
 damage_player="Damages player if touched"
 
 [input]
