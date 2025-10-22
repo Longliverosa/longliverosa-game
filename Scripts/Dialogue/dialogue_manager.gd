@@ -4,10 +4,11 @@ class_name DialogueManager
 var dialogue_cluster_collection:Array
 
 func _ready():
-	var dialogue_data:String = load_dialogue_file()
-	if dialogue_data == "":
-		return
-	parse_dialogue_data(dialogue_data)
+	for file in LevelLoader.get_all_file_paths("res://Assets/Dialog"):
+		var dialogue_data:String = load_dialogue_file(file)
+		if dialogue_data == "":
+			return
+		parse_dialogue_data(dialogue_data)
 	connect_trigger()
 
 # ANNOUNCEMENT: Dialogue file has to be generated for the Dialogue System to work!!!
@@ -47,15 +48,11 @@ func save_dialogue_file(data:String):
 	save_file.store_line(data)
 	save_file.close()
 
-func load_dialogue_file() -> String:
-	const FILE_NAME: String = "test-dialog"
-	const FILE_EXTENSION: String = ".json"
-	const FULL_PATH: String = "res://Assets/Dialog/" + FILE_NAME + FILE_EXTENSION
-	
-	if not FileAccess.file_exists(FULL_PATH):
+func load_dialogue_file(file: String) -> String:	
+	if not FileAccess.file_exists(file):
 		printerr("couldn't find dialogue file")
 		return ""
-	var save_file = FileAccess.open(FULL_PATH,FileAccess.READ)
+	var save_file = FileAccess.open(file,FileAccess.READ)
 	var save_file_content:String = save_file.get_as_text()
 	
 	return save_file_content

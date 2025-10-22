@@ -185,7 +185,8 @@ pause={
 [internationalization]
 
 locale/translation_remaps={}
-locale/translations=PackedStringArray("res://Locale/Menu.en.translation", "res://Locale/Settings.en.translation", "res://Locale/Test-dialog.en.translation")
+locale/translations=PackedStringArray("res://Locale/Menu.en.translation", "res://Locale/Settings.en.translation", "res://Locale/dialog.en.translation")
+
 
 [layer_names]
 

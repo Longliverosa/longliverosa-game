@@ -103,7 +103,7 @@ func export() -> Dictionary:
 func import(tree_id: String, data:Dictionary, next_id: String, choices: Array, override_id: String):
 	node_id = data["Identifier"] if override_id == "" else override_id
 	node_speaker = data["Speaker"]["Name"]
-	node_text = tree_id + "_" + data["Identifier"]
+	node_text = tr(tree_id + "_" + data["Identifier"])
 	
 		
 	if next_id != "":
