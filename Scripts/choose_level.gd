@@ -43,7 +43,7 @@ func _ready() -> void:
 	
 func set_information_for_current_level():
 	level_locked.visible = current_level.locked
-	level_name.text = current_level.name
+	level_name.text = tr(current_level.name)
 	level_icon.texture = current_level.icon
 	play_button.disabled = current_level.locked
 	

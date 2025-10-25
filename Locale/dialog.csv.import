@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://wyrhnupfm2wp"
+
+[deps]
+
+files=["res://Locale/dialog.en.translation"]
+
+source_file="res://Locale/dialog.csv"
+dest_files=["res://Locale/dialog.en.translation"]
+
+[params]
+
+compress=true
+delimiter=0

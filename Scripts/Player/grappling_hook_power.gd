@@ -10,12 +10,12 @@ var hooked_collider: CollisionShape2D = null
 const MAX_ROPE_LENGTH := 300.0
 const SWING_FORCE := 1100.0
 
-var sprite_active = preload("res://Sprites/Characters/Peppers/spr_green_pepper_test_active.png")
-var sprite = preload("res://Sprites/Characters/Peppers/spr_green_pepper_test.png")
+var sprite_active = preload("res://Assets/Sprites/Characters/Peppers/spr_green_pepper_test_active.png")
+var sprite = preload("res://Assets/Sprites/Characters/Peppers/spr_green_pepper_test.png")
 
 func _init():
 	id = "grappling_hook"
-	texture = preload("res://Sprites/Characters/Peppers/spr_green_pepper_test.png")
+	texture = preload("res://Assets/Sprites/Characters/Peppers/spr_green_pepper_test.png")
 	text = "Current Power: Grappling Hook"
 
 func use(companion):

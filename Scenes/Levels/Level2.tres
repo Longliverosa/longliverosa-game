@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("2_85pgh")
-name = "Second level"
+name = "LEVEL_TWO"
 order = 1
 id = 1
 depends_on = 0

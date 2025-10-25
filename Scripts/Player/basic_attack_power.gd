@@ -5,7 +5,7 @@ const BASIC_ATTACK_RANGE = 60.0
 
 func _init():
 	id = "basic_attack"
-	texture = preload("res://Sprites/Characters/Peppers/pip_pepper.png")
+	texture = preload("res://Assets/Sprites/Characters/Peppers/pip_pepper.png")
 	text = "Current Power: Basic Attack"
 	
 func use(companion):

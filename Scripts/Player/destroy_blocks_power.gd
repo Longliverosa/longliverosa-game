@@ -3,7 +3,7 @@ class_name DestroyBlocksPower
 
 func _init():
 	id = "destroy_blocks"
-	texture = preload("res://Sprites/Characters/Peppers/spr_yellow_pepper_test.png")
+	texture = preload("res://Assets/Sprites/Characters/Peppers/spr_yellow_pepper_test.png")
 	text = "Current Power: Destroy Blocks"
 
 func use(companion):
