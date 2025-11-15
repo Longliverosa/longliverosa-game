@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://ccpe61iq4yldp"]
 
-[ext_resource type="Texture2D" uid="uid://bnjnmrn4swjda" path="res://Sprites/rosa_looking.png" id="1_jcge5"]
+[ext_resource type="Texture2D" uid="uid://bnjnmrn4swjda" path="res://Assets/Sprites/rosa_looking.png" id="1_jcge5"]
 [ext_resource type="Script" uid="uid://b3p8cfk3vw7g0" path="res://Scripts/main_menu.gd" id="2_1ehe0"]
 [ext_resource type="PackedScene" uid="uid://4vjk881onlb1" path="res://Scenes/Menu/choose_level.tscn" id="3_n45e2"]
 [ext_resource type="PackedScene" uid="uid://dqs2syn58gexv" path="res://Scenes/LevelEditor/level_editor.tscn" id="4_pn3xf"]
