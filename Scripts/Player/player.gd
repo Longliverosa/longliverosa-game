@@ -30,7 +30,6 @@ var level_start_pos: Vector2
 
 var impulse_velocity: Vector2 = Vector2.ZERO
 
-var CanUsePower: bool = true
 
 var grappling: bool = false
 
