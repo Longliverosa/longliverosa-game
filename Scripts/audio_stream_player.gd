@@ -1,7 +1,7 @@
 extends Node
 
-var menu_music : AudioStream = preload("res://Sounds/Music/beach_music.mp3")
-var editor_music : AudioStream = preload("res://Sounds/Music/level_editor_wip2.ogg")
+var menu_music : AudioStream = preload("res://Assets/Sounds/Music/beach_music.mp3")
+var editor_music : AudioStream = preload("res://Assets/Sounds/Music/level_editor_wip2.ogg")
 
 @onready var stream_player = $AudioStreamPlayer
 

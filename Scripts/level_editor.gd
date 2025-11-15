@@ -38,9 +38,9 @@ func reset_created_scene_vars() -> void:
 	created_scene = get_node("CreatedScene")
 	tile_map = created_scene.get_node("TileMap")
 	for node in created_scene.get_children():
-		if node is EntitySpawn and node.entity.name == "Player":
+		if node is EntitySpawn and node.entity.name == "ENTITY_PLAYER":
 			for i in range(item_select.item_count):
-				if entities[i].name == "Player":
+				if entities[i].name == "ENTITY_PLAYER":
 					is_player_placed = true
 					break
 	set_item_select_for_category(Categories.TILES)
@@ -60,7 +60,7 @@ func set_item_select_for_category(category : int) -> void:
 	elif category == Categories.ENTITIES:
 		for entity in entities:
 			var index = item_select.add_item(tr(entity.name), entity.icon)
-			if entity.name == "Player" and is_player_placed:
+			if entity.name == "ENTITY_PLAYER" and is_player_placed:
 				item_select.set_item_disabled(index, true)
 			else:
 				item_select.set_item_disabled(index, false)
@@ -92,7 +92,7 @@ func _process(_delta: float) -> void:
 			scene.set_icon()
 			created_scene.add_child(scene, true)
 			scene.set_owner(created_scene)
-			if(entities[current_tile_index].name == "Player"):
+			if(entities[current_tile_index].name == "ENTITY_PLAYER"):
 				item_select.set_item_disabled(current_tile_index, true)
 				is_player_placed = true
 	if Input.is_action_just_pressed("pepper_power"):

@@ -10,11 +10,11 @@ const REQUIRED_CHARGE: float = 0.8
 const OFFSET_Y := 8
 const HORIZONTAL_OFFSET := 48
 const VERTICAL_OFFSET := 32
-const PREVIEW_TEXTURE := preload("res://Sprites/Characters/Peppers/eyeblock.png")
+const PREVIEW_TEXTURE := preload("res://Assets/Sprites/Characters/Peppers/eyeblock.png")
 
 func _init():
 	id = "create_platforms"
-	texture = preload("res://Sprites/Characters/Peppers/spr_purple_pepper_test.png")
+	texture = preload("res://Assets/Sprites/Characters/Peppers/spr_purple_pepper_test.png")
 	text = "Current Power: Creates Platform"
 
 func use(companion):
