@@ -20,6 +20,8 @@ extends CharacterBody2D
 @onready var companion = companion_scene.instantiate()
 @onready var GFX = $GFX
 
+
+
 var controlling: bool = false
 
 var dialogue_active:bool = false
@@ -27,6 +29,12 @@ var has_shield: bool = true
 var level_start_pos: Vector2
 
 var impulse_velocity: Vector2 = Vector2.ZERO
+
+var CanUsePower: bool = true
+
+var grappling: bool = false
+
+var can_fall: bool = true
 
 var shortcut_map = {
 	"orange_shortcut": 0,
@@ -47,7 +55,7 @@ func _physics_process(delta):
 	if select_power.visible or controlling:
 		return
 
-	if not is_on_floor():
+	if not is_on_floor() and can_fall:
 		velocity.y += gravity * delta
 	else:
 		coyote_timer.start()
@@ -104,13 +112,14 @@ func _input(_event):
 			if Input.is_action_just_pressed(shortcut_action):
 				companion.set_power_by_index(shortcut_map[shortcut_action])
 
-		if Input.is_action_just_pressed("pepper_power"):
+		if Input.is_action_just_released("pepper_power") and $Timers/CompanionCooldown.time_left==0:
 			select_power.hide()
 			select_power_sprite.hide()
 			companion.cleanup()
 	else:
-		if Input.is_action_just_pressed("pepper_power"):
+		if Input.is_action_just_released("pepper_power") and $Timers/CompanionCooldown.time_left==0:
 			companion.use_power()
+			
 
 func damage(angle: float) -> void:
 	if has_shield:

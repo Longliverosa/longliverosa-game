@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://dvldnxksorea7"]
 
 [ext_resource type="Script" uid="uid://bt3pfl5wow30c" path="res://Scripts/Player/player.gd" id="1_46r5w"]
-[ext_resource type="Texture2D" uid="uid://b00mm51luc0qm" path="res://Sprites/Characters/Peppers/wheel.png" id="2_htcer"]
-[ext_resource type="Texture2D" uid="uid://8kff6ifakcd" path="res://Sprites/Characters/Rosa/rosa_sprite.png" id="2_rcd5j"]
-[ext_resource type="Texture2D" uid="uid://csljihyxxlcp" path="res://Sprites/Characters/Peppers/plug_head.png" id="10_jhyir"]
+[ext_resource type="Texture2D" uid="uid://b00mm51luc0qm" path="res://Assets/Sprites/Characters/Peppers/wheel.png" id="2_htcer"]
+[ext_resource type="Texture2D" uid="uid://8kff6ifakcd" path="res://Assets/Sprites/Characters/Rosa/rosa_sprite.png" id="2_rcd5j"]
+[ext_resource type="Texture2D" uid="uid://csljihyxxlcp" path="res://Assets/Sprites/Characters/Peppers/plug_head.png" id="10_jhyir"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jhyir"]
 radius = 6.0
@@ -85,4 +85,8 @@ one_shot = true
 
 [node name="DamageCooldown" type="Timer" parent="Timers"]
 wait_time = 0.5
+one_shot = true
+
+[node name="CompanionCooldown" type="Timer" parent="Timers"]
+wait_time = 0.2
 one_shot = true
