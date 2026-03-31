@@ -7,6 +7,9 @@ extends CharacterBody2D
 @export var max_speed: int = 200
 @export var acceleration: float = 0.06
 @export var friction: float = 0.15
+@export var slow_walk_multiplier: float = 0.4
+@export var water_gravity: int = 200
+@export var water_drag: float = 0.1
 
 @onready var label: Label = $Canvas/Label
 @onready var shield_slider: HSlider = $Canvas/ShieldSlider
@@ -20,19 +23,16 @@ extends CharacterBody2D
 @onready var companion = companion_scene.instantiate()
 @onready var GFX = $GFX
 
-
-
-var controlling: bool = false
-
-var dialogue_active:bool = false
-var has_shield: bool = true
-var level_start_pos: Vector2
-
+var current_checkpoint_pos: Vector2
 var impulse_velocity: Vector2 = Vector2.ZERO
 
+var controlling: bool = false
+var dialogue_active:bool = false
+var has_shield: bool = true
 var grappling: bool = false
-
 var can_fall: bool = true
+var is_forced_slow: bool = false
+var is_dodging: bool = false
 
 var shortcut_map = {
 	"orange_shortcut": 0,
@@ -47,19 +47,30 @@ func _ready():
 	get_parent().add_child.call_deferred(companion)
 	companion.power_changed.connect(_on_power_changed)
 	_on_power_changed(companion.get_current_power())
-	level_start_pos = global_position
+	current_checkpoint_pos = global_position
 
 func _physics_process(delta):
 	if select_power.visible or controlling:
 		return
+	
+	var map_pos = $"../TileMapLayer".local_to_map(global_position)
+	var tile_data = $"../TileMapLayer".get_cell_tile_data(map_pos) # Layer 0
+	var in_water = tile_data.get_custom_data("is_water") if tile_data else false
 
-	if not is_on_floor() and can_fall:
+	if in_water:
+		velocity.y += water_gravity * delta
+		velocity.x = lerp(velocity.x, 0.0, water_drag) # Simulate thick water
+		# Add swimming jump logic here if needed
+	elif not is_on_floor() and can_fall:
 		velocity.y += gravity * delta
 	else:
 		coyote_timer.start()
 
 	if Input.is_action_just_pressed("jump") and not dialogue_active:
-		jump_buffer.start()
+		if in_water:
+			velocity.y = -sqrt(jump_height * 2 * water_gravity)
+		else:
+			jump_buffer.start()
 
 	if !jump_buffer.is_stopped() and !coyote_timer.is_stopped():
 		velocity.y = -sqrt(jump_height * 2 * gravity)
@@ -67,8 +78,13 @@ func _physics_process(delta):
 		jump_buffer.stop()
 
 	var direction = Input.get_axis("move_left", "move_right")
+	var current_speed = max_speed
+	if is_forced_slow:
+		current_speed *= slow_walk_multiplier
+	if is_dodging:
+		current_speed *= 2.0 # Dodge speed boost
 	if direction and not dialogue_active:
-		velocity.x = lerp(velocity.x, direction * max_speed, acceleration)
+		velocity.x = lerp(velocity.x, direction * current_speed, acceleration)
 		if(velocity.x < 0):
 			GFX.flip_h = true
 		else:
@@ -85,8 +101,25 @@ func _physics_process(delta):
 		var last_collision = get_last_slide_collision()
 		var collider = last_collision.get_collider()
 		if(collider.is_in_group("damage_player") and not collider.get_parent().fainted):
-			damage(global_position.angle_to_point(Vector2(collider.global_position.x, collider.global_position.y - 20)))
+			var collision_normal = last_collision.get_normal()
+			if collision_normal.y < -0.5 and collider.get_parent().is_stunned: # -0.5 means hitting from above
+				collider.get_parent().die_from_jump()
+				velocity.y = -sqrt(jump_height * 1 * gravity) # Small bounce for Rosa
+			else:
+				damage(global_position.angle_to_point(Vector2(collider.global_position.x, collider.global_position.y - 20)))
 	
+func perform_dodge():
+	if is_dodging: return
+	is_dodging = true
+	set_collision_mask_value(3, false)
+	var enemies = get_tree().get_nodes_in_group("damage_player")
+	for enemy in enemies:
+		enemy.set_collision_mask_value(2, false)
+	await get_tree().create_timer(0.4).timeout 
+	set_collision_mask_value(3, true)
+	for enemy in enemies:
+		enemy.set_collision_mask_value(2, true)
+	is_dodging = false
 
 func _process(_delta: float) -> void:
 	if !shield_cooldown.is_stopped():
@@ -97,9 +130,17 @@ func _process(_delta: float) -> void:
 
 func _input(_event):
 	if Input.is_action_just_pressed("menu") and !controlling:
+		if companion.equipped_power_ids.size() > 1:
+			select_power.visible = not select_power.visible
+			select_power_sprite.visible = not select_power_sprite.visible
+		else:
+			print("Only one power unlocked - Wheel disabled")
 		select_power.visible = not select_power.visible
 		select_power_sprite.visible = not select_power_sprite.visible
-
+	
+	if Input.is_action_just_pressed("dodge"):
+		perform_dodge()
+	
 	if select_power.visible:
 		if Input.is_action_just_pressed("ui_right"):
 			companion.prev_power()
@@ -120,6 +161,7 @@ func _input(_event):
 			
 
 func damage(angle: float) -> void:
+	if is_dodging: return
 	if has_shield:
 		has_shield = false
 		shield_slider.visible = true
@@ -133,8 +175,9 @@ func damage(angle: float) -> void:
 
 func reset_to_checkpoint():
 	print("RESET TO CHECKPOINT")
-	global_position = level_start_pos
+	global_position = current_checkpoint_pos
 	has_shield = true
+	velocity = Vector2.ZERO
 	shield_cooldown.stop()
 	shield_slider.visible = false
 
