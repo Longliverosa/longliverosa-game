@@ -111,7 +111,14 @@ func _physics_process(delta):
 func perform_dodge():
 	if is_dodging: return
 	is_dodging = true
-	await get_tree().create_timer(0.2).timeout 
+	set_collision_mask_value(3, false)
+	var enemies = get_tree().get_nodes_in_group("damage_player")
+	for enemy in enemies:
+		enemy.set_collision_mask_value(2, false)
+	await get_tree().create_timer(0.4).timeout 
+	set_collision_mask_value(3, true)
+	for enemy in enemies:
+		enemy.set_collision_mask_value(2, true)
 	is_dodging = false
 
 func _process(_delta: float) -> void:
@@ -154,6 +161,7 @@ func _input(_event):
 			
 
 func damage(angle: float) -> void:
+	if is_dodging: return
 	if has_shield:
 		has_shield = false
 		shield_slider.visible = true
@@ -162,7 +170,7 @@ func damage(angle: float) -> void:
 		
 		var direction_vector = Vector2(-cos(angle), sin(angle)).normalized() 
 		impulse_velocity = Vector2(direction_vector.x * 400, direction_vector.y * (-300 if is_on_floor() else -800)) 
-	elif damage_cooldown.is_stopped() or is_dodging:
+	elif damage_cooldown.is_stopped():
 		reset_to_checkpoint()
 
 func reset_to_checkpoint():

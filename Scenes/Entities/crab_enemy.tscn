@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://c1q808d2ol1xa"]
+[gd_scene format=3 uid="uid://c1q808d2ol1xa"]
 
 [ext_resource type="PackedScene" uid="uid://d0mer00ituels" path="res://Scenes/Entities/base_enemy.tscn" id="1_7wxf3"]
 
-[node name="Enemy" instance=ExtResource("1_7wxf3")]
+[node name="Enemy" unique_id=829603009 instance=ExtResource("1_7wxf3")]
 speed = 40.0
 patrol_distance = 150.0
 attack_mode = 2
