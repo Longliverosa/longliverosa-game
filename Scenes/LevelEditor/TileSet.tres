@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://cvovyihqvkh1c"]
+[gd_resource type="TileSet" format=3 uid="uid://cvovyihqvkh1c"]
 
 [ext_resource type="Texture2D" uid="uid://c61c86cfaya0b" path="res://Assets/Sprites/Tiles/Sand/sand.png" id="2_0mfga"]
 [ext_resource type="Texture2D" uid="uid://b7c0vpc5462ey" path="res://Assets/Sprites/Tiles/Sand/breakable.png" id="3_7ngoq"]
@@ -397,5 +397,7 @@ terrain_set_0/terrain_0/name = "SAND_TERRAIN"
 terrain_set_0/terrain_0/color = Color(0, 0, 0, 1)
 custom_data_layer_0/name = "Breakable"
 custom_data_layer_0/type = 1
+custom_data_layer_1/name = "is_water"
+custom_data_layer_1/type = 1
 sources/1 = SubResource("TileSetAtlasSource_5rknm")
 sources/2 = SubResource("TileSetAtlasSource_v3u1m")

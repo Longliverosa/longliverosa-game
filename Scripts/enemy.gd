@@ -38,8 +38,13 @@ var current_gravity: float = 0
 
 var is_aggro: bool = false
 @onready var target: Node2D = $"Target"
+
 var player_body: Node2D
 var stuck_timer: float = 0 
+var is_stunned: bool = false
+var is_enraged: bool = false
+var is_scared: bool = false
+@onready var state_timer: Timer = Timer.new() # Multi-purpose timer
 
 func _ready():
 	character_body.add_to_group("attackable")
@@ -48,12 +53,15 @@ func _ready():
 	wait_timer.one_shot = true
 	aggro_enter_shape.shape.radius = aggro_enter_range
 	aggro_exit_shape.shape.radius = aggro_exit_range
+	add_child(state_timer)
+	state_timer.one_shot = true
+	state_timer.timeout.connect(_on_state_timeout)
 	
 func _physics_process(delta):
 	if grappled:
 		return
 	
-	if fainted:
+	if fainted or is_stunned:
 		character_body.velocity.x = 0
 	else:
 		var current_target = calculate_target()
@@ -102,12 +110,40 @@ func calculate_gravity(delta: float):
 	character_body.velocity.y += current_gravity
 
 func damage():
+	if is_stunned:
+		return
 	health -= 1
 	if health <= 0:
+		enter_stun_state()
+
+func die_from_jump():
+	if is_stunned:
 		fainted = true
 		gravity = 1000
 		sprite_node.flip_v = true
+
+func enter_stun_state():
+	is_stunned = true
+	is_aggro = false
+	character_body.velocity = Vector2.ZERO
+	sprite_node.modulate = Color(0.5, 0.5, 1) # Blueish tint for stun
+	state_timer.start(5.0) # Stunned for 5 seconds
+
+func _on_state_timeout():
+	if fainted: return
+	is_stunned = false
+	health = 2 # Reset health or they die instantly again
 	
+	if randf() > 0.5:
+		is_enraged = true
+		is_scared = false
+		sprite_node.modulate = Color(2, 0.5, 0.5) # Red glow
+	else:
+		is_scared = true
+		is_enraged = false
+		sprite_node.modulate = Color(0.5, 2, 0.5) # Greenish/Scared tint
+	state_timer.start(5.0) # Stay Enraged/Scared for 5 seconds then reset
+
 func check_if_stuck(delta: float):
 	if not is_aggro and movement_mode != MoveMode.None and character_body.velocity.length() == 0:
 		stuck_timer += delta
@@ -134,7 +170,7 @@ func player_entered(body: Node2D) -> void:
 	player_body = body
 	wait_timer.stop()
 
-func player_left(body: Node2D) -> void:
+func player_left(_body: Node2D) -> void:
 	if attack_mode == AttackMode.Passive or (attack_mode == AttackMode.Neutral and not is_neutral_and_attacked):
 		return
 	is_aggro = false
