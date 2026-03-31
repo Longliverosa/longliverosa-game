@@ -15,5 +15,3 @@ dest_files=["res://Locale/Test-dialog.en.translation"]
 
 compress=true
 delimiter=0
-unescape_keys=false
-unescape_translations=true
