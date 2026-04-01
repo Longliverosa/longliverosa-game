@@ -1,8 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://ge5t37d5i0es"]
+[gd_scene format=3 uid="uid://ge5t37d5i0es"]
 
-[ext_resource type="Texture2D" uid="uid://bvveikc1g3126" path="res://Sprites/Characters/Peppers/pip_pepper.png" id="1_2r5mc"]
+[ext_resource type="Texture2D" uid="uid://bvveikc1g3126" path="res://Assets/Sprites/Characters/Peppers/pip_pepper.png" id="1_2r5mc"]
 [ext_resource type="Script" uid="uid://c81lnspdwdc66" path="res://Scripts/Player/companion.gd" id="2_x1gqq"]
-[ext_resource type="Texture2D" uid="uid://da2b6ifloxmrb" path="res://Sprites/Characters/crosshair.png" id="3_x1gqq"]
+[ext_resource type="Texture2D" uid="uid://da2b6ifloxmrb" path="res://Assets/Sprites/Characters/crosshair.png" id="3_x1gqq"]
 
 [sub_resource type="Animation" id="Animation_w00u3"]
 resource_name = "OrangeAttack"
@@ -75,15 +75,15 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_2r5mc"]
 radius = 9.5
 
-[node name="Companion" type="CharacterBody2D"]
+[node name="Companion" type="CharacterBody2D" unique_id=1204040894]
 collision_layer = 8
 collision_mask = 4
 script = ExtResource("2_x1gqq")
 follow_speed = 2.2
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=518314437]
 
-[node name="FuelBar" type="ProgressBar" parent="."]
+[node name="FuelBar" type="ProgressBar" parent="." unique_id=915176986]
 visible = false
 offset_left = -21.714
 offset_top = -25.857
@@ -92,7 +92,7 @@ offset_bottom = -19.857
 step = 0.001
 show_percentage = false
 
-[node name="FuelLabel" type="Label" parent="."]
+[node name="FuelLabel" type="Label" parent="." unique_id=2092006109]
 visible = false
 offset_left = -22.714
 offset_top = -42.857
@@ -101,19 +101,17 @@ offset_bottom = -19.857
 scale = Vector2(1.35598, 0.861816)
 text = "Fuel"
 
-[node name="PepperAnimations" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_w00u3")
-}
+[node name="PepperAnimations" type="AnimationPlayer" parent="." unique_id=1675327705]
+libraries/ = SubResource("AnimationLibrary_w00u3")
 
-[node name="GFX" type="Sprite2D" parent="."]
+[node name="GFX" type="Sprite2D" parent="." unique_id=1344955285]
 unique_name_in_owner = true
 texture = ExtResource("1_2r5mc")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=903842079]
 shape = SubResource("CircleShape2D_2r5mc")
 disabled = true
 
-[node name="Crosshair" type="Sprite2D" parent="."]
+[node name="Crosshair" type="Sprite2D" parent="." unique_id=201499068]
 visible = false
 texture = ExtResource("3_x1gqq")

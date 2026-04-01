@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dvldnxksorea7"]
+[gd_scene format=3 uid="uid://dvldnxksorea7"]
 
 [ext_resource type="Script" uid="uid://bt3pfl5wow30c" path="res://Scripts/Player/player.gd" id="1_46r5w"]
 [ext_resource type="Texture2D" uid="uid://b00mm51luc0qm" path="res://Assets/Sprites/Characters/Peppers/wheel.png" id="2_htcer"]
@@ -11,34 +11,34 @@ height = 28.0
 
 [sub_resource type="ImageTexture" id="ImageTexture_mtuoh"]
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" unique_id=1044910472]
 physics_interpolation_mode = 2
 self_modulate = Color(0.52572, 0.723689, 0.712835, 1)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_46r5w")
 
-[node name="SelectPowerBg" type="Sprite2D" parent="."]
+[node name="SelectPowerBg" type="Sprite2D" parent="." unique_id=1662579402]
 visible = false
 texture = ExtResource("2_htcer")
 
-[node name="SelectPower" type="Node2D" parent="."]
+[node name="SelectPower" type="Node2D" parent="." unique_id=2058734023]
 visible = false
 
-[node name="GFX" type="Sprite2D" parent="."]
+[node name="GFX" type="Sprite2D" parent="." unique_id=879343868]
 texture = ExtResource("2_rcd5j")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2129649774]
 position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_jhyir")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1254635287]
 physics_interpolation_mode = 1
 position = Vector2(1, 1)
 
-[node name="Canvas" type="CanvasLayer" parent="."]
+[node name="Canvas" type="CanvasLayer" parent="." unique_id=40264234]
 
-[node name="Label" type="Label" parent="Canvas"]
+[node name="Label" type="Label" parent="Canvas" unique_id=1163512178]
 visible = false
 offset_left = 7.0
 offset_top = 7.99998
@@ -47,7 +47,7 @@ offset_bottom = 31.0
 scale = Vector2(2.06691, 2.74735)
 text = "Current Power: Basic Attack"
 
-[node name="ShieldSlider" type="HSlider" parent="Canvas"]
+[node name="ShieldSlider" type="HSlider" parent="Canvas" unique_id=76766748]
 visible = false
 offset_left = 10.0
 offset_top = 65.0
@@ -59,34 +59,34 @@ value = 57.8
 editable = false
 scrollable = false
 
-[node name="Plug" type="Line2D" parent="."]
+[node name="Plug" type="Line2D" parent="." unique_id=1225175970]
 width = 1.0
 default_color = Color(0.329412, 0.14902, 0.0784314, 1)
 
-[node name="PlugHead" type="Sprite2D" parent="."]
+[node name="PlugHead" type="Sprite2D" parent="." unique_id=1747245562]
 visible = false
 texture = ExtResource("10_jhyir")
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=705499841]
 
-[node name="Timers" type="Node" parent="."]
+[node name="Timers" type="Node" parent="." unique_id=45388923]
 
-[node name="CoyoteTime" type="Timer" parent="Timers"]
+[node name="CoyoteTime" type="Timer" parent="Timers" unique_id=1628984939]
 wait_time = 0.1
 one_shot = true
 
-[node name="JumpBuffer" type="Timer" parent="Timers"]
+[node name="JumpBuffer" type="Timer" parent="Timers" unique_id=840575356]
 wait_time = 0.2
 one_shot = true
 
-[node name="ShieldCooldown" type="Timer" parent="Timers"]
+[node name="ShieldCooldown" type="Timer" parent="Timers" unique_id=1258486900]
 wait_time = 10.0
 one_shot = true
 
-[node name="DamageCooldown" type="Timer" parent="Timers"]
+[node name="DamageCooldown" type="Timer" parent="Timers" unique_id=1419856572]
 wait_time = 0.5
 one_shot = true
 
-[node name="CompanionCooldown" type="Timer" parent="Timers"]
+[node name="CompanionCooldown" type="Timer" parent="Timers" unique_id=52884093]
 wait_time = 0.2
 one_shot = true

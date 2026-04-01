@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://ccpe61iq4yldp"]
+[gd_scene format=3 uid="uid://ccpe61iq4yldp"]
 
 [ext_resource type="Texture2D" uid="uid://bnjnmrn4swjda" path="res://Assets/Sprites/rosa_looking.png" id="1_jcge5"]
 [ext_resource type="Script" uid="uid://b3p8cfk3vw7g0" path="res://Scripts/main_menu.gd" id="2_1ehe0"]
@@ -12,7 +12,7 @@ corner_radius_top_right = 30
 corner_radius_bottom_right = 30
 corner_radius_bottom_left = 30
 
-[node name="MainMenu" type="TextureRect"]
+[node name="MainMenu" type="TextureRect" unique_id=874056208]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -24,7 +24,7 @@ script = ExtResource("2_1ehe0")
 NEW_GAME_SCENE = ExtResource("3_n45e2")
 EDITOR_SCENE = ExtResource("4_pn3xf")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1380397978]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -39,37 +39,37 @@ theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 200
 theme_override_constants/margin_bottom = 50
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1446894455]
 layout_mode = 2
 
-[node name="MenuOptions" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="MenuOptions" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=525175959]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 15
 alignment = 1
 
-[node name="NewGame" type="Button" parent="MarginContainer/VBoxContainer/MenuOptions"]
+[node name="NewGame" type="Button" parent="MarginContainer/VBoxContainer/MenuOptions" unique_id=1649319240]
 layout_mode = 2
 theme_override_constants/outline_size = 0
 theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxFlat_kr3tp")
 text = "NEWGAME_BUTTON"
 
-[node name="Settings" type="Button" parent="MarginContainer/VBoxContainer/MenuOptions"]
+[node name="Settings" type="Button" parent="MarginContainer/VBoxContainer/MenuOptions" unique_id=962976561]
 layout_mode = 2
 theme_override_constants/outline_size = 0
 theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxFlat_kr3tp")
 text = "SETTINGS_BUTTON"
 
-[node name="Editor" type="Button" parent="MarginContainer/VBoxContainer/MenuOptions"]
+[node name="Editor" type="Button" parent="MarginContainer/VBoxContainer/MenuOptions" unique_id=1228516019]
 layout_mode = 2
 theme_override_constants/outline_size = 0
 theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxFlat_kr3tp")
 text = "EDITOR_BUTTON"
 
-[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer/MenuOptions"]
+[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer/MenuOptions" unique_id=1585530830]
 layout_mode = 2
 theme_override_constants/outline_size = 0
 theme_override_font_sizes/font_size = 25
