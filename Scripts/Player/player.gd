@@ -129,15 +129,13 @@ func _process(_delta: float) -> void:
 		has_shield = true
 
 func _input(_event):
-	if Input.is_action_just_pressed("menu") and !controlling:
+	if (Input.is_action_just_pressed ("menu") or Input.is_action_just_released("menu")) and !controlling:
 		if companion.equipped_power_ids.size() > 1:
 			select_power.visible = not select_power.visible
 			select_power_sprite.visible = not select_power_sprite.visible
 		else:
 			print("Only one power unlocked - Wheel disabled")
-		select_power.visible = not select_power.visible
-		select_power_sprite.visible = not select_power_sprite.visible
-	
+			
 	if Input.is_action_just_pressed("dodge"):
 		perform_dodge()
 	
