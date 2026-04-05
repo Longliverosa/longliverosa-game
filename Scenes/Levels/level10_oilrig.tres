@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LevelBase" format=3 uid="uid://2kui0q8urpbw"]
+
+[ext_resource type="Texture2D" uid="uid://yq8rtoqp7yvl" path="res://Assets/Sprites/doug_doug_rosa.png" id="1_vbp6d"]
+[ext_resource type="PackedScene" uid="uid://wvat7jm1hg1o" path="res://Scenes/Levels/level10_oilrig.tscn" id="2_vbp6d"]
+[ext_resource type="Script" uid="uid://ijd7s5ydo7go" path="res://Scripts/level_base.gd" id="3_4bje4"]
+
+[resource]
+script = ExtResource("3_4bje4")
+name = "LEVEL_TEN"
+order = 9
+id = 9
+depends_on = 8
+scene = ExtResource("2_vbp6d")
+icon = ExtResource("1_vbp6d")
+metadata/_custom_type_script = "uid://ijd7s5ydo7go"

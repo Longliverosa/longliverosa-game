@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LevelBase" format=3 uid="uid://dnw7i5vlnklpc"]
+
+[ext_resource type="Texture2D" uid="uid://yq8rtoqp7yvl" path="res://Assets/Sprites/doug_doug_rosa.png" id="1_bn5nl"]
+[ext_resource type="PackedScene" uid="uid://bq81okbokwduu" path="res://Scenes/Levels/level4_boss1.tscn" id="2_bn5nl"]
+[ext_resource type="Script" uid="uid://ijd7s5ydo7go" path="res://Scripts/level_base.gd" id="3_l58ca"]
+
+[resource]
+script = ExtResource("3_l58ca")
+name = "LEVEL_FOUR"
+order = 3
+id = 3
+depends_on = 2
+scene = ExtResource("2_bn5nl")
+icon = ExtResource("1_bn5nl")
+metadata/_custom_type_script = "uid://ijd7s5ydo7go"
