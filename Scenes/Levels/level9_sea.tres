@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LevelBase" format=3 uid="uid://vflcsk1qj3fc"]
+
+[ext_resource type="Texture2D" uid="uid://yq8rtoqp7yvl" path="res://Assets/Sprites/doug_doug_rosa.png" id="1_8uvuf"]
+[ext_resource type="PackedScene" uid="uid://db7e68a0trjec" path="res://Scenes/Levels/level9_sea.tscn" id="2_8uvuf"]
+[ext_resource type="Script" uid="uid://ijd7s5ydo7go" path="res://Scripts/level_base.gd" id="3_53yik"]
+
+[resource]
+script = ExtResource("3_53yik")
+name = "LEVEL_NINE"
+order = 8
+id = 8
+depends_on = 7
+scene = ExtResource("2_8uvuf")
+icon = ExtResource("1_8uvuf")
+metadata/_custom_type_script = "uid://ijd7s5ydo7go"

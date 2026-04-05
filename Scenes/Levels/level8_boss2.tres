@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LevelBase" format=3 uid="uid://bf1o78c2f4jwr"]
+
+[ext_resource type="Texture2D" uid="uid://yq8rtoqp7yvl" path="res://Assets/Sprites/doug_doug_rosa.png" id="1_qnj1y"]
+[ext_resource type="PackedScene" uid="uid://cpofaujbl1jaw" path="res://Scenes/Levels/level8_boss2.tscn" id="2_qnj1y"]
+[ext_resource type="Script" uid="uid://ijd7s5ydo7go" path="res://Scripts/level_base.gd" id="3_p3rlm"]
+
+[resource]
+script = ExtResource("3_p3rlm")
+name = "LEVEL_EIGHT"
+order = 7
+id = 7
+depends_on = 6
+scene = ExtResource("2_qnj1y")
+icon = ExtResource("1_qnj1y")
+metadata/_custom_type_script = "uid://ijd7s5ydo7go"

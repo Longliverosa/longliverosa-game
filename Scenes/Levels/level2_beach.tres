@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LevelBase" format=3 uid="uid://dic8gth5dd6qp"]
+
+[ext_resource type="Texture2D" uid="uid://yq8rtoqp7yvl" path="res://Assets/Sprites/doug_doug_rosa.png" id="1_u8a4e"]
+[ext_resource type="Script" uid="uid://ijd7s5ydo7go" path="res://Scripts/level_base.gd" id="2_85pgh"]
+[ext_resource type="PackedScene" uid="uid://dtc84ffhwayx7" path="res://Scenes/Levels/level2_beach.tscn" id="2_nrwgf"]
+
+[resource]
+script = ExtResource("2_85pgh")
+name = "LEVEL_TWO"
+order = 1
+id = 1
+depends_on = 0
+scene = ExtResource("2_nrwgf")
+icon = ExtResource("1_u8a4e")
+metadata/_custom_type_script = "uid://ijd7s5ydo7go"

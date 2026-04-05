@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LevelBase" format=3 uid="uid://b302va835dtun"]
+
+[ext_resource type="Texture2D" uid="uid://yq8rtoqp7yvl" path="res://Assets/Sprites/doug_doug_rosa.png" id="1_djucf"]
+[ext_resource type="PackedScene" uid="uid://bxh8k4uqf54qy" path="res://Scenes/Levels/level6_treetop.tscn" id="2_djucf"]
+[ext_resource type="Script" uid="uid://ijd7s5ydo7go" path="res://Scripts/level_base.gd" id="3_rwnpl"]
+
+[resource]
+script = ExtResource("3_rwnpl")
+name = "LEVEL_SIX"
+order = 5
+id = 5
+depends_on = 4
+scene = ExtResource("2_djucf")
+icon = ExtResource("1_djucf")
+metadata/_custom_type_script = "uid://ijd7s5ydo7go"

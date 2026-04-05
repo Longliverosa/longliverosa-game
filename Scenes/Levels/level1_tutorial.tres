@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="LevelBase" format=3 uid="uid://xsm08xt82ivp"]
+
+[ext_resource type="Texture2D" uid="uid://yq8rtoqp7yvl" path="res://Assets/Sprites/doug_doug_rosa.png" id="1_lx3b7"]
+[ext_resource type="PackedScene" uid="uid://bq6oq5v2mk5ay" path="res://Scenes/Levels/level1_tutorial.tscn" id="1_yheis"]
+[ext_resource type="Script" uid="uid://ijd7s5ydo7go" path="res://Scripts/level_base.gd" id="3_p8m1a"]
+
+[resource]
+script = ExtResource("3_p8m1a")
+name = "LEVEL_ONE"
+id = 0
+scene = ExtResource("1_yheis")
+icon = ExtResource("1_lx3b7")
+metadata/_custom_type_script = "uid://ijd7s5ydo7go"

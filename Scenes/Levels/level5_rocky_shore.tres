@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LevelBase" format=3 uid="uid://blqxb33yhrn2p"]
+
+[ext_resource type="Texture2D" uid="uid://yq8rtoqp7yvl" path="res://Assets/Sprites/doug_doug_rosa.png" id="1_uj2js"]
+[ext_resource type="PackedScene" uid="uid://ccm4p8tt86s5v" path="res://Scenes/Levels/level5_rocky_shore.tscn" id="2_uj2js"]
+[ext_resource type="Script" uid="uid://ijd7s5ydo7go" path="res://Scripts/level_base.gd" id="3_iituh"]
+
+[resource]
+script = ExtResource("3_iituh")
+name = "LEVEL_FIVE"
+order = 4
+id = 4
+depends_on = 3
+scene = ExtResource("2_uj2js")
+icon = ExtResource("1_uj2js")
+metadata/_custom_type_script = "uid://ijd7s5ydo7go"

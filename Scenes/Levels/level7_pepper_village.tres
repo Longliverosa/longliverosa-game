@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LevelBase" format=3 uid="uid://b3rkdehvp3y3g"]
+
+[ext_resource type="Texture2D" uid="uid://yq8rtoqp7yvl" path="res://Assets/Sprites/doug_doug_rosa.png" id="1_ypcvq"]
+[ext_resource type="PackedScene" uid="uid://doq246o1v7q1g" path="res://Scenes/Levels/level7_pepper_village.tscn" id="2_ypcvq"]
+[ext_resource type="Script" uid="uid://ijd7s5ydo7go" path="res://Scripts/level_base.gd" id="3_8axgw"]
+
+[resource]
+script = ExtResource("3_8axgw")
+name = "LEVEL_SEVEN"
+order = 6
+id = 6
+depends_on = 5
+scene = ExtResource("2_ypcvq")
+icon = ExtResource("1_ypcvq")
+metadata/_custom_type_script = "uid://ijd7s5ydo7go"
