@@ -13,8 +13,17 @@ TEST_BUTTON,Test
 BACK_BUTTON,Back
 EDITOR_INSTRUCTION,"Navigate using WASD, place with left click, remove with right, flip with z"
 ENTITY_PLAYER,Player
-LEVEL_ONE,The First Level
-LEVEL_TWO,The Doughole
+LEVEL_ONE,The Aquarium
+LEVEL_TWO,The Beach
+LEVEL_THREE,The Cave
+LEVEL_FOUR,The Terminator
+LEVEL_FIVE,The Rocky Shore
+LEVEL_SIX,The Treetops
+LEVEL_SEVEN,Pepper Village
+LEVEL_EIGHT,The Terminator (Again?)
+LEVEL_NINE,The Sea
+LEVEL_TEN,The Oil Rig
+LEVEL_ELEVEN,The Final Fight
 PLAY_BUTTON,Play
 CATEGORY_TILE,Tiles
 CATEGORY_ENTITY,Entities

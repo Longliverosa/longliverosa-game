@@ -3,15 +3,46 @@ extends Area2D
 signal pressed
 signal released
 
+@export var is_toggle : bool = true
+@export var press_duration : float = 0.5
+
+@onready var sprite_inactive : Sprite2D = $Sprite2D
+@onready var sprite_active : Sprite2D = $Sprite2D_ACTIVE
+@onready var label : Label = $Label
+@onready var timer : Timer = $Timer
+
 var pressed_bodies: Array = []
 
+var is_active : bool = false
+var is_pressable : bool = false
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("interact") and is_pressable:
+		if is_toggle:
+			set_pressed(not is_active)
+		elif not is_active:
+			set_pressed(true)
+			timer.wait_time = press_duration if press_duration >= 0.5 else 0.5 
+			timer.start()
+			
+func _on_timer_timeout() -> void:
+	set_pressed(false)
+
+func set_pressed(is_pressed: bool) -> void:
+	is_active = is_pressed
+	sprite_inactive.visible = not is_pressed
+	sprite_active.visible = is_pressed
+	if is_pressed: 
+		pressed.emit()
+	else:
+		released.emit()
+
 func _on_body_entered(body):
-	if not pressed_bodies.has(body):
-		pressed_bodies.append(body)
-	if pressed_bodies.size() == 1:
-		emit_signal("pressed")
+	if body is Player:
+		is_pressable = true
+		label.visible = true
 
 func _on_body_exited(body):
-	pressed_bodies.erase(body)
-	if pressed_bodies.is_empty():
-		emit_signal("released")
+	if body is Player:
+		is_pressable = false
+		label.visible = false

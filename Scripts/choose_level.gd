@@ -29,6 +29,7 @@ func load_config_file():
 func _ready() -> void:
 	load_config_file()
 	levels = LevelLoader.all_levels.duplicate()
+	levels.sort_custom(func(a, b): return a.order < b.order)
 	for level in levels:
 		level.completed = completed_levels.any(func(id): return level.id == id)
 		

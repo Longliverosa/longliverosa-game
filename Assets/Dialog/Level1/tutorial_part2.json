@@ -1,0 +1,43 @@
+[
+  {
+	"Title": "tutorial_2",
+	"Identifier": "PDX5R8HZ",
+	"Nodes": [
+	  {
+		"Identifier": "ZIPJMRTZ",
+		"Name": "",
+		"Text": [
+		  {
+			"Identifier": "H5VAZS61",
+			"Text": "I will be following you around throughout your journey, and assisting you wherever you go",
+			"Speaker": {
+			  "Name": "DIALOG_PIP"
+			}
+		  },
+		  {
+			"Identifier": "6DQ9DSSW",
+			"Text": "",
+			"Speaker": {
+			  "Name": "DIALOG_PIP"
+			}
+		  },
+		  {
+			"Identifier": "EXTRA_ABOUT_BUTTONS_2",
+			"Text": "",
+			"Speaker": {
+			  "Name": "DIALOG_PIP"
+			}
+		  },
+		  {
+			"Identifier": "EXTRA_ABOUT_BUTTONS",
+			"Text": "",
+			"Speaker": {
+			  "Name": "DIALOG_PIP"
+			}
+		  }
+		],
+		"Choices": []
+	  }
+	]
+  }
+]

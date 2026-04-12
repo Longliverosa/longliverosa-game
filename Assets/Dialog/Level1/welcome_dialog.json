@@ -1,0 +1,36 @@
+[
+  {
+	"Title": "tutorial_start",
+	"Identifier": "NWLRE4UR",
+	"Nodes": [
+	  {
+		"Identifier": "GJ6ROIHM",
+		"Name": "start",
+		"Text": [
+		  {
+			"Identifier": "DCPKCDLX",
+			"Text": "Hi Rosa, its nice to see you in the aquarium again",
+			"Speaker": {
+			  "Name": "DIALOG_PIP"
+			}
+		  },
+		  {
+			"Identifier": "LFXULEVQ",
+			"Text": "You can move around using WASD, and jump with the space bar",
+			"Speaker": {
+			  "Name": "DIALOG_PIP"
+			}
+		  },
+		  {
+			"Identifier": "MSOFO7QB",
+			"Text": "Go ahead and give it a try",
+			"Speaker": {
+			  "Name": "DIALOG_PIP"
+			}
+		  }
+		],
+		"Choices": []
+	  }
+	]
+  }
+]
