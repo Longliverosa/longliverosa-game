@@ -26,6 +26,7 @@ texture = ExtResource("2_htcer")
 visible = false
 
 [node name="GFX" type="Sprite2D" parent="." unique_id=879343868]
+z_index = 4096
 texture = ExtResource("2_rcd5j")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2129649774]

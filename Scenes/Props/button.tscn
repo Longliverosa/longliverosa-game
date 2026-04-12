@@ -1,22 +1,49 @@
-[gd_scene load_steps=4 format=3 uid="uid://dqi2b8x4bhgtk"]
+[gd_scene format=3 uid="uid://dqi2b8x4bhwer"]
 
-[ext_resource type="Script" uid="uid://dx56ppaynkjlt" path="res://Scripts/button.gd" id="1_5c45m"]
-[ext_resource type="Texture2D" uid="uid://qnheu6iu1pse" path="res://Sprites/Props/spr_button.png" id="2_5hfw7"]
+[ext_resource type="Script" uid="uid://dx56ppaynkwer" path="res://Scripts/button.gd" id="1_383fr"]
+[ext_resource type="Texture2D" uid="uid://qnheu6iu1pse" path="res://Assets/Sprites/Props/spr_button.png" id="2_5hfw7"]
+[ext_resource type="Texture2D" uid="uid://hlnncdwdvu8o" path="res://Assets/Sprites/Props/spr_button_pressed.png" id="2_383fr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rwtyl"]
-size = Vector2(42.0364, 8.21162)
+size = Vector2(28.02433, 30.109266)
 
-[node name="Button" type="Area2D"]
-script = ExtResource("1_5c45m")
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yvjlo"]
+bg_color = Color(0.19434926, 0.19434929, 0.19434917, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Button" type="Area2D" unique_id=1034526503]
+script = ExtResource("1_383fr")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1936219249]
 texture = ExtResource("2_5hfw7")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 3)
+[node name="Sprite2D_ACTIVE" type="Sprite2D" parent="." unique_id=1887477105]
+visible = false
+texture = ExtResource("2_383fr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1019284450]
+position = Vector2(-1.0000138, -0.9999782)
 rotation = -3.14159
 scale = Vector2(0.6423, -0.730672)
 shape = SubResource("RectangleShape2D_rwtyl")
 
+[node name="Label" type="Label" parent="." unique_id=1142977298]
+visible = false
+offset_left = -21.0
+offset_top = -37.0
+offset_right = 19.0
+offset_bottom = -14.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_yvjlo")
+text = "F"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="." unique_id=1111134150]
+one_shot = true
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -7,18 +7,17 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rwtyl"]
 size = Vector2(42.0364, 8.21162)
 
-[node name="PressurePlate" type="Area2D" unique_id=1532081176]
-collision_mask = 2
+[node name="PressurePlate" type="Area2D" unique_id=1100841227]
 script = ExtResource("1_5c45m")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1275487605]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1748492852]
 texture = ExtResource("2_e4t37")
 
-[node name="Sprite2D_ACTIVE" type="Sprite2D" parent="." unique_id=239206252]
+[node name="Sprite2D_ACTIVE" type="Sprite2D" parent="." unique_id=1384103617]
 visible = false
 texture = ExtResource("3_ltkgr")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1754820802]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1802263875]
 position = Vector2(-0.5, 3)
 rotation = -3.14159
 scale = Vector2(0.6423, -0.730672)
