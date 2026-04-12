@@ -2,8 +2,9 @@
 
 [ext_resource type="TileSet" uid="uid://cvovyihqvkh1c" path="res://Scenes/LevelEditor/TileSet.tres" id="1_tcq61"]
 [ext_resource type="PackedScene" uid="uid://dvldnxksorea7" path="res://Scenes/Player/player.tscn" id="1_ukt2a"]
+[ext_resource type="PackedScene" uid="uid://dqi2b8x4bhgtk" path="res://Scenes/Props/pressure_plate.tscn" id="4_sxkof"]
 [ext_resource type="PackedScene" uid="uid://r7hftsak24ry" path="res://Scenes/Props/door.tscn" id="6_mjcty"]
-[ext_resource type="PackedScene" uid="uid://dqi2b8x4bhgtk" path="res://Scenes/Props/pressure_plate.tscn" id="9_wfpdi"]
+[ext_resource type="PackedScene" uid="uid://dwdi6gxffp5n" path="res://Scenes/Props/button.tscn" id="9_wfpdi"]
 [ext_resource type="PackedScene" uid="uid://b1n3kruxhwkje" path="res://Scenes/Props/message_bubble.tscn" id="10_iukr2"]
 [ext_resource type="Script" uid="uid://c25w5dbgbmwis" path="res://Scripts/Dialogue/dialogue_manager.gd" id="11_5lneo"]
 [ext_resource type="Script" uid="uid://btqetnj6xow5g" path="res://Scripts/Dialogue/dialogue_trigger.gd" id="11_jfqkh"]
@@ -19,7 +20,7 @@ tile_set = ExtResource("1_tcq61")
 position = Vector2(650, 194.88)
 scale = Vector2(0.91, 0.91)
 
-[node name="PressurePlate" parent="." unique_id=1845335158 groups=["freezable"] instance=ExtResource("9_wfpdi")]
+[node name="PressurePlate" parent="." unique_id=1845335158 groups=["freezable"] instance=ExtResource("4_sxkof")]
 position = Vector2(561, 222)
 collision_mask = 3
 
@@ -31,6 +32,7 @@ position = Vector2(285, 257)
 collision_mask = 3
 script = ExtResource("11_jfqkh")
 dialogue_label = "NWLRE4UR"
+can_reactivate = false
 
 [node name="DialogueManager" type="Node2D" parent="." unique_id=301492212]
 script = ExtResource("11_5lneo")
@@ -43,6 +45,7 @@ position = Vector2(482, 235)
 collision_mask = 3
 script = ExtResource("11_jfqkh")
 dialogue_label = "PDX5R8HZ"
+can_reactivate = false
 
 [node name="Button" parent="." unique_id=1532081176 instance=ExtResource("9_wfpdi")]
 position = Vector2(819, 197)
