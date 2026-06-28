@@ -30,8 +30,8 @@ PauseManager="*res://Autoloads/pause_manager.tscn"
 
 [display]
 
-window/size/viewport_width=640
-window/size/viewport_height=360
+window/size/viewport_width=1500
+window/size/viewport_height=1000
 window/stretch/mode="viewport"
 window/stretch/aspect="ignore"
 
