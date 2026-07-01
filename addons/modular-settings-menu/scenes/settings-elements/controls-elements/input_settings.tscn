@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://i0w5gftb0j16"]
+[gd_scene format=3 uid="uid://i0w5gftb0j16"]
 
 [ext_resource type="PackedScene" uid="uid://cqqhgk8ufkmqa" path="res://addons/modular-settings-menu/scenes/settings-elements/controls-elements/input-settings-panel/input_settings_panel.tscn" id="1_6pc66"]
 
@@ -159,7 +159,7 @@ func verify_settings_data(data_: Dictionary) -> void:
 			push_warning(\"Input action is missing: \", action)
 "
 
-[node name="InputSettings" type="Button"]
+[node name="InputSettings" type="Button" unique_id=910170432]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

@@ -7,9 +7,12 @@
 process_mode = 3
 script = ExtResource("1_ue73k")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1154641609]
+[node name="MusicStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1154641609]
 stream = ExtResource("2_5psad")
 autoplay = true
 bus = &"Music"
 
-[connection signal="finished" from="AudioStreamPlayer" to="." method="_on_finished"]
+[node name="EffectsStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=935801226]
+bus = &"Effects"
+
+[connection signal="finished" from="MusicStreamPlayer" to="." method="_on_finished"]
