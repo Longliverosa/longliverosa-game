@@ -7,7 +7,6 @@ class_name LevelEditor
 @onready var camera : Camera2D = %Camera
 @onready var created_scene : Node2D = %CreatedScene
 @onready var edit_interface : Control = %EditInterface
-@onready var editor_track : Resource = preload("res://Assets/Sounds/Music/level_editor_wip2.ogg")
 
 @export var entity_placeholder_scene : PackedScene
 
@@ -24,7 +23,6 @@ var is_player_placed : bool = false
 var created_should_check_for_load = true
 
 func _ready() -> void:
-	AudioManager.play_music(editor_track)
 	for i in range(tile_map.tile_set.get_terrains_count(0)):
 		tiles.append(tile_map.tile_set.get_terrain_name(0, i))
 	set_item_select_for_category(Categories.TILES)
@@ -130,4 +128,5 @@ func _on_test_button_pressed() -> void:
 
 
 func _on_back_button_pressed() -> void:
+	AudioManager.play_menu_music()
 	get_tree().change_scene_to_file("res://Scenes/Menu/main_menu.tscn")
