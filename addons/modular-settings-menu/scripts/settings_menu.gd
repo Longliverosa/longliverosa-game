@@ -27,6 +27,8 @@ var ElementPanelsRef: Control
 var SettingsTabsRef: TabContainer
 
 
+
+
 func _enter_tree() -> void:
 	ElementPanelsRef = $ElementPanels
 	SettingsTabsRef = $SettingsPanel/SettingsTabs

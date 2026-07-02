@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/level_editor_wip2.ogg-c955e0a4053ae6c101c45e3
 [params]
 
 loop=false
-loop_offset=0
-bpm=0
+loop_offset=0.0
+bpm=0.0
 beat_count=0
 bar_beats=4

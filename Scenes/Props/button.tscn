@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dx56ppaynkwer" path="res://Scripts/button.gd" id="1_383fr"]
 [ext_resource type="Texture2D" uid="uid://qnheu6iu1pse" path="res://Assets/Sprites/Props/spr_button.png" id="2_5hfw7"]
 [ext_resource type="Texture2D" uid="uid://hlnncdwdvu8o" path="res://Assets/Sprites/Props/spr_button_pressed.png" id="2_383fr"]
+[ext_resource type="AudioStream" uid="uid://dnr1gxuokq76h" path="res://Assets/Sounds/effects/negative_buzzer_sound.mp3" id="4_352yv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rwtyl"]
 size = Vector2(28.02433, 30.109266)
@@ -43,6 +44,10 @@ vertical_alignment = 1
 
 [node name="Timer" type="Timer" parent="." unique_id=1111134150]
 one_shot = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1405445724]
+stream = ExtResource("4_352yv")
+volume_db = 10.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
