@@ -5,6 +5,7 @@ signal released
 
 @export var is_toggle : bool = true
 @export var press_duration : float = 0.5
+@export var toggle_locked : bool = false
 
 @onready var sprite_inactive : Sprite2D = $Sprite2D
 @onready var sprite_active : Sprite2D = $Sprite2D_ACTIVE
@@ -13,20 +14,19 @@ signal released
 @onready var buzz_sound : Resource = preload("res://Assets/Sounds/effects/negative_buzzer_sound.mp3")
 
 var pressed_bodies: Array = []
-
 var is_active : bool = false
 var is_pressable : bool = false
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("interact"):
-		if is_pressable and is_toggle:
+	if event.is_action_pressed("interact") and is_pressable:
+		if toggle_locked:
+			AudioManager.play_effect(buzz_sound) 
+		elif is_toggle:
 			set_pressed(not is_active)
-		elif is_pressable and not is_active:
+		elif not is_active:
 			set_pressed(true)
 			timer.wait_time = press_duration if press_duration >= 0.5 else 0.5 
 			timer.start()
-		else:
-			AudioManager.play_effect(buzz_sound)
 			
 func _on_timer_timeout() -> void:
 	set_pressed(false)
