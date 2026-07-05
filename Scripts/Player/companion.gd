@@ -47,12 +47,27 @@ const CROSSHAIR_COLORS = {
 signal power_changed(power)
 
 func initialize(equipped_ids: Array) -> void:
-	equipped_power_ids = equipped_ids
-	for id in equipped_power_ids:
-		var power = _create_power_instance(id)
+	for id in equipped_ids:
+		add_power(id)
+	if len(power_list) == 0:
+		visible = false
+	
+func add_power(power_id: String) -> void:
+	if not power_id in equipped_power_ids:
+		equipped_power_ids.append(power_id)
+		var power = _create_power_instance(power_id)
 		if power:
 			power_list.append(power)
+			
+func remove_power(power_id: String) -> void:
+	if power_id in equipped_power_ids:
+		equipped_power_ids.erase(power_id)
+		power_list.erase(_create_power_instance(power_id))
 
+func clear_powers() -> void:
+	equipped_power_ids = []
+	power_list = []
+	
 func _ready():
 	if equipped_power_ids.is_empty():
 		initialize(["basic_attack", "destroy_blocks", "remote_control", "create_platforms", "grappling_hook", "freeze_time"])

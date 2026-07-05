@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://csysejogvdd8s"]
+[gd_scene format=3 uid="uid://csysejogvdd8s"]
 
 [ext_resource type="Script" uid="uid://cklol6xbb3qra" path="res://Scripts/pause_menu.gd" id="1_i0al5"]
 [ext_resource type="PackedScene" uid="uid://txlnsvtkj715" path="res://Scenes/Menu/settings_menu.tscn" id="3_jnmi5"]
@@ -10,7 +10,7 @@ colors = PackedColorArray(0.27451, 0.27451, 0.27451, 0.796078, 0.301961, 0.30196
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_6pfc5"]
 gradient = SubResource("Gradient_i0al5")
 
-[node name="PauseMenu" type="Control"]
+[node name="PauseMenu" type="Control" unique_id=862219505]
 z_index = 4096
 layout_mode = 3
 anchors_preset = 15
@@ -20,22 +20,22 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_i0al5")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2002351536]
 
-[node name="Background" type="TextureRect" parent="CanvasLayer"]
+[node name="Background" type="TextureRect" parent="CanvasLayer" unique_id=679664382]
 visible = false
 offset_right = 642.0
 offset_bottom = 361.0
 texture = SubResource("GradientTexture1D_6pfc5")
 
-[node name="Menu" type="Control" parent="CanvasLayer"]
+[node name="Menu" type="Control" parent="CanvasLayer" unique_id=1914656490]
 visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="ContinueButton" type="Button" parent="CanvasLayer/Menu"]
+[node name="ContinueButton" type="Button" parent="CanvasLayer/Menu" unique_id=1370093029]
 layout_mode = 0
 offset_left = 245.0
 offset_top = 122.5
@@ -43,7 +43,7 @@ offset_right = 395.0
 offset_bottom = 157.5
 text = "CONTINUE_BUTTON"
 
-[node name="SettingsButton" type="Button" parent="CanvasLayer/Menu"]
+[node name="SettingsButton" type="Button" parent="CanvasLayer/Menu" unique_id=681330513]
 layout_mode = 0
 offset_left = 245.0
 offset_top = 162.5
@@ -51,7 +51,7 @@ offset_right = 395.0
 offset_bottom = 197.5
 text = "SETTINGS_BUTTON"
 
-[node name="MainMenuButton" type="Button" parent="CanvasLayer/Menu"]
+[node name="MainMenuButton" type="Button" parent="CanvasLayer/Menu" unique_id=686746362]
 layout_mode = 0
 offset_left = 245.0
 offset_top = 202.5
@@ -59,10 +59,19 @@ offset_right = 395.0
 offset_bottom = 237.5
 text = "MENU_BUTTON"
 
-[node name="SettingsMenu" parent="CanvasLayer" node_paths=PackedStringArray("MenuPanelRef") instance=ExtResource("3_jnmi5")]
+[node name="DebugButton" type="Button" parent="CanvasLayer/Menu" unique_id=931452277]
+layout_mode = 0
+offset_left = 246.0
+offset_top = 244.0
+offset_right = 396.0
+offset_bottom = 279.0
+text = "DEBUG_BUTTON"
+
+[node name="SettingsMenu" parent="CanvasLayer" unique_id=1232356006 node_paths=PackedStringArray("MenuPanelRef") instance=ExtResource("3_jnmi5")]
 visible = false
 MenuPanelRef = NodePath("../..")
 
 [connection signal="pressed" from="CanvasLayer/Menu/ContinueButton" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Menu/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Menu/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Menu/DebugButton" to="." method="_on_debug_button_pressed"]
