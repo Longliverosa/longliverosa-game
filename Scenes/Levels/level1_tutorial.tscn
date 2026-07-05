@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://b1n3kruxhwkje" path="res://Scenes/Props/message_bubble.tscn" id="10_iukr2"]
 [ext_resource type="Script" uid="uid://c25w5dbgbmwis" path="res://Scripts/Dialogue/dialogue_manager.gd" id="11_5lneo"]
 [ext_resource type="Script" uid="uid://btqetnj6xow5g" path="res://Scripts/Dialogue/dialogue_trigger.gd" id="11_jfqkh"]
+[ext_resource type="PackedScene" uid="uid://dvgfboeto8y75" path="res://Scenes/Props/moving_platform_button_controlled.tscn" id="12_oygnc"]
 [ext_resource type="Script" uid="uid://byu6kr7gy1tuk" path="res://Scripts/Dialogue/dialogue_script_generator.gd" id="13_snyua"]
 
 [node name="GameScene" type="Node2D" unique_id=840575024]
@@ -51,4 +52,8 @@ collision_mask = 3
 script = ExtResource("11_jfqkh")
 dialogue_label = "PDX5R8HZ"
 
+[node name="Path2D2" parent="." unique_id=915926435 instance=ExtResource("12_oygnc")]
+position = Vector2(568, -39)
+
 [connection signal="pressed" from="PressurePlate" to="Door" method="open"]
+[connection signal="pressed" from="Button" to="Path2D2" method="_on_button_pressed"]
