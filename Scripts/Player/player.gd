@@ -34,6 +34,9 @@ var can_fall: bool = true
 var is_forced_slow: bool = false
 var is_dodging: bool = false
 
+var debug_mode = false
+var saved_powers = []
+
 var shortcut_map = {
 	"orange_shortcut": 0,
 	"yellow_shortcut": 1,
@@ -43,7 +46,7 @@ var shortcut_map = {
 }
 
 func _ready():
-	companion.initialize(["basic_attack", "remote_control", "grappling_hook", "create_platforms", "freeze_time"])
+	companion.initialize(["basic_attack", "remote_control", "grappling_hook"])
 	get_parent().add_child.call_deferred(companion)
 	companion.power_changed.connect(_on_power_changed)
 	_on_power_changed(companion.get_current_power())
@@ -108,6 +111,12 @@ func _physics_process(delta):
 			else:
 				damage(global_position.angle_to_point(Vector2(collider.global_position.x, collider.global_position.y - 20)))
 	
+	# Debug mode
+	if debug_mode:
+		velocity = Vector2() # Reset velocity
+		var input_axis: Vector2 = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+		velocity = input_axis * 500
+		
 func perform_dodge():
 	if is_dodging: return
 	is_dodging = true
@@ -129,16 +138,24 @@ func _process(_delta: float) -> void:
 		has_shield = true
 
 func _input(_event):
-	if (Input.is_action_just_pressed ("menu") or Input.is_action_just_released("menu")) and !controlling:
-		if companion.equipped_power_ids.size() > 1:
-			select_power.visible = not select_power.visible
-			select_power_sprite.visible = not select_power_sprite.visible
+	if (Input.is_action_just_pressed("menu") or Input.is_action_just_released("menu")) and !controlling:
+		if Input.is_action_just_pressed("menu"):
+			if companion.equipped_power_ids.size() > 1:
+				select_power.visible = true
+				select_power_sprite.visible = true
+		elif Input.is_action_just_released("menu"):
+			if companion.equipped_power_ids.size() > 1:
+				select_power.visible = false
+				select_power_sprite.visible = false
 		else:
 			print("Only one power unlocked - Wheel disabled")
 			
 	if Input.is_action_just_pressed("dodge"):
 		perform_dodge()
-	
+		
+	if Input.is_action_just_pressed("debug_key"):
+		change_debug_mode()
+
 	if select_power.visible:
 		if Input.is_action_just_pressed("ui_right"):
 			companion.prev_power()
@@ -156,7 +173,6 @@ func _input(_event):
 	else:
 		if Input.is_action_just_released("pepper_power") and $Timers/CompanionCooldown.time_left==0:
 			companion.use_power()
-			
 
 func damage(angle: float) -> void:
 	if is_dodging: return
@@ -178,6 +194,22 @@ func reset_to_checkpoint():
 	velocity = Vector2.ZERO
 	shield_cooldown.stop()
 	shield_slider.visible = false
-
+	
+func change_debug_mode() -> void:
+	debug_mode = not debug_mode
+	
+	if debug_mode: # Grant all pepper powers and save current powers to go back to after leaving debug mode
+		saved_powers = companion.equipped_power_ids
+		companion.clear_powers()
+		for power in ["basic_attack", "destroy_blocks", "remote_control", "create_platforms", "grappling_hook", "freeze_time"]:
+			companion.add_power(power)
+	else:
+		companion.clear_powers()
+		companion.initialize(saved_powers)
+		companion.current_index = 0
+	companion._build_power_wheel()
+		
+	$CollisionShape2D.disabled = not $CollisionShape2D.disabled
+	
 func _on_power_changed(power):
 	label.text = power["text"]

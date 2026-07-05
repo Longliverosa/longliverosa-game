@@ -18,3 +18,10 @@ func _on_main_menu_button_pressed() -> void:
 	PauseManager.set_paused(false)
 	AudioManager.play_menu_music()
 	get_tree().change_scene_to_packed(main_menu)
+	
+func _on_debug_button_pressed() -> void:
+	if get_tree().current_scene.has_node("Player"):
+		get_tree().current_scene.get_node("Player").change_debug_mode()
+	else:
+		print("Player not found as a child of the current scene")
+		print(get_tree().current_scene.get_children())
