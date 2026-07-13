@@ -13,8 +13,8 @@ extends CharacterBody2D
 
 @onready var label: Label = $Canvas/Label
 @onready var shield_slider: HSlider = $Canvas/ShieldSlider
-@onready var select_power: Node = $SelectPower
-@onready var select_power_sprite: Node = $"SelectPowerBg"
+@onready var select_power: Node = $CanvasLayer/SelectPower
+@onready var select_power_sprite: Node = $"CanvasLayer/SelectPowerBg"
 @onready var coyote_timer: Timer = $Timers/CoyoteTime
 @onready var jump_buffer: Timer = $Timers/JumpBuffer
 @onready var shield_cooldown : Timer = $Timers/ShieldCooldown
@@ -51,6 +51,8 @@ func _ready():
 	companion.power_changed.connect(_on_power_changed)
 	_on_power_changed(companion.get_current_power())
 	current_checkpoint_pos = global_position
+	select_power.position = get_window().size/2
+	select_power_sprite.position = get_window().size/2
 
 func _physics_process(delta):
 	if select_power.visible or controlling:
