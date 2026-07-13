@@ -24,6 +24,7 @@ transform = Transform2D(1.3, 0, 0, 1.3, 0, 0)
 
 [node name="SelectPowerBg" type="Sprite2D" parent="CanvasLayer" unique_id=1662579402]
 visible = false
+scale = Vector2(3, 3)
 texture = ExtResource("2_htcer")
 
 [node name="SelectPower" type="Node2D" parent="CanvasLayer" unique_id=2058734023]
