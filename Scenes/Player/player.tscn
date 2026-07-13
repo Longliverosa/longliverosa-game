@@ -20,6 +20,7 @@ script = ExtResource("1_46r5w")
 
 [node name="SelectPowerBg" type="Sprite2D" parent="." unique_id=1662579402]
 visible = false
+scale = Vector2(3, 3)
 texture = ExtResource("2_htcer")
 
 [node name="SelectPower" type="Node2D" parent="." unique_id=2058734023]

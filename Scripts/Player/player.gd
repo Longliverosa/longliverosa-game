@@ -51,6 +51,8 @@ func _ready():
 	companion.power_changed.connect(_on_power_changed)
 	_on_power_changed(companion.get_current_power())
 	current_checkpoint_pos = global_position
+	
+	select_power.scale = select_power_sprite.scale
 
 func _physics_process(delta):
 	if select_power.visible or controlling:

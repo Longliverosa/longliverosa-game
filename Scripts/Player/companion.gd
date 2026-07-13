@@ -158,7 +158,7 @@ func _build_power_wheel():
 	for child in select_power_ui.get_children():
 		child.queue_free()
 	power_ui_nodes.clear()
-	var radius = 50.0
+	var radius = select_power_sprite.texture.get_width()/4
 	var count = power_list.size()
 	for i in range(count):
 		var angle = deg_to_rad(-360.0 / count * i - 90)
