@@ -17,8 +17,8 @@ class_name Companion
 @onready var raycast: RayCast2D = $"../Player/RayCast2D"
 @onready var plug: Line2D = $"../Player/Plug"
 @onready var plug_head: Sprite2D = $"../Player/PlugHead"
-@onready var select_power_ui: Node = $"../Player/SelectPower"
-@onready var select_power_sprite: Node = $"../Player/SelectPowerBg"
+@onready var select_power_ui: Node = $"../Player/CanvasLayer/SelectPower"
+@onready var select_power_sprite: Node = $"../Player/CanvasLayer/SelectPowerBg"
 
 var equipped_power_ids: Array = []
 var power_list: Array = []

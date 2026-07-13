@@ -5,9 +5,9 @@
 
 [sub_resource type="Curve2D" id="Curve2D_16o0v"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 196.77777, 87, 0, 0, 0, 0, 281, 89, 0, 0, 0, 0, 376, 90, 0, 0, 0, 0, 440, 88)
+"points": PackedVector2Array(0, 0, 0, 0, 196.77777, 87, 0, 0, 0, 0, 281, 89, 0, 0, 0, 0, 376, 90, 0, 0, 0, 0, 443, 87, 0, 0, 0, 0, 142, 38, 0, 0, 0, 0, 102, 47)
 }
-point_count = 4
+point_count = 6
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0opt1"]
 size = Vector2(24, 8.5)
@@ -63,7 +63,6 @@ remote_path = NodePath("../../AnimatableBody2D")
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="." unique_id=1459841373]
 position = Vector2(196.77777, 87)
-rotation = 0.023742236
 
 [node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D" unique_id=987625196]
 scale = Vector2(0.50000006, 0.5)
